@@ -26,6 +26,8 @@ string \"[^"]*\"
 "," { printf ("tComa\n");}
 \n	{ printf ("tEOL\n"); }
 ";" { printf ("tSC\n");}
+"return" {printf ("tRET");}
+
 
 {string} {	printf ("tString\n", yytext); }
 "printf" {printf ("tPrint\n");}
