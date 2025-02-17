@@ -23,5 +23,5 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 
 clean:
-	rm $(OBJ) $(LEX_OUT) 
+	rm $(OBJ) $(LEX).c $(BIN) 
 
