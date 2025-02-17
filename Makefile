@@ -19,6 +19,10 @@ lex_compile:
 	$(LEX_C) -o $(LEX).c $(LEX)
 	$(CC) $(LEX).c -o $(BIN)
 
+run:
+	make lex_compile
+	./$(BIN)
+
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 
