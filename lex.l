@@ -5,17 +5,22 @@
 
 %option noyywrap
 
-
-nb ^[-+][0-9]+\.[0-9]+[eE][-+]?[0-9]+$
+int (0|[1-9][0-9]*)([eE][-+]?(0|[1-9][0-9]*))?
+float [0-9]+.[0-9]*([eE][-+]?[0-9]+)?
 string \"[^"]*\"
+
 %%
-{nb} { printf ("tNb = %d\n", atoi(yytext));}
+
+{int} { printf ("tINT = %d\n", atoi(yytext)); }
+{float} { printf("tFLOAT = %d\n", atoi(yytext)); }
 "main" { printf("tMain\n");}
 "{" {printf ("tOB\n");}
 "}" {printf ("tCB\n");}
-[ \t]+	{ printf("tTab\n");}
-"const "	{	  printf ("tConst\n"); }
-"int "	{	  printf ("tInt\n"); }
+[\t]+	{ printf("tTab\n");}
+"const"	{ printf ("tConst\n"); }
+"int"	{ printf ("tInt\n"); }
+"float" { printf ("tFloat\n"); }
+[ ]     { printf("tSPACE\n"); }
 "="	{ printf ("tEq\n"); }
 "-"	{ printf ("tSub\n"); }
 "+"	{ printf ("tAdd\n"); }
@@ -31,8 +36,10 @@ string \"[^"]*\"
 
 {string} {	printf ("tString\n", yytext); }
 "printf" {printf ("tPrint\n");}
-[a-z]+ {printf ("tID\n");}
+[a-z_][a-z0-9_]* {printf ("tID\n");}
+
 %%
+
 int main(void){
 	yylex();
 }
