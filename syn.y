@@ -112,12 +112,17 @@ Parameter:
 
 
 Declaration:
-      tInt tID tSC
-    | tFloat tID tSC
-    | tConst tInt tID tSC
-    | tConst tFloat tID tSC
-    ;
+    Type tID tSC
+  | Type Affectation;
 
+Type : 
+  tInt
+  | tFloat
+  | tChar
+  | tConst tInt
+  | tConst tFloat
+  | tConst tChar
+  ;
 
 Statement:
       Affectation
