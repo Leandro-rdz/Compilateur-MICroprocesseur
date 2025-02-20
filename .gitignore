@@ -1,2 +1,5 @@
 out
 lex.l.c
+lex.yy.c
+y.tab.c
+y.tab.h
