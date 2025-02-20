@@ -1,14 +1,13 @@
-GRM=syn.y
-LEX=lex.l
-BIN=out
+GRM = syn.y
+LEX = lex.l
+BIN = out
 
-CC=gcc
-CFLAGS=-Wall -g
-LEX_C=flex
-SYN_C=yacc
+CC = gcc
+CFLAGS = -Wall -g -Wno-unused-function -Wno-implicit-function-declaration
+LEX_C = flex
+SYN_C = yacc
 
-
-OBJ=
+OBJ =
 
 all: $(BIN)
 
@@ -19,13 +18,17 @@ lex_compile:
 	$(LEX_C) -o $(LEX).c $(LEX)
 	$(CC) $(LEX).c -o $(BIN)
 
+syn_compile:
+	$(LEX_C) $(LEX)
+	$(SYN_C) -d -t $(GRM)
+	$(CC) $(CFLAGS) y.tab.c lex.yy.c -o $(BIN)
+
 run:
-	make lex_compile
+	make syn_compile
 	./$(BIN)
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 
 clean:
-	rm $(OBJ) $(LEX).c $(BIN) 
-
+	rm -f $(OBJ) $(LEX).c $(BIN) y.tab.c lex.yy.c y.tab.h

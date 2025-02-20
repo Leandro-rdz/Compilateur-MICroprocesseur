@@ -1,45 +1,64 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include "y.tab.h"
 %}
 
 %option noyywrap
 
-int (0|[1-9][0-9]*)([eE][-+]?(0|[1-9][0-9]*))?
-float [0-9]+.[0-9]*([eE][-+]?[0-9]+)?
-string \"[^"]*\"
+/* Définitions de macros pour les littéraux numériques et chaînes */
+INTEGER   (0|[1-9][0-9]*)
+FLOATNUM  [0-9]+\.[0-9]*([eE][-+]?[0-9]+)?
+STRING    \"[^"]*\"
 
 %%
 
-{int} { printf ("tINT = %d\n", atoi(yytext)); }
-{float} { printf("tFLOAT = %d\n", atoi(yytext)); }
-"main" { printf("tMain\n");}
-"{" {printf ("tOB\n");}
-"}" {printf ("tCB\n");}
-[\t]+	{ printf("tTab\n");}
-"const"	{ printf ("tConst\n"); }
-"int"	{ printf ("tInt\n"); }
-"float" { printf ("tFloat\n"); }
-[ ]     { printf("tSPACE\n"); }
-"="	{ printf ("tEq\n"); }
-"-"	{ printf ("tSub\n"); }
-"+"	{ printf ("tAdd\n"); }
-"*"	{ printf ("tMul\n"); }
-"/"	{ printf ("tDiv\n"); }
-"("	{ printf ("tOP\n"); }
-")"	{ printf ("tCP\n"); }
-"," { printf ("tComa\n");}
-\n	{ printf ("tEOL\n"); }
-";" { printf ("tSC\n");}
-"return" {printf ("tRET");}
+{INTEGER}    { yylval.nb = atoi(yytext); return tNB; }
+{FLOATNUM}   { yylval.nb = atoi(yytext); /* Conversion simplifiée */ return tNBF; }
 
+{STRING}     { return tSTRING; }
 
-{string} {	printf ("tString\n", yytext); }
-"printf" {printf ("tPrint\n");}
-[a-z_][a-z0-9_]* {printf ("tID\n");}
+"main"       { return tMain; }
+"{"          { return tOB; }
+"}"          { return tCB; }
+"const"      { return tConst; }
+"int"        { return tInt;}
+"float"      { return tFloat; }
+"void"       { return tVoid; }
+"char"       { return tChar; }
+"="          { return tEq; }
+"-"          { return tSub; }
+"+"          { return tAdd; }
+"*"          { return tMul; }
+"/"          { return tDiv; }
+"("          { return tOP; }
+")"          { return tCP; }
+","          { return tComa; }
+";"          { return tSC; }
+"return"     { return tRET; }
+"printf"     { return tPrint; }
+"<"          { return tLT; }
+">"          { return tGT; }
+">="         { return tGE; } 
+"<="         { return tLE; }
+"!="         { return tDif; }
+"=="         { return tEqq; }
+"if"         { return tIf; }
+"else"       { return tElse; }
+"for"        { return tFor; }
+"while"      { return tWhile; }
+"&"          { return tAnd; }
+"|"          { return tOr; }
+"true"       { return tTrue; }
+"false"      { return tFalse; }
+[a-z_][a-z0-9_]*  { 
+                        strncpy(yylval.id, yytext, 15);
+                        yylval.id[15] = '\0';
+                        return tID;
+                   }
+
+[ \t\n]+     { /* rien */ }
+
 
 %%
-
-int main(void){
-	yylex();
-}
