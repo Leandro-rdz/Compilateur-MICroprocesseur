@@ -7,15 +7,14 @@
 
 %option noyywrap
 
-/* Définitions de macros pour les littéraux numériques et chaînes */
-INTEGER   (0|[1-9][0-9]*)
-FLOATNUM  [0-9]+\.[0-9]*([eE][-+]?[0-9]+)?
+INTEGER   (0|[1-9][0-9]*)([eE][-+]?[0-9]+)?
+FLOATNUM  ([0-9]+\.[0-9]+)([eE][-+]?[0-9]+)?
 STRING    \"[^"]*\"
 
 %%
 
 {INTEGER}    { yylval.nb = atoi(yytext); return tNB; }
-{FLOATNUM}   { yylval.nb = atoi(yytext); /* Conversion simplifiée */ return tNBF; }
+{FLOATNUM}   { yylval.nbf = atof(yytext);return tNBF; }
 
 {STRING}     { return tSTRING; }
 
@@ -52,6 +51,7 @@ STRING    \"[^"]*\"
 "|"          { return tOr; }
 "true"       { return tTrue; }
 "false"      { return tFalse; }
+"!"          { return tNegate; }
 [a-z_][a-z0-9_]*  { 
                         strncpy(yylval.id, yytext, 15);
                         yylval.id[15] = '\0';

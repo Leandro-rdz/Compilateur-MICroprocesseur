@@ -6,13 +6,16 @@
 %union {
     int nb;
     char id[16];
+    float nbf;
+    char string[64];
 }
 
-%token tMain tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tSTRING tPrint tNBF tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tFalse
+%token tMain tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tNegate tFalse
 %token <nb> tNB
 %token <id> tID
-%nonassoc tElse
-
+%token <nbf> tNBF
+%token <string> tSTRING
+%right tNegate
 %left tAdd tSub
 %left tMul tDiv
 %start Code
@@ -20,17 +23,18 @@
 %%
 
 Code:
-      Functions 
-    ;  { printf("Code\n");}
+      Functions  //{ printf("Code\n");};
 
 Functions:
-      Function
+      MainFunction
     | Functions Function
     ;
 
-Function:
-      FType tMain tOP Parameters tCP Body
-    ; { printf("Function\n");}
+MainFunction:
+      FType tMain tOP Parameters tCP Body { printf("Function\n");} ;
+
+Function: 
+      FType tID tOP Parameters tCP Body { printf("Function %s\n", $2);};
 
 FType: 
     tInt
@@ -68,9 +72,8 @@ Instruction:
 
 
 If :
-  tIf tOP Condition tCP ControlBody %prec tElse
-  | tIf tOP Condition tCP ControlBody tElse ControlBody 
-  ; { printf("IF\n");}
+  tIf tOP Condition tCP ControlBody
+  | tIf tOP Condition tCP ControlBody tElse ControlBody  { printf("IF\n");};
 
 ControlBody :
   Body
@@ -78,17 +81,19 @@ ControlBody :
   ;
 
 While :
-  tWhile tOP Condition tCP ControlBody
-  ; { printf("While\n");}
+  tWhile tOP Condition tCP ControlBody { printf("While\n");};
 
 For : 
-  tFor tOP Expression tSC Condition tSC Expression tCP ControlBody
-  ; { printf("For\n");}
+  tFor tOP Expression tSC Condition tSC Expression tCP ControlBody { printf("For\n");};
 
 
-Condition: Value BoolOp Value 
+Condition: 
+
+Value BoolOp Value 
 | tTrue 
 | tFalse
+| Value
+| tNegate Value
 ;
 
 BoolOp:
@@ -113,7 +118,8 @@ Parameter:
 
 Declaration:
     Type tID tSC
-  | Type Affectation;
+  | Type Affectation
+  | Type tID tComa Affectation;
 
 Type : 
   tInt
@@ -132,27 +138,36 @@ Statement:
 
 /* Affectation : id = expression ; */
 Affectation:
-      tID tEq Expression tSC
-    ; { printf("Affect %s\n",$1);}
+      tID tEq Expression tSC { printf("Affect %s\n",$1);}
+    ;
 
 /* Instruction d'affichage : printf(expression); */
 Print:
-      tPrint tOP Expression tCP tSC
-    ; { printf("print ");}
+      tPrint tOP Expression tCP tSC { printf("print ");} ;
 
 /* Instruction de retour : return expression; */
 Return:
-      tRET Expression tSC
-    ; { printf("Return ");}
+      tRET Expression tSC { printf("Return ");}  ;
 
-Expression: Expression Arithmetic Expression
+Expression:
+tNegate Expression
+| Expression Arithmetic Expression
 | Value
-; { printf("Expression\n");}
+| tID tOP ArgList tCP { printf("Expression\n");} ;
 
-Value: tNB
-| tNBF
-| tSTRING
-| tID
+ArgList:
+      /* vide */
+    | Arguments
+    ;
+
+Arguments:
+      Expression
+    | Expression tComa Arguments
+    ;
+Value: tNB {printf("int %d\n", $1);}
+| tNBF  {printf("float %f\n", $1);}
+| tSTRING  {printf("string %s\n", $1);}
+| tID {printf("id %s\n", $1);}
 ; 
 
 Arithmetic: tAdd 
