@@ -23,7 +23,7 @@
 %%
 
 Code:
-      Functions  //{ printf("Code\n");};
+      Functions { printf("Code\n");};
 
 Functions:
       MainFunction
