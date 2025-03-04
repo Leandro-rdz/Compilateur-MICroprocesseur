@@ -119,11 +119,11 @@ Parameter:
 Declaration:
     Type tID tSC
   | Type Affectation
-  | Type tID tComa Affectation;
+  | Type tID tComa Affectation { printf("DOuble Affect and first is %s\n",$2);};
 
 Type : 
   tInt
-  | tFloat
+  | tFloat 
   | tChar
   | tConst tInt
   | tConst tFloat
