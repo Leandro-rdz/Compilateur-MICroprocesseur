@@ -31,7 +31,7 @@ Functions:
     ;
 
 MainFunction:
-      FType tMain tOP Parameters tCP Body { printf("Function\n");} ;
+      FType tMain tOP Parameters tCP Body { printf("Function main\n");} ;
 
 Function: 
       FType tID tOP Parameters tCP Body { printf("Function %s\n", $2);};
@@ -143,15 +143,15 @@ Affectation:
 
 /* Instruction d'affichage : printf(expression); */
 Print:
-      tPrint tOP Expression tCP tSC { printf("print ");} ;
+      tPrint tOP Expression tCP tSC { printf("printf \n");} ;
 
 /* Instruction de retour : return expression; */
 Return:
-      tRET Expression tSC { printf("Return ");}  ;
+      tRET Expression tSC { printf("Return \n ");}  ;
 
 Expression:
 tNegate Expression
-| Expression Arithmetic Expression
+| Expression Arithmetic Expression { printf("Arithmetic\n");}
 | Value
 | tID tOP ArgList tCP { printf("Expression\n");} ;
 
@@ -164,16 +164,18 @@ Arguments:
       Expression
     | Expression tComa Arguments
     ;
-Value: tNB {printf("int %d\n", $1);}
-| tNBF  {printf("float %f\n", $1);}
-| tSTRING  {printf("string %s\n", $1);}
-| tID {printf("id %s\n", $1);}
-; 
 
-Arithmetic: tAdd 
-| tSub 
-| tMul
-| tDiv
+Value: 
+    tNB {printf("int %d\n", $1);}
+    | tNBF  {printf("float %f\n", $1);}
+    | tSTRING  {printf("string %s\n", $1);}
+    | tID {printf("id %s\n", $1);}
+    ; 
+
+Arithmetic: tAdd { printf(" + ");} ;
+| tSub { printf("-");}
+| tMul { printf("/");}
+| tDiv { printf("*");}
 ;
 
 %%
@@ -184,6 +186,7 @@ int main(void) {
     yyparse();
     return 0;
 }
+
 
 /* Gestion des erreurs */
 void yyerror(const char *s) {
