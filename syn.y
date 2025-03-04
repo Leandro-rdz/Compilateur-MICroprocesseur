@@ -7,7 +7,7 @@
     int nb;
     char id[16];
     float nbf;
-    char string[64];
+    char string[16];
 }
 
 %token tMain tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tNegate tFalse
@@ -37,10 +37,10 @@ Function:
       FType tID tOP Parameters tCP Body { printf("Function %s\n", $2);};
 
 FType: 
-    tInt
-    | tFloat
-    | tChar
-    | tVoid
+    tInt { printf("Type Int");} 
+    | tFloat { printf("Type Float");}
+    | tChar { printf("Type Char");}
+    | tVoid { printf("Type Void");}
   ;
 
 Parameters:
@@ -49,7 +49,7 @@ Parameters:
     ;
 
 ParamList:
-      Parameter
+      Parameter 
     | ParamList tComa Parameter
     ;
 
@@ -72,8 +72,8 @@ Instruction:
 
 
 If :
-  tIf tOP Condition tCP ControlBody
-  | tIf tOP Condition tCP ControlBody tElse ControlBody  { printf("IF\n");};
+  tIf tOP Condition tCP ControlBody  { printf("IF\n");};
+  | tIf tOP Condition tCP ControlBody tElse ControlBody  { printf("IF-ELSE\n");};
 
 ControlBody :
   Body
@@ -166,10 +166,10 @@ Arguments:
     ;
 
 Value: 
-    tNB {printf("int %d\n", $1);}
-    | tNBF  {printf("float %f\n", $1);}
-    | tSTRING  {printf("string %s\n", $1);}
-    | tID {printf("id %s\n", $1);}
+    tNB {printf("int : %d\n", $1);}
+    | tNBF  {printf("float : %f\n", $1);}
+    | tSTRING  { printf("string : %s\n",$1);}
+    | tID {printf("id : %s\n", $1);}
     ; 
 
 Arithmetic: tAdd { printf(" + ");} ;
@@ -182,11 +182,10 @@ Arithmetic: tAdd { printf(" + ");} ;
 
 /* Code principal */
 int main(void) {
-    printf("Compilateur C\n");
+    printf("Compilateur C\n\n");
     yyparse();
     return 0;
 }
-
 
 /* Gestion des erreurs */
 void yyerror(const char *s) {
