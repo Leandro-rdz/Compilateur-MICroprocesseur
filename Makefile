@@ -20,7 +20,7 @@ lex_compile:
 
 syn_compile:
 	$(LEX_C) $(LEX)
-	$(SYN_C) -d -t $(GRM)
+	$(SYN_C) -d -v $(GRM)
 	$(CC) $(CFLAGS) y.tab.c lex.yy.c -o $(BIN)
 
 run:
