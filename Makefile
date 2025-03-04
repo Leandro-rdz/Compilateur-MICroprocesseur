@@ -4,6 +4,7 @@ BIN = out
 
 CC = gcc
 CFLAGS = -Wall -g -Wno-unused-function -Wno-implicit-function-declaration
+YFLAGS = -d -v -Wcounterexamples
 LEX_C = flex
 SYN_C = yacc
 
@@ -20,7 +21,7 @@ lex_compile:
 
 syn_compile:
 	$(LEX_C) $(LEX)
-	$(SYN_C) -d -v $(GRM)
+	$(SYN_C) $(YFLAGS) $(GRM)
 	$(CC) $(CFLAGS) y.tab.c lex.yy.c -o $(BIN)
 
 run:
