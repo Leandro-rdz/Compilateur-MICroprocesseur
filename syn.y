@@ -7,7 +7,7 @@
     int nb;
     char id[16];
     float nbf;
-    char string[16];
+    char string[64];
 }
 
 %token tMain tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tNegate tFalse

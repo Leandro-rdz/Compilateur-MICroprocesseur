@@ -16,7 +16,12 @@ STRING    \"[^"]*\"
 {INTEGER}    { yylval.nb = atoi(yytext); return tNB; }
 {FLOATNUM}   { yylval.nbf = atof(yytext);return tNBF; }
 
-{STRING}     { return tSTRING; }
+{STRING} { 
+          strncpy(yylval.string, yytext, 63);
+          yylval.string[64] = '\0';
+          return tSTRING;
+     }
+
 
 "main"       { return tMain; }
 "{"          { return tOB; }
