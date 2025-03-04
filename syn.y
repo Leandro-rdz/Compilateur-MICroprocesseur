@@ -72,8 +72,8 @@ Instruction:
 
 
 If :
-  tIf tOP Condition tCP ControlBody  { printf("IF\n");};
-  | tIf tOP Condition tCP ControlBody tElse ControlBody  { printf("IF-ELSE\n");};
+  tIf tOP Condition tCP ControlBody  { printf("IF\n"); };
+  | tIf tOP Condition tCP ControlBody tElse ControlBody %prec LOWER_THAN_ELSE  { printf("IF-ELSE\n");}; // pour fixer le dangling else
 
 ControlBody :
   Body
