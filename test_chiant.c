@@ -13,8 +13,6 @@ int main(){
 		x=0.43;
 		while(x<20.0) { x=x+1.0; }
 	}
-    } else {
-        y = 6;
     }
 
     int a = 0;
