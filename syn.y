@@ -151,7 +151,10 @@ Return:
 
 Expression:
 tNegate Expression
-| Expression Arithmetic Expression { printf("Arithmetic\n");}
+| Expression tAdd Expression { printf("Add\n");}
+| Expression tSub Expression { printf("Sub\n");}
+| Expression tMul Expression { printf("Mul\n");}
+| Expression tDiv Expression { printf("Div\n");}
 | Value
 | tID tOP ArgList tCP { printf("Expression\n");} ;
 
@@ -171,12 +174,6 @@ Value:
     | tSTRING  { printf("string : %s\n",$1);}
     | tID {printf("id : %s\n", $1);}
     ; 
-
-Arithmetic: tAdd { printf(" + ");} ;
-| tSub { printf("-");}
-| tMul { printf("/");}
-| tDiv { printf("*");}
-;
 
 %%
 
