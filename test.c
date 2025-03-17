@@ -1,4 +1,9 @@
-int h = 5;
+int add(int a, int b){
+    return a + b;
+}
+
+
+
 
 int main(){
     float x = 0.9;
@@ -27,6 +32,4 @@ int main(){
     return 0;
 }
 
-int add(int a, int b){
-    return a + b;
-}
+int h;

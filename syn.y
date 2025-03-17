@@ -1,6 +1,8 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
+
+#define YYDEBUG 1
 %}
 
 %union {
@@ -10,7 +12,7 @@
     char string[64];
 }
 
-%token tMain tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tNegate tFalse
+%token tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tNegate tFalse
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
@@ -24,39 +26,27 @@
 %%
 
 Code:
-      Declarations { printf("Code\n");};
+      Declarations { printf("Code\n"); }
+    ;
 
 Declarations:
       Declaration
     | Declarations Declaration
     ;
 
-
 Declaration: 
-    FunctionDeclaration 
-    | VariableDeclaration
+      Function  { printf("Declaration de fonction \n"); }
+    | VariableDeclaration { printf("Declaration de variable \n"); }
+    | ConstantDeclaration { printf("Declaration de constante \n"); }
     ;
 
-FunctionDeclaration:
-      MainFunction
-    | FunctionDeclaration Function
-    ;
-
-MainFunction:
-      FType tMain tOP Parameters tCP Body { printf("Function main\n");} ;
 
 Function: 
-      FType tID tOP Parameters tCP Body { printf("Function %s\n", $2);};
-
-FType: 
-    tInt { printf("Type Int");} 
-    | tFloat { printf("Type Float");}
-    | tChar { printf("Type Char");}
-    | tVoid { printf("Type Void");}
-  ;
+      Type tID tOP Parameters tCP Body { printf("Function %s\n", $2); }
+    ;
 
 Parameters:
-      /* vide */
+      /* empty */
     | ParamList
     ;
 
@@ -69,78 +59,82 @@ Body:
       tOB Instructions tCB
     ;
 
-Instructions :
-    Instruction Instructions 
-    | /*vide*/
+Instructions:
+      Instruction Instructions 
+    | /* empty */
     ;
 
 Instruction:
       VariableDeclaration
-  | Statement
-  | If 
-  | While 
-  | For
-  ;
-
-
-If :
-  tIf tOP Condition tCP ControlBody  { printf("IF\n"); };
-  | tIf tOP Condition tCP ControlBody tElse ControlBody %prec LOWER_THAN_ELSE  { printf("IF-ELSE\n");}; // pour fixer le dangling else
-
-ControlBody :
-  Body
-  | Instruction
-  ;
-
-While :
-  tWhile tOP Condition tCP ControlBody { printf("While\n");};
-
-For : 
-  tFor tOP Expression tSC Condition tSC Expression tCP ControlBody { printf("For\n");};
-
-
-Condition: 
-
-Value BoolOp Value 
-| tTrue 
-| tFalse
-| Value
-| tNegate Value
-;
-
-BoolOp:
-    tLT
-  | tGT
-  | tGE
-  | tLE
-  | tDif
-  | tEqq
-  | tAnd
-  | tOr
-  ;
-
-/* Déclaration des paramètres de fonction */
-Parameter:
-      tInt tID
-    | tFloat tID
-    | tConst tInt tID
-    | tConst tFloat tID
+    | ConstantDeclaration
+    | Statement
+    | If 
+    | While 
+    | For
     ;
 
+If:
+      tIf tOP Condition tCP ControlBody { printf("IF\n"); }
+    | tIf tOP Condition tCP ControlBody tElse ControlBody %prec LOWER_THAN_ELSE  { printf("IF-ELSE\n"); }
+    ;
+
+ControlBody:
+      Body
+    | Instruction
+    ;
+
+While:
+      tWhile tOP Condition tCP ControlBody { printf("While\n"); }
+    ;
+
+For: 
+      tFor tOP Expression tSC Condition tSC Expression tCP ControlBody { printf("For\n"); }
+    ;
+
+Condition: 
+      Value BoolOp Value 
+    | tTrue 
+    | tFalse
+    | Value
+    | tNegate Value
+    ;
+
+BoolOp:
+      tLT
+    | tGT
+    | tGE
+    | tLE
+    | tDif
+    | tEqq
+    | tAnd
+    | tOr
+    ;
+
+/* Declaration of function parameters */
+Parameter:
+      Type tID
+    ;
+
+ConstantDeclaration:
+      ConstType Affectation
+    ;
 
 VariableDeclaration:
-    Type tID tSC
-  | Type Affectation
-  | Type tID tComa Affectation { printf("DOuble Affect and first is %s\n",$2);};
+      Type tID tSC
+    | Type Affectation
+    | Type tID tComa Affectation { printf("Double Affect and first is %s\n", $2); }
+    ;
 
-Type : 
-  tInt
-  | tFloat 
-  | tChar
-  | tConst tInt
-  | tConst tFloat
-  | tConst tChar
-  ;
+Type: 
+      tInt
+    | tFloat 
+    | tChar
+    | tVoid
+    ;
+
+ConstType:
+      tConst Type
+    ;
 
 Statement:
       Affectation
@@ -148,30 +142,33 @@ Statement:
     | Return
     ;
 
-/* Affectation : id = expression ; */
+/* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { printf("Affect %s\n",$1);}
+      tID tEq Expression tSC { printf("Affect %s\n", $1); }
     ;
 
-/* Instruction d'affichage : printf(expression); */
+/* Print statement: printf(expression); */
 Print:
-      tPrint tOP Expression tCP tSC { printf("printf \n");} ;
+      tPrint tOP Expression tCP tSC { printf("printf \n"); }
+    ;
 
-/* Instruction de retour : return expression; */
+/* Return statement: return expression; */
 Return:
-      tRET Expression tSC { printf("Return \n ");}  ;
+      tRET Expression tSC { printf("Return \n"); }
+    ;
 
 Expression:
-tNegate Expression
-| Expression tAdd Expression { printf("Add\n");}
-| Expression tSub Expression { printf("Sub\n");}
-| Expression tMul Expression { printf("Mul\n");}
-| Expression tDiv Expression { printf("Div\n");}
-| Value
-| tID tOP ArgList tCP { printf("Expression\n");} ;
+      tNegate Expression
+    | Expression tAdd Expression { printf("Add\n"); }
+    | Expression tSub Expression { printf("Sub\n"); }
+    | Expression tMul Expression { printf("Mul\n"); }
+    | Expression tDiv Expression { printf("Div\n"); }
+    | Value
+    | tID tOP ArgList tCP { printf("Expression\n"); }
+    ;
 
 ArgList:
-      /* vide */
+      /* empty */
     | Arguments
     ;
 
@@ -181,22 +178,23 @@ Arguments:
     ;
 
 Value: 
-    tNB {printf("int : %d\n", $1);}
-    | tNBF  {printf("float : %f\n", $1);}
-    | tSTRING  { printf("string : %s\n",$1);}
-    | tID {printf("id : %s\n", $1);}
+      tNB { printf("int : %d\n", $1); }
+    | tNBF { printf("float : %f\n", $1); }
+    | tSTRING { printf("string : %s\n", $1); }
+    | tID { printf("id : %s\n", $1); }
     ; 
 
 %%
 
-/* Code principal */
+/* Main code */
 int main(void) {
+    yydebug = 0; 
     printf("Compilateur C\n\n");
     yyparse();
     return 0;
 }
 
-/* Gestion des erreurs */
+/* Error handling */
 void yyerror(const char *s) {
     fprintf(stderr, "Erreur: %s\n", s);
 }

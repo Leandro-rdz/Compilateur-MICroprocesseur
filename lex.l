@@ -23,7 +23,7 @@ STRING    \"[^"]*\"
      }
 
 
-"main"       { return tMain; }
+
 "{"          { return tOB; }
 "}"          { return tCB; }
 "const"      { return tConst; }
