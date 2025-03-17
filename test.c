@@ -1,3 +1,5 @@
+int h = 5;
+
 int main(){
     float x = 0.9;
     int y = 86;

@@ -16,6 +16,7 @@
 %token <nbf> tNBF
 %token <string> tSTRING
 %right tNegate
+%nonassoc LOWER_THAN_ELSE
 %left tAdd tSub
 %left tMul tDiv
 %start Code
@@ -23,11 +24,22 @@
 %%
 
 Code:
-      Functions { printf("Code\n");};
+      Declarations { printf("Code\n");};
 
-Functions:
+Declarations:
+      Declaration
+    | Declarations Declaration
+    ;
+
+
+Declaration: 
+    FunctionDeclaration 
+    | VariableDeclaration
+    ;
+
+FunctionDeclaration:
       MainFunction
-    | Functions Function
+    | FunctionDeclaration Function
     ;
 
 MainFunction:
@@ -63,7 +75,7 @@ Instructions :
     ;
 
 Instruction:
-   Declaration
+      VariableDeclaration
   | Statement
   | If 
   | While 
@@ -116,7 +128,7 @@ Parameter:
     ;
 
 
-Declaration:
+VariableDeclaration:
     Type tID tSC
   | Type Affectation
   | Type tID tComa Affectation { printf("DOuble Affect and first is %s\n",$2);};
