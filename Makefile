@@ -32,6 +32,7 @@ test:
 	clear
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
+	cat output.asm
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
