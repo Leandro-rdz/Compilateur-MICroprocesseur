@@ -2,7 +2,7 @@ int main(){
     float x;
     x = 0.9;
     int y = 86;
-    int z = 90e78;
+    int z = 90e2;
     char toto, mim = 's';  
 
     if (x > 0.6){

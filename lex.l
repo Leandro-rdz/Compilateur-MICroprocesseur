@@ -13,8 +13,8 @@ STRING    \"[^"]*\"
 
 %%
 
-{INTEGER}    { yylval.nb = atoi(yytext); return tNB; }
-{FLOATNUM}   { yylval.nbf = atof(yytext);return tNBF; }
+{INTEGER}    { yylval.nb = strtod(yytext,NULL); return tNB; }
+{FLOATNUM}   { yylval.nbf = strtod(yytext,NULL);return tNBF; }
 
 {STRING} { 
           strncpy(yylval.string, yytext, 63);
