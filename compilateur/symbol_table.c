@@ -25,6 +25,7 @@ void addToSymbolTable(char * name) {
 	} else {
 		printf("Table des symboles full");
 	}
+	printSymbolTable();
 }
 
 void enterScope() {scope++;}
@@ -36,7 +37,9 @@ void printSymbolTable() {
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
     printf("┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━┓\n");
 	//deuxième ligne
-	printf("┃ Symbol name                   ┃ scope   ┃ size    ┃ @          ┃\n");
+	printf("┃ Symbol name");
+	for(int r = SYMBOL_NAME_SIZE - 12; r >= 0; r--) { printf(" "); }
+	printf("┃ scope   ┃ size    ┃ @          ┃\n");
 	//troisième ligne
 	printf("┣");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
@@ -45,7 +48,7 @@ void printSymbolTable() {
     for (size_t i = 0; i < tableIndex; i++) {
     	printf("┃ ");
         printf("%s", st[i].name);
-        for(int r = 30 - strlen(st[i].name); r > 0; r--) printf(" ");
+        for(int r = SYMBOL_NAME_SIZE - strlen(st[i].name); r > 0; r--) printf(" ");
 
         char str[9];  // 8 caractères + '\0'
     	printf("┃ ");
