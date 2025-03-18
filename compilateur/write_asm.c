@@ -24,28 +24,28 @@ void closeFile() {
 void ASM(enum OpCode op, int a, int b, int c) {
 	switch (op) {
 		case ADD:
-			fprintf(file, "ADD %d %d %d", a, b, c);
+			fprintf(file, "ADD %d %d %d\n", a, b, c);
 			break;
 		case MUL:
-			fprintf(file, "MUL %d %d %d", a, b, c);
+			fprintf(file, "MUL %d %d %d\n", a, b, c);
 			break;
 		case SOU:
-			fprintf(file, "SOU %d %d %d", a, b, c);
+			fprintf(file, "SOU %d %d %d\n", a, b, c);
 			break;
 		case DIV:
-			fprintf(file, "DIV %d %d %d", a, b, c);
+			fprintf(file, "DIV %d %d %d\n", a, b, c);
 			break;
 		case COP:
-			//fprintf(file, "");
+			//fprintf(file, "\n");
 			break;
 		case AFC:
-			//fprintf(file, "");
+			//fprintf(file, "\n");
 			break;
 		case LOAD:
-			//fprintf(file, "");
+			//fprintf(file, "\n");
 			break;
 		case STORE:
-			//fprintf(file, "");
+			//fprintf(file, "\n");
 			break;
 	}
     fflush(file);
