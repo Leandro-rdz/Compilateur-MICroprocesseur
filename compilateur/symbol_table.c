@@ -77,7 +77,7 @@ void printSymbolTable() {
         printf("%s", st[i].name);
         for(int r = SYMBOL_NAME_SIZE - strlen(st[i].name); r > 0; r--) printf(" ");
 
-        char str[9];  // 8 caractères + '\0'
+        char str[20];
     	printf("┃ ");
 	    sprintf(str, "%-8d", st[i].scope);
 	    printf("%s", str);
