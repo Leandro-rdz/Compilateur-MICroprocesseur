@@ -4,8 +4,8 @@ static Symbol * st;    // table des symbole
 static int tableIndex = 0; // index dans la table des symboles
 static int scope = 0;
 
-static int esp = 0;
-static int ebp = 0;
+static int esp = 0; // sommet de la pile
+static int ebp = 0; // base de pile
 
 void initSymbolTable() {
 	st = malloc(sizeof(Symbol) * TABLE_SIZE);
@@ -22,7 +22,7 @@ Symbol newSymbol(char * name, int size) {
 }
 
 void addToSymbolTable(char * name, char type[16]) {
-	int size = -1;
+	int size;
 	if (strcmp(type, "int") == 0) {
 		size = 8;
 	} else if (strcmp(type, "float") == 0) {
@@ -36,20 +36,26 @@ void addToSymbolTable(char * name, char type[16]) {
 		Symbol newsymbol = newSymbol(name, size);
 		st[tableIndex] = newsymbol;
 		tableIndex++;
+		esp = esp + size;
 	} else {
 		printf("Table des symboles full");
 	}
 	printSymbolTable();
 }
 
-void enterScope() {scope++;}
+void enterScope() {
+	scope++;
+}
+
 void exitScope() {
 	scope--;
 	clearCurrentScope();
 }
 
 void clearCurrentScope() { // supprime les éléments du scope qu'on vient de fermer
-	for(; st[tableIndex-1].scope > scope; tableIndex--) {}
+	for(; st[tableIndex-1].scope > scope; tableIndex--) {
+		esp = esp - st[tableIndex-2].size;
+	}
 }
 
 void printSymbolTable() {
