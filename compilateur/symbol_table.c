@@ -56,6 +56,7 @@ void clearCurrentScope() { // supprime les éléments du scope qu'on vient de fe
 	for(; st[tableIndex-1].scope > scope; tableIndex--) {
 		esp = esp - st[tableIndex-2].size;
 	}
+	printSymbolTable();
 }
 
 void printSymbolTable() {
