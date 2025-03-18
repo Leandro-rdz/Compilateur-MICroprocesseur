@@ -179,10 +179,10 @@ Arguments:
     ;
 
 Value: 
-      tNB { printf("int : %d\n", $1); addToSymbolTable("int"); }
-    | tNBF { printf("float : %f\n", $1); addToSymbolTable("float"); }
-    | tSTRING { printf("string : %s\n", $1);  addToSymbolTable("string"); }
-    | tID { printf("id : %s\n", $1); addToSymbolTable("id"); }
+      tNB { printf("int : %d\n", $1); }
+    | tNBF { printf("float : %f\n", $1); }
+    | tSTRING { printf("string : %s\n", $1);}
+    | tID { printf("id : %s\n", $1); addToSymbolTable($1); }
     ; 
 
 %%
