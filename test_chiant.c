@@ -9,12 +9,13 @@ int main(){
         y = 5;
         printf("LOL");
     	if (y < 314159216) {
-		x=0.42;
+    		x=0.42;
+        }
 	} else {
 		x=0.43;
+        int y = 4;
 		while(x<20.0) { x=x+1.0; }
 	}
-    }
 
     int a = 0;
     while (!a){
