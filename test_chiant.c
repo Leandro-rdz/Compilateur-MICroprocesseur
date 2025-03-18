@@ -3,7 +3,7 @@ int main(){
     x = 0.9;
     int y = 86;
     int z = 90e78;
-    int toto, mim = 5;  
+    char toto, mim = 's';  
 
     if (x > 0.6){
         y = 5;

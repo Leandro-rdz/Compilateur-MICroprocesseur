@@ -11,13 +11,19 @@
     char id[16];
     float nbf;
     char string[64];
+    char type[16];
 }
 
-%token tOB tCB tConst tInt tFloat tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tVoid tAnd tOr tChar tEqq tTrue tNegate tFalse
+%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
 %token <string> tSTRING
+%token <type> tInt
+%token <type> tFloat
+%token <type> tChar
+%token <type> tVoid
+%type <type> Type
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
 %left tAdd tSub
@@ -43,7 +49,7 @@ Declaration:
 
 
 Function: 
-      Type tID { addToSymbolTable($2); } tOP Parameters tCP Body { printf("Function %s\n", $2); }
+      Type tID { addToSymbolTable($2,$1);} tOP Parameters tCP Body { printf("Function %s\n", $2); }
     ;
 
 Parameters:
@@ -117,29 +123,27 @@ Parameter:
     ;
 
 ConstantDeclaration:
-      ConstType tID { addToSymbolTable($2);} tEq Expression tSC 
+      tConst Type tID { addToSymbolTable($3, $2);} tEq Expression tSC 
     ;
 
 VariableDeclaration:
-      Type Variables tSC
-    | Type Variables tEq Expression tSC 
+       
+Variables tSC 
+    | Variables tEq Expression tSC 
     ;
 
 Variables : 
-      tID { addToSymbolTable($1);}
-      | tID { addToSymbolTable($1);} tComa Variables ; 
+       Type tID { addToSymbolTable($2,$1);}
+      |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1);} ; 
 
 
 Type: 
-      tInt
+      tInt 
     | tFloat 
-    | tChar
-    | tVoid
+    | tChar 
+    | tVoid 
     ;
 
-ConstType:
-      tConst Type
-    ;
 
 Statement:
       Affectation
@@ -193,7 +197,7 @@ Value:
 
 /* Main code */
 int main(void) {
-      yydebug = 1; 
+      yydebug = 0; 
       initSymbolTable();
       printf("Compilateur C\n\n");
       yyparse();

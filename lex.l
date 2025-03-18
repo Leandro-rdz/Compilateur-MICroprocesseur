@@ -27,10 +27,18 @@ STRING    \"[^"]*\"
 "{"          { return tOB; }
 "}"          { return tCB; }
 "const"      { return tConst; }
-"int"        { return tInt;}
-"float"      { return tFloat; }
-"void"       { return tVoid; }
-"char"       { return tChar; }
+"int"        { strncpy(yylval.string, "int", 15);
+                yylval.string[16] = '\0';
+               return tInt;}
+"float"      { strncpy(yylval.string, "float", 15);
+                yylval.string[16] = '\0';
+               return tFloat; }
+"void"       { strncpy(yylval.string, "void", 15);
+                yylval.string[16] = '\0';
+               return tVoid; }
+"char"       { strncpy(yylval.string, "char", 15);
+                yylval.string[16] = '\0';
+               return tChar; }
 "="          { return tEq; }
 "-"          { return tSub; }
 "+"          { return tAdd; }

@@ -18,8 +18,18 @@ Symbol newSymbol(char * name, int size) {
 }
 
 void addToSymbolTable(char * name, char type[16]) {
+	int size = -1;
+	if (strcmp(type, "int") == 0) {
+		size = 8;
+	} else if (strcmp(type, "float") == 0) {
+		size = 8;
+	} else if (strcmp(type, "void") == 0) {
+		size = ADDRESS_SIZE;
+	} else if (strcmp(type, "char") == 0) {
+		size = 1;
+	}
 	if(tableIndex <= TABLE_SIZE) {
-		Symbol newsymbol = newSymbol(name, 8);
+		Symbol newsymbol = newSymbol(name, size);
 		st[tableIndex] = newsymbol;
 		tableIndex++;
 	} else {
