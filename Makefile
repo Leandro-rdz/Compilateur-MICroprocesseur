@@ -27,6 +27,9 @@ syn_compile:
 run:
 	make syn_compile
 	./$(BIN)
+test:
+	make syn_compile
+	./$(BIN) < TEST_FILE
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
