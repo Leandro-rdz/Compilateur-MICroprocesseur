@@ -117,14 +117,18 @@ Parameter:
     ;
 
 ConstantDeclaration:
-      ConstType Affectation
+      ConstType tID { addToSymbolTable($2);} tEq Expression tSC 
     ;
 
 VariableDeclaration:
-      Type tID { addToSymbolTable($2);} tSC
-    | Type Affectation
-    | Type tID tComa Affectation { printf("Double Affect and first is %s\n", $2);}
+      Type Variables tSC
+    | Type Variables tEq Expression tSC 
     ;
+
+Variables : 
+      tID { addToSymbolTable($1);}
+      | tID { addToSymbolTable($1);} tComa Variables ; 
+
 
 Type: 
       tInt
@@ -189,7 +193,7 @@ Value:
 
 /* Main code */
 int main(void) {
-      yydebug = 0; 
+      yydebug = 1; 
       initSymbolTable();
       printf("Compilateur C\n\n");
       yyparse();
