@@ -30,7 +30,7 @@ run:
 	./$(BIN)
 test:
 	make syn_compile
-	./$(BIN) < TEST_FILE
+	./$(BIN) < $(TEST_FILE)
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
