@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "compilateur/symbol_table.h"
+#include "compilateur/write_asm.h"
 
 #define YYDEBUG 1
 %}
@@ -199,9 +200,11 @@ Value:
 int main(void) {
       yydebug = 0; 
       initSymbolTable();
+      initOUTPUT("output.asm");
       printf("Compilateur C\n\n");
       yyparse();
       printSymbolTable();
+      closeFile();
       return 0;
 }
 
