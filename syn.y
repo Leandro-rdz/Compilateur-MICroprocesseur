@@ -43,7 +43,7 @@ Declaration:
 
 
 Function: 
-      Type tID tOP Parameters tCP Body { printf("Function %s\n", $2); }
+      Type tID { addToSymbolTable($2); } tOP Parameters tCP Body { printf("Function %s\n", $2); }
     ;
 
 Parameters:
