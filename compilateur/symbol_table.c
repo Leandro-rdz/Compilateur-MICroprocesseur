@@ -96,10 +96,10 @@ void printSymbolTable() {
     printf("┻━━━━━━━━━┻━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━┛\n");
 
     char str[9];  // 8 caractères + '\0'
-	printf("┏━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━┓\n");
+	printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━┓\n");
 	sprintf(str, "%-8X", stp);
-	printf("┃ STP ┃ 0x%s ┃", str);
+	printf("┃ STP (Symbol Table Pointer) ┃ 0x%s ┃", str);
 	sprintf(str, "%-8d", stp);
 	printf(" %s ┃\n", str);
-    printf("┗━━━━━┻━━━━━━━━━━━━┻━━━━━━━━━━┛\n");
+    printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━┻━━━━━━━━━━┛\n");
 }
