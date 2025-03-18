@@ -29,6 +29,7 @@ run:
 	make syn_compile
 	./$(BIN)
 test:
+	clear
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
 
