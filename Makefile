@@ -7,6 +7,7 @@ CFLAGS = -Wall -g -Wno-unused-function -Wno-implicit-function-declaration
 YFLAGS = -d -v #-Wcounterexamples
 LEX_C = flex
 SYN_C = yacc
+TEST_FILE = test_chiant.c
 
 OBJ =
 
