@@ -1,6 +1,7 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
+#include "compilateur/symbol_table.h"
 
 #define YYDEBUG 1
 %}
@@ -122,7 +123,7 @@ ConstantDeclaration:
 VariableDeclaration:
       Type tID tSC
     | Type Affectation
-    | Type tID tComa Affectation { printf("Double Affect and first is %s\n", $2); }
+    | Type tID tComa Affectation { printf("Double Affect and first is %s\n", $2);}
     ;
 
 Type: 
@@ -144,7 +145,7 @@ Statement:
 
 /* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { printf("Affect %s\n", $1); }
+      tID tEq Expression tSC { printf("Affect %s\n", $1);}
     ;
 
 /* Print statement: printf(expression); */
@@ -178,23 +179,25 @@ Arguments:
     ;
 
 Value: 
-      tNB { printf("int : %d\n", $1); }
-    | tNBF { printf("float : %f\n", $1); }
-    | tSTRING { printf("string : %s\n", $1); }
-    | tID { printf("id : %s\n", $1); }
+      tNB { printf("int : %d\n", $1); addToSymbolTable("int"); }
+    | tNBF { printf("float : %f\n", $1); addToSymbolTable("float"); }
+    | tSTRING { printf("string : %s\n", $1);  addToSymbolTable("string"); }
+    | tID { printf("id : %s\n", $1); addToSymbolTable("id"); }
     ; 
 
 %%
 
 /* Main code */
 int main(void) {
-    yydebug = 0; 
-    printf("Compilateur C\n\n");
-    yyparse();
-    return 0;
+      yydebug = 0; 
+      initSymbolTable();
+      printf("Compilateur C\n\n");
+      yyparse();
+      printSymbolTable();
+      return 0;
 }
 
 /* Error handling */
 void yyerror(const char *s) {
-    fprintf(stderr, "Erreur: %s\n", s);
+      fprintf(stderr, "Erreur: %s\n", s);
 }
