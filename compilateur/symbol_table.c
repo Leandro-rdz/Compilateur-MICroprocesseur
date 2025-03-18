@@ -4,6 +4,9 @@ static Symbol * st;    // table des symbole
 static int tableIndex = 0; // index dans la table des symboles
 static int scope = 0;
 
+static int esp = 0;
+static int ebp = 0;
+
 void initSymbolTable() {
 	st = malloc(sizeof(Symbol) * TABLE_SIZE);
 }
@@ -14,6 +17,7 @@ Symbol newSymbol(char * name, int size) {
     sym.name[SYMBOL_NAME_SIZE - 1] = '\0';
     sym.scope = scope;
     sym.size = size;
+    sym.address = 0x10;
     return sym;
 }
 
@@ -52,15 +56,15 @@ void printSymbolTable() {
 	//première ligne
 	printf("┏");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
-    printf("┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━┓\n");
+    printf("┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓\n");
 	//deuxième ligne
 	printf("┃ Symbol name");
 	for(int r = SYMBOL_NAME_SIZE - 12; r >= 0; r--) { printf(" "); }
-	printf("┃ scope   ┃ size    ┃ @          ┃\n");
+	printf("┃ scope   ┃ size    ┃ @                  ┃\n");
 	//troisième ligne
 	printf("┣");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
-    printf("╋━━━━━━━━━╋━━━━━━━━━╋━━━━━━━━━━━━┫\n");
+    printf("╋━━━━━━━━━╋━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫\n");
 
     for (size_t i = 0; i < tableIndex; i++) {
     	printf("┃ ");
@@ -75,12 +79,21 @@ void printSymbolTable() {
 	    sprintf(str, "%-8d", st[i].size);
 	    printf("%s", str);
 	    printf("┃ 0x");
-	    printf("87654357");
+	    sprintf(str, "%-16x", st[i].address);
+	    printf("%s", str);
 	    printf(" ┃\n");
     }
 
 	//dernière ligne
 	printf("┗");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
-    printf("┻━━━━━━━━━┻━━━━━━━━━┻━━━━━━━━━━━━┛\n");
+    printf("┻━━━━━━━━━┻━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━┛\n");
+
+    char str[9];  // 8 caractères + '\0'
+	printf("┏━━━━━┳━━━━━━━━━━━━┓\n");
+	sprintf(str, "%-8d", ebp);
+	printf("┃ EBP ┃ 0x%s ┃\n", str);
+	sprintf(str, "%-8d", esp);
+	printf("┃ ESP ┃ 0x%s ┃\n", str);
+    printf("┗━━━━━┻━━━━━━━━━━━━┛\n");
 }

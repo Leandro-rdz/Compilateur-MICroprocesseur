@@ -13,6 +13,7 @@ typedef struct {
 	char name[SYMBOL_NAME_SIZE];
 	int size;
 	int scope;
+	int address;
 } Symbol;
 
 void initSymbolTable();
