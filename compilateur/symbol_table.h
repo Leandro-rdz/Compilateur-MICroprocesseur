@@ -18,7 +18,7 @@ typedef struct {
 
 void initSymbolTable();
 
-Symbol newSymbol(char * name, int size); // size en octet
+Symbol newSymbol(char * name, int size, int address); // size en octet
 
 void addToSymbolTable(char * name, char type[16]);
 
