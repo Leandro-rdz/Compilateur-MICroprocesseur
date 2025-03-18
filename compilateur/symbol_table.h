@@ -11,12 +11,13 @@
 
 typedef struct {
 	char name[SYMBOL_NAME_SIZE];
+	int size;
 	int scope;
 } Symbol;
 
 void initSymbolTable();
 
-Symbol newSymbol(char * name);
+Symbol newSymbol(char * name, int size); // size en octet
 
 void addToSymbolTable(char * name);
 

@@ -8,17 +8,18 @@ void initSymbolTable() {
 	st = malloc(sizeof(Symbol) * TABLE_SIZE);
 }
 
-Symbol newSymbol(char * name) {
+Symbol newSymbol(char * name, int size) {
     Symbol sym;
     strncpy(sym.name, name, SYMBOL_NAME_SIZE - 1); // on est passé à 2 doigts(1 char) du buffer overflow ici ;)
     sym.name[SYMBOL_NAME_SIZE - 1] = '\0';
     sym.scope = scope;
+    sym.size = size;
     return sym;
 }
 
 void addToSymbolTable(char * name) {
 	if(tableIndex <= TABLE_SIZE) {
-		Symbol newsymbol = newSymbol(name);
+		Symbol newsymbol = newSymbol(name, 8);
 		st[tableIndex] = newsymbol;
 		tableIndex++;
 	} else {
@@ -33,18 +34,26 @@ void printSymbolTable() {
 	//première ligne
 	printf("┏");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
-    printf("┳━━━━━━━━━━━━┓\n");
+    printf("┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━┓\n");
 	//deuxième ligne
-	printf("┃ Symbol name                   ┃ @          ┃\n");
+	printf("┃ Symbol name                   ┃ scope   ┃ size    ┃ @          ┃\n");
 	//troisième ligne
 	printf("┣");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
-    printf("╋━━━━━━━━━━━━┫\n");
+    printf("╋━━━━━━━━━╋━━━━━━━━━╋━━━━━━━━━━━━┫\n");
 
     for (size_t i = 0; i < tableIndex; i++) {
     	printf("┃ ");
         printf("%s", st[i].name);
         for(int r = 30 - strlen(st[i].name); r > 0; r--) printf(" ");
+
+        char str[9];  // 8 caractères + '\0'
+    	printf("┃ ");
+	    sprintf(str, "%-8d", st[i].scope);
+	    printf("%s", str);
+	    printf("┃ ");
+	    sprintf(str, "%-8d", st[i].size);
+	    printf("%s", str);
 	    printf("┃ 0x");
 	    printf("87654357");
 	    printf(" ┃\n");
@@ -53,5 +62,5 @@ void printSymbolTable() {
 	//dernière ligne
 	printf("┗");
 	for (int i = 0; i <= SYMBOL_NAME_SIZE; i++) printf("━");
-    printf("┻━━━━━━━━━━━━┛\n");
+    printf("┻━━━━━━━━━┻━━━━━━━━━┻━━━━━━━━━━━━┛\n");
 }
