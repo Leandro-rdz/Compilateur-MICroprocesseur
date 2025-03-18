@@ -34,10 +34,8 @@ void exitScope() {
 	clearCurrentScope();
 }
 
-void clearCurrentScope() {
-	for(int i = tableIndex; st[i].scope > scope; i--) {
-		tableIndex--;
-	}
+void clearCurrentScope() { // supprime les éléments du scope qu'on vient de fermer
+	for(; st[tableIndex-1].scope > scope; tableIndex--) {}
 }
 
 void printSymbolTable() {
