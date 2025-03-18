@@ -1,0 +1,24 @@
+#ifndef SYMBOL__H
+#define SYMBOL__H
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define TABLE_SIZE 256
+#define SYMBOL_NAME_SIZE 30
+
+
+typedef struct {
+	char name[SYMBOL_NAME_SIZE];
+} Symbol;
+
+void initSymbolTable();
+
+Symbol newSymbol(char * name);
+
+void addToSymbolTable(char * name);
+
+void printSymbolTable();
+
+#endif
