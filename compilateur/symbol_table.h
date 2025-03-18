@@ -19,10 +19,12 @@ void initSymbolTable();
 
 Symbol newSymbol(char * name, int size); // size en octet
 
-void addToSymbolTable(char * name);
+void addToSymbolTable(char * name, char[16] type);
 
 void enterScope();
 void exitScope();
+
+void clearCurrentScope();
 
 void printSymbolTable();
 

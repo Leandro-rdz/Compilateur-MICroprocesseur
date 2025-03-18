@@ -17,7 +17,7 @@ Symbol newSymbol(char * name, int size) {
     return sym;
 }
 
-void addToSymbolTable(char * name) {
+void addToSymbolTable(char * name, char[16] type) {
 	if(tableIndex <= TABLE_SIZE) {
 		Symbol newsymbol = newSymbol(name, 8);
 		st[tableIndex] = newsymbol;
@@ -29,7 +29,16 @@ void addToSymbolTable(char * name) {
 }
 
 void enterScope() {scope++;}
-void exitScope() {scope--;}
+void exitScope() {
+	scope--;
+	clearCurrentScope();
+}
+
+void clearCurrentScope() {
+	for(int i = tableIndex; st[i].scope > scope; i--) {
+		
+	}
+}
 
 void printSymbolTable() {
 	//première ligne
