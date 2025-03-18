@@ -25,6 +25,8 @@
 %token <type> tChar
 %token <type> tVoid
 %type <type> Type
+%type <nb> Expression
+%type <nb> Value
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
 %left tAdd tSub
@@ -169,10 +171,10 @@ Return:
 
 Expression:
       tNegate Expression
-    | Expression tAdd Expression { printf("Add\n"); }
-    | Expression tSub Expression { printf("Sub\n"); }
-    | Expression tMul Expression { printf("Mul\n"); }
-    | Expression tDiv Expression { printf("Div\n"); }
+    | Expression tAdd Expression { ASM(ADD, $1,$1,$3); }
+    | Expression tSub Expression { ASM(SOU, $1,$1,$3); }
+    | Expression tMul Expression { ASM(MUL, $1,$1,$3); }
+    | Expression tDiv Expression { ASM(DIV, $1,$1,$3); }
     | Value
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
