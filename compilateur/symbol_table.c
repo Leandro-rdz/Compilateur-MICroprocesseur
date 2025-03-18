@@ -2,6 +2,7 @@
 
 static Symbol * st;    // table des symbole
 static int tableIndex = 0; // index dans la table des symboles
+static int scope = 0;
 
 void initSymbolTable() {
 	st = malloc(sizeof(Symbol) * TABLE_SIZE);
@@ -11,6 +12,7 @@ Symbol newSymbol(char * name) {
     Symbol sym;
     strncpy(sym.name, name, SYMBOL_NAME_SIZE - 1); // on est passé à 2 doigts(1 char) du buffer overflow ici ;)
     sym.name[SYMBOL_NAME_SIZE - 1] = '\0';
+    sym.scope = scope;
     return sym;
 }
 
@@ -23,6 +25,9 @@ void addToSymbolTable(char * name) {
 		printf("Table des symboles full");
 	}
 }
+
+void enterScope() {scope++;}
+void exitScope() {scope--;}
 
 void printSymbolTable() {
 	//première ligne

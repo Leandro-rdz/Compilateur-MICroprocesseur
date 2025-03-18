@@ -11,6 +11,7 @@
 
 typedef struct {
 	char name[SYMBOL_NAME_SIZE];
+	int scope;
 } Symbol;
 
 void initSymbolTable();
@@ -18,6 +19,9 @@ void initSymbolTable();
 Symbol newSymbol(char * name);
 
 void addToSymbolTable(char * name);
+
+void enterScope();
+void exitScope();
 
 void printSymbolTable();
 

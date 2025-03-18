@@ -57,7 +57,7 @@ ParamList:
     ;
 
 Body:
-      tOB Instructions tCB
+      tOB { enterScope(); } Instructions tCB { exitScope(); }
     ;
 
 Instructions:
