@@ -121,7 +121,7 @@ ConstantDeclaration:
     ;
 
 VariableDeclaration:
-      Type tID tSC
+      Type tID { addToSymbolTable($2);} tSC
     | Type Affectation
     | Type tID tComa Affectation { printf("Double Affect and first is %s\n", $2);}
     ;
@@ -182,7 +182,7 @@ Value:
       tNB { printf("int : %d\n", $1); }
     | tNBF { printf("float : %f\n", $1); }
     | tSTRING { printf("string : %s\n", $1);}
-    | tID { printf("id : %s\n", $1); addToSymbolTable($1); }
+    | tID { printf("id : %s\n", $1);}
     ; 
 
 %%
