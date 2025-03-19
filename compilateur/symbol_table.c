@@ -54,7 +54,8 @@ int addToSymbolTable(char * name, char type[16]) {
 		tableIndex++;
 		return old_stp;
 	} else {
-		printf("Table des symboles full");
+		printf("Erreur de compilation : Table des symboles full\n");
+		exit(1);
 	}
 	printSymbolTable();
 }
@@ -73,6 +74,17 @@ void clearCurrentScope() { // supprime les éléments du scope qu'on vient de fe
 		stp -= st[tableIndex-1].size;
 	}
 	printSymbolTable();
+}
+
+Symbol * searchSymbol(char * name) {
+	for (int i = tableIndex - 1; i >= 0; i--) {
+		if(strcmp(st[i].name, name) == 0) {
+			printf("---- %s %d\n", name, st[i].address);
+			return &st[i];
+		}
+	}
+	printf("Erreur de compilation : Symbole non trouvé : \"%s\" \n", name);
+	exit(1);
 }
 
 void printSymbolTable() {

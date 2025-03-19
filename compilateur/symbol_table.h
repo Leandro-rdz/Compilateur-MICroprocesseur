@@ -32,6 +32,8 @@ void exitScope();
 
 void clearCurrentScope();
 
+Symbol * searchSymbol(char * name);
+
 void printSymbolTable();
 
 #endif
