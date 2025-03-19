@@ -1,20 +1,20 @@
 int main(){
-    float x;
-    x = 0.9;
+    int x;
+    x = 3;
     int y = 86;
     int z = 90e1;
-    char toto, mim = 's';  
+    int toto, mim = 5;  
 
-    if (x > 0.6){
+    if (x > 2){
         y = 5;
         printf("LOL");
     	if (y < 314159216) {
     		x=0.42;
         }
 	} else {
-		x=0.43;
+		x=9;
         int y = 4;
-		while(x<20.0) { x=x+1.0; }
+		while(x<20) { x=x+1; }
 	}
 
     int a = 0;
