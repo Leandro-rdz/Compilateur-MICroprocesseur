@@ -20,7 +20,7 @@ Symbol newSymbol(char * name, int size, int address) {
     return sym;
 }
 
-void addToSymbolTable(char * name, char type[16]) {
+int addToSymbolTable(char * name, char type[16]) {
 	int size;
 	if (strcmp(type, "int") == 0) {
 		size = ADDRESS_SIZE;
@@ -34,8 +34,10 @@ void addToSymbolTable(char * name, char type[16]) {
 	if(tableIndex <= TABLE_SIZE) {
 		Symbol newsymbol = newSymbol(name, size, stp);
 		st[tableIndex] = newsymbol;
+		int old_stp = stp;
 		stp = stp + size;
 		tableIndex++;
+		return old_stp;
 	} else {
 		printf("Table des symboles full");
 	}

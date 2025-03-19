@@ -20,7 +20,7 @@ void initSymbolTable();
 
 Symbol newSymbol(char * name, int size, int address); // size en octet
 
-void addToSymbolTable(char * name, char type[16]);
+int addToSymbolTable(char * name, char type[16]);
 
 void enterScope();
 void exitScope();
