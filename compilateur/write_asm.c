@@ -36,7 +36,7 @@ void ASM(enum OpCode op, int a, int b, int c) {
 		case DIV:
 			fprintf(file, "DIV %d %d %d\n", a, b, c);
 			break;
-		case CaddrOP:
+		case COP:
 			fprintf(file, "COP %d %d\n",a,b );
 			break;
 		case AFC:
