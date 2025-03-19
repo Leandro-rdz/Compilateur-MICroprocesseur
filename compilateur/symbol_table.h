@@ -11,6 +11,7 @@
 
 typedef struct {
 	char name[SYMBOL_NAME_SIZE];
+	char type[16];
 	int size;
 	int scope;
 	int address;
@@ -19,6 +20,10 @@ typedef struct {
 void initSymbolTable();
 
 Symbol newSymbol(char * name, int size, int address); // size en octet
+
+void removeFromSymbolTable(int *tempVar);
+
+char* getTypeFromSymbolTable(char* name); 
 
 int addToSymbolTable(char * name, char type[16]);
 

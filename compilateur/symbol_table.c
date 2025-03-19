@@ -20,6 +20,21 @@ Symbol newSymbol(char * name, int size, int address) {
     return sym;
 }
 
+void removeFromSymbolTable(int *tempVar) {
+	if (tempVar != NULL) {
+		for (int i = 0; i < tableIndex; i++) {
+			if (st[i].address == *tempVar && st[i].name[0] == '_') { 
+				for (int j = i; j < tableIndex - 1; j++) {
+					st[j] = st[j + 1];
+				}
+				tableIndex--;
+				break;
+			}
+		}
+	}
+}
+
+
 int addToSymbolTable(char * name, char type[16]) {
 	int size;
 	if (strcmp(type, "int") == 0) {
