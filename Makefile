@@ -7,7 +7,7 @@ CFLAGS = compilateur/* -I compilateur -Wall -g -Wno-unused-function -Wno-implici
 YFLAGS = -d -v #-Wcounterexamples
 LEX_C = flex
 SYN_C = yacc
-TEST_FILE = test_chiant.c
+TEST_FILE = test_algeb.c
 
 OBJ = 
 

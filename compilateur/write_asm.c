@@ -21,6 +21,7 @@ void closeFile() {
     }
 }
 
+
 void ASM(enum OpCode op, int a, int b, int c) {
 	switch (op) {
 		case ADD:
@@ -35,17 +36,17 @@ void ASM(enum OpCode op, int a, int b, int c) {
 		case DIV:
 			fprintf(file, "DIV %d %d %d\n", a, b, c);
 			break;
-		case COP:
-			//fprintf(file, "\n");
+		case CaddrOP:
+			fprintf(file, "COP %d %d\n",a,b );
 			break;
 		case AFC:
-			//fprintf(file, "\n");
+			fprintf(file, "AFC %d %d\n",a,b);
 			break;
 		case LOAD:
-			//fprintf(file, "\n");
+			fprintf(file, "LOAD %d %d\n",a,b);
 			break;
 		case STORE:
-			//fprintf(file, "\n");
+			fprintf(file, "STORE %d %d\n",a,b);
 			break;
 	}
     fflush(file);

@@ -27,6 +27,7 @@
 %type <type> Type
 %type <nb> Expression
 %type <nb> Value
+%type <id> Variables
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
 %left tAdd tSub
@@ -130,9 +131,8 @@ ConstantDeclaration:
     ;
 
 VariableDeclaration:
-       
-Variables tSC 
-    | Variables tEq Expression tSC 
+      Variables tSC 
+    | Variables tEq Expression tSC  
     ;
 
 Variables : 
@@ -156,7 +156,7 @@ Statement:
 
 /* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { printf("Affect %s\n", $1);}
+      tID tEq Expression tSC { ASM(AFC,$1,$3,0);}
     ;
 
 /* Print statement: printf(expression); */
@@ -168,14 +168,14 @@ Print:
 Return:
       tRET Expression tSC { printf("Return \n"); }
     ;
-
+//$$ = "remonte la valeur"
 Expression:
       tNegate Expression
     | Expression tAdd Expression { ASM(ADD, $1,$1,$3); }
     | Expression tSub Expression { ASM(SOU, $1,$1,$3); }
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3); }
-    | Value
+    | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
 
@@ -190,7 +190,7 @@ Arguments:
     ;
 
 Value: 
-      tNB { printf("int : %d\n", $1); }
+      tNB { $$=$1; }
     | tNBF { printf("float : %f\n", $1); }
     | tSTRING { printf("string : %s\n", $1);}
     | tID { printf("id : %s\n", $1);}
