@@ -2,8 +2,26 @@
 
 static FILE *file = NULL;
 
+int Jump_Table[4096];
 char Instructions[4096][40];
 int instruction_counter = 0;
+int jump_counter=0;
+
+void pushJump(int address) {
+	if (jump_counter >= 4096) {
+		fprintf(stderr, "Erreur : dépassement de la table des sauts\n");
+		exit(EXIT_FAILURE);
+	}
+	Jump_Table[jump_counter++] = address;
+}
+
+void popJump() {
+	if (jump_counter <= 0) {
+		fprintf(stderr, "Erreur : tentative de dépiler une table des sauts vide\n");
+		exit(EXIT_FAILURE);
+	}
+	jump_counter--;
+}
 
 void ASM(enum OpCode op, int a, int b, int c) {
 	switch (op) {
@@ -64,7 +82,7 @@ void ASM(enum OpCode op, int a, int b, int c) {
 			instruction_counter++;
 			break;
 		case JMPF: // saut à l'@ de a si b !=0
-			sprintf(Instructions[instruction_counter], "JMPF %d %d\n", a, b);
+			sprintf(Instructions[instruction_counter], "JMPF 0x%d 0x%d\n", a, b);
 			instruction_counter++;
 			break;
 	}

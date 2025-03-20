@@ -88,7 +88,7 @@ Instruction:
     ;
 
 If:
-      tIf tOP Condition tCP ControlBody Else
+      tIf tOP Condition {ASM(JMPF,-1,$3,0);}tCP ControlBody Else //{UPDATE ASM JUMPF}
     ;
 
 Else : 
