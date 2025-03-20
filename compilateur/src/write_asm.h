@@ -5,11 +5,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+extern int instruction_counter;
 enum OpCode { ADD, MUL, SOU, DIV, COP, AFC, LOAD, STORE, EQU, INF, INFE, SUP, SUPE, JMP, JMPF};
 void pushJumpf(int condition) ;
-void popJumpf();
+int popJumpf();
 void pushJump();
-void popJump();
+int popJump();
 void ASM(enum OpCode op, int a, int b, int c);
 
 void writeOutputASM(char * filename);

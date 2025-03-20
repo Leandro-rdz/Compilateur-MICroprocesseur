@@ -4,6 +4,7 @@
 #include "symbol_table.h"
 #include "write_asm.h"
 
+
 #define YYDEBUG 1
 
 %}
@@ -101,7 +102,7 @@ ControlBody:
     ;
 
 While:
-      tWhile tOP Condition tCP ControlBody { printf("While\n"); }
+      tWhile tOP Condition {pushJumpf($3); } tCP ControlBody  {  pushJump(); int addr = popJumpf(); popJump();instruction_counter--; ASM(JMP, addr-1,0,0); }
     ;
 
 For: 
@@ -109,18 +110,17 @@ For:
     ;
 
 Condition: 
-      Condition tLT Condition { ASM(INF,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
-    | Condition tGT Condition { ASM(SUP,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    | Condition tGE Condition { ASM(SUPE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    | Condition tLE Condition { ASM(INFE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    | Condition tEqq Condition{ ASM(EQU,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    //| Value BoolOp Value
+      Value tLT Value { ASM(INF,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
+    | Value tGT Value { ASM(SUP,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    | Value tGE Value { ASM(SUPE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    | Value tLE Value { ASM(INFE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    | Value tEqq Value{ ASM(EQU,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    //| Value tDif Value
     //| Value tAnd Value 
     //| Value tOr Value
     //| tTrue 
     //| tFalse
     | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
-    | tID  { $$=atoi($1);}
     //| tNegate Value
     ;
 
@@ -196,7 +196,7 @@ Value:
       tNB { $$=$1; }
     | tNBF { $$=$1; }
     | tSTRING { $$=atoi($1);}
-    | tID { $$=atoi($1);}
+    | tID { Symbol * s =searchSymbol($1); $$=s->address;}
     ; 
 
 %%

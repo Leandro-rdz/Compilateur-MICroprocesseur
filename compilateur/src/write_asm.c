@@ -4,9 +4,11 @@ static FILE *file = NULL;
 
 int Jumpf_Table[4096];
 char Instructions[4096][40];
-int instruction_counter = 0;
+int instruction_counter =0 ;
 int jumpf_counter = 0;
 
+int Jump_Table[4096];
+int jump_counter = 0;
 
 void pushJumpf(int condition) {
     int index = instruction_counter;  // Sauvegarde l'adresse actuelle
@@ -18,7 +20,7 @@ void pushJumpf(int condition) {
     sprintf(Instructions[instruction_counter++], "JMPF TMP 0x%x\n", condition);
 }
 
-void popJumpf() {
+int popJumpf() {
     if (jumpf_counter <= 0) {
         fprintf(stderr, "Erreur : tentative de dépiler une table des sauts vide\n");
         exit(EXIT_FAILURE);
@@ -30,11 +32,10 @@ void popJumpf() {
     // Écriture dans la bonne ligne (pas jump_index - 1)
     sprintf(Instructions[jumpf_index], "JMPF 0x%x 0x%x\n", instruction_counter * 4, condition);
     jumpf_counter--;
+	return jumpf_index;
 }
 
 
-int Jump_Table[4096];
-int jump_counter = 0;
 
 
 void pushJump() {
@@ -43,13 +44,14 @@ void pushJump() {
     sprintf(Instructions[instruction_counter++], "JMP 0x0\n");
 }
 
-void popJump() {
+int popJump() {
     if (jump_counter <= 0) {
         fprintf(stderr, "Erreur : aucune adresse de jump inconditionnel à patcher\n");
         exit(EXIT_FAILURE);
     }
     int jump_index = Jump_Table[--jump_counter];
     sprintf(Instructions[jump_index], "JMP 0x%x\n", instruction_counter * 4);
+	return jump_index;
 }
 
 void ASM(enum OpCode op, int a, int b, int c) {
@@ -94,10 +96,10 @@ void ASM(enum OpCode op, int a, int b, int c) {
             sprintf(Instructions[instruction_counter++], "SUPE 0x%d 0x%d 0x%d\n", a, b, c);
             break;
         case JMP:
-            sprintf(Instructions[instruction_counter++], "JMP %d\n", a * 4);
+            sprintf(Instructions[instruction_counter++], "JMP %x\n", a * 4);
             break;
         case JMPF:
-            sprintf(Instructions[instruction_counter++], "JMPF 0x%d 0x%d\n", a * 4, b);
+            sprintf(Instructions[instruction_counter++], "JMPF 0x%x 0x%d\n", a * 4, b);
             break;
     }
 }
