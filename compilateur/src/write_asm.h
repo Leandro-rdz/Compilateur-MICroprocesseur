@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "symbol_table.h"
 
 extern int instruction_counter;
 
@@ -19,7 +20,7 @@ int popJump();
 
 void ASM(enum OpCode op, int a, int b, int c);
 
-void _binaryToString(char out[9], int num);
+void _binaryToString(char out[ADDRESS_SIZE * 8 + 1], int num);
 
 void writeOutputASM(char * filename);
 

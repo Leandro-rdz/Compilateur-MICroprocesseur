@@ -125,11 +125,11 @@ void writeOutputASM(char *filename) {
     }
 }
 
-void _binaryToString(char out[9], int num) {
-    for (int i = 7; i >= 0; i--) {
-        out[7 - i] = ((num >> i) & 1) ? '1' : '0';
+void _binaryToString(char out[ADDRESS_SIZE * 8 + 1], int num) {
+    for (int i = ADDRESS_SIZE * 8 - 1; i >= 0; i--) {
+        out[ADDRESS_SIZE * 8 - 1 - i] = ((num >> i) & 1) ? '1' : '0';
     }
-    out[8] = '\0';
+    out[ADDRESS_SIZE * 8] = '\0';
 }
 
 
@@ -171,21 +171,22 @@ void writeOutputOPCode(char * filename) {
         else if (strcmp(op, "JMPF") == 0) { opcode = 0x0F; parsed = 2; a *= 4; }
 
 
-        char opcode_out[9], addr[9], a_out[9], b_out[9], c_out[9];
+        char opcode_out[ADDRESS_SIZE * 8 + 1], addr[ADDRESS_SIZE * 8 + 1], a_out[ADDRESS_SIZE * 8 + 1], b_out[ADDRESS_SIZE * 8 + 1], c_out[ADDRESS_SIZE * 8 + 1], zero[ADDRESS_SIZE * 8 + 1];
         _binaryToString(opcode_out, opcode);
         _binaryToString(addr, i*4);
         _binaryToString(a_out, a);
         _binaryToString(b_out, b);
         _binaryToString(c_out, c);
+        _binaryToString(zero, 0);
 
         if (parsed == 4) {
             fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, c_out);
         } else if (parsed == 3) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, "00000000");
+            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, zero);
         } else if (parsed == 2) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, "00000000", "00000000");
+            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, zero, zero);
         } else if (parsed == 1) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, "00000000", "00000000", "00000000");
+            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, zero, zero, zero);
         }
     }
     fflush(file);
