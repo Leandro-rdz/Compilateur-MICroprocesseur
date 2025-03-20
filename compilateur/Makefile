@@ -32,10 +32,12 @@ run:
 	./$(BIN)
 
 test:
+	make clean
 	clear
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
 	cat $(OUT_DIR)/output.asm
+	cat $(OUT_DIR)/output.opcode
 
 clean:
 	rm -rf $(OUT_DIR)  # Supprime tout le dossier `out/`
