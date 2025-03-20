@@ -40,23 +40,23 @@ void ASM(enum OpCode op, int a, int b, int c) {
 			instruction_counter++;
 			break;
 		case EQU: // a=1 si b=c sinon a=0
-			sprintf(Instructions[instruction_counter], "EQU %d %d %d\n", a, b, c);
+			sprintf(Instructions[instruction_counter], "EQU 0x%d 0x%d 0x%d\n", a, b, c);
 			instruction_counter++;
 			break;
 		case INF: // a=1 si b<c sinon a=0
-			sprintf(Instructions[instruction_counter], "INF %d %d %d\n", a, b, c);
+			sprintf(Instructions[instruction_counter], "INF 0x%d 0x%d 0x%d\n", a, b, c);
 			instruction_counter++;
 			break;
 		case INFE: // a=1 si b<=c sinon a=0
-			sprintf(Instructions[instruction_counter], "INFE %d %d %d\n", a, b, c);
+			sprintf(Instructions[instruction_counter], "INFE 0x%d 0x%d 0x%d\n", a, b, c);
 			instruction_counter++;
 			break;
 		case SUP: // a=1 si b>c sinon a=0
-			sprintf(Instructions[instruction_counter], "SUP %d %d %d\n", a, b, c);
+			sprintf(Instructions[instruction_counter], "SUP 0x%d 0x%d 0x%d\n", a, b, c);
 			instruction_counter++;
 			break;
 		case SUPE: // a=1 si b>=c sinon a=0
-			sprintf(Instructions[instruction_counter], "SUPE %d %d %d\n", a, b, c);
+			sprintf(Instructions[instruction_counter], "SUPE 0x%d 0x%d 0x%d\n", a, b, c);
 			instruction_counter++;
 			break;
 		case JMP: // saut à l'@ de a

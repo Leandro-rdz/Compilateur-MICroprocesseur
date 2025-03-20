@@ -28,6 +28,7 @@
 %type <type> Type
 %type <nb> Expression
 %type <nb> Value
+%type <nb> Condition
 %type <nb> Variables
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
@@ -108,22 +109,18 @@ For:
     ;
 
 Condition: 
-      Value BoolOp Value 
-    | tTrue 
-    | tFalse
-    | Value
-    | tNegate Value
-    ;
-
-BoolOp:
-      tLT
-    | tGT
-    | tGE
-    | tLE
-    | tDif
-    | tEqq
-    | tAnd
-    | tOr
+      Condition tLT Condition { ASM(INF,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
+    | Condition tGT Condition { ASM(SUP,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    | Condition tGE Condition { ASM(SUPE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    | Condition tLE Condition { ASM(INFE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    | Condition tEqq Condition{ ASM(EQU,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
+    //| Value BoolOp Value
+    //| Value tAnd Value 
+    //| Value tOr Value
+    //| tTrue 
+    //| tFalse
+    | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
+    //| tNegate Value
     ;
 
 /* Declaration of function parameters */
