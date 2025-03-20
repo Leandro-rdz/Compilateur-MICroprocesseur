@@ -80,7 +80,7 @@ void ASM(enum OpCode op, int a, int b, int c) {
 			instruction_counter++;
 			break;
 		case JMP: // saut à l'@ de a
-			sprintf(Instructions[instruction_counter], "JMPPC %d %d\n", a, 1);
+			sprintf(Instructions[instruction_counter], "JMP %d %d\n", a, 1);
 			instruction_counter++;
 			break;
 		case JMPF: // saut à l'@ de a si b !=0
