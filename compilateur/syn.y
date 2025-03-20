@@ -207,11 +207,9 @@ Value:
 int main(void) {
       yydebug = 0; 
       initSymbolTable();
-      initOUTPUT("out/output.asm");
       printf("Compilateur C\n\n");
       yyparse();
-      printSymbolTable();
-      closeFile();
+      writeOutputASM("out/output.asm");
       return 0;
 }
 

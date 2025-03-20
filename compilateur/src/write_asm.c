@@ -5,26 +5,6 @@ static FILE *file = NULL;
 char Instructions[4096][40];
 int instruction_counter = 0;
 
-void initOUTPUT(char *filename) {
-    if (file != NULL) {
-        fclose(file);
-    }
-
-    file = fopen(filename, "w");
-    if (file == NULL) {
-        perror("Erreur lors de l'ouverture du fichier");
-        exit(EXIT_FAILURE);
-    }
-}
-
-void closeFile() {
-    if (file != NULL) {
-        fclose(file);
-        file = NULL;
-    }
-}
-
-
 void ASM(enum OpCode op, int a, int b, int c) {
 	switch (op) {
 		case ADD:
@@ -87,14 +67,26 @@ void ASM(enum OpCode op, int a, int b, int c) {
 			sprintf(Instructions[instruction_counter], "JMPF %d %d\n", a, b);
 			instruction_counter++;
 			break;
-	}   
+	}
 }
 
-void writeAll (){
-	for (int i = 0; i < 256; i++) {
-		if (Instructions[i] != NULL) {
-			fprintf(file, "%s", Instructions[i]);
-		}
+void writeOutputASM(char * filename){
+	if (file != NULL) {
+        fclose(file);
+    }
+
+    file = fopen(filename, "w");
+    if (file == NULL) {
+        perror("Erreur lors de l'ouverture du fichier");
+        exit(EXIT_FAILURE);
+    }
+	for (int i = 0; i < instruction_counter; i++) {
+		fprintf(file, "%s", Instructions[i]);
 	}
 	fflush(file);
+
+    if (file != NULL) {
+        fclose(file);
+        file = NULL;
+    }
 }
