@@ -21,7 +21,7 @@ void initSymbolTable();
 
 Symbol newSymbol(char * name, int size, int address, char type[16]); // size en octet
 
-void removeFromSymbolTable(int *tempVar);
+void removeFromSymbolTable(int tempAddr);
 
 char* getTypeFromSymbolTable(char* name); 
 
