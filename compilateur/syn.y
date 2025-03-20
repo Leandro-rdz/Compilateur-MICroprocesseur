@@ -120,6 +120,7 @@ Condition:
     //| tTrue 
     //| tFalse
     | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
+    | tID  { $$=atoi($1);}
     //| tNegate Value
     ;
 
