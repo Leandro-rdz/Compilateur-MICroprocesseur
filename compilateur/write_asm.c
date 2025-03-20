@@ -37,16 +37,16 @@ void ASM(enum OpCode op, int a, int b, int c) {
 			fprintf(file, "DIV 0x%d 0x%d 0x%d\n", a, b, c);
 			break;
 		case COP:
-			fprintf(file, "COP 0x%d 0x%d\n",a,b );
+			fprintf(file, "COP 0x%d 0x%d\n", a, b);
 			break;
 		case AFC:
-			fprintf(file, "AFC 0x%d %d\n",a,b);
+			fprintf(file, "AFC 0x%d %d\n", a, b);
 			break;
 		case LOAD:
-			fprintf(file, "LOAD 0x%d 0x%d\n",a,b);
+			fprintf(file, "LOAD 0x%d 0x%d\n", a, b);
 			break;
 		case STORE:
-			fprintf(file, "STORE 0x%d 0x%d\n",a,b);
+			fprintf(file, "STORE 0x%d 0x%d\n", a, b);
 			break;
 		case EQU: // a=1 si b=c sinon a=0
 			fprintf(file, "EQU %d %d %d\n", a, b, c);
