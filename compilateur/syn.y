@@ -41,7 +41,7 @@
 %%
 
 Code:
-      Declarations {   writeOutputASM("out/output.asm"); }
+      Declarations { writeOutputASM("out/output.asm"); writeOutputOPCode("out/output.opcode");}
     ;
 
 Declarations:
@@ -205,7 +205,6 @@ Value:
 int main(void) {
       yydebug = 0; 
       initSymbolTable();
-      printf("Compilateur C\n\n");
       yyparse();
       return 0;
 }

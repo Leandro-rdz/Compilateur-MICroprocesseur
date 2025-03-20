@@ -6,13 +6,23 @@
 #include <stdlib.h>
 
 extern int instruction_counter;
+
 enum OpCode { ADD, MUL, SOU, DIV, COP, AFC, LOAD, STORE, EQU, INF, INFE, SUP, SUPE, JMP, JMPF};
+
 void pushJumpf(int condition) ;
+
 int popJumpf();
+
 void pushJump();
+
 int popJump();
+
 void ASM(enum OpCode op, int a, int b, int c);
 
+void _binaryToString(char out[9], int num);
+
 void writeOutputASM(char * filename);
+
+void writeOutputOPCode(char * filename);
 
 #endif
