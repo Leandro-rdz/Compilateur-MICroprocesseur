@@ -25,28 +25,28 @@ void closeFile() {
 void ASM(enum OpCode op, int a, int b, int c) {
 	switch (op) {
 		case ADD:
-			fprintf(file, "ADD %d %d %d\n", a, b, c);
+			fprintf(file, "ADD 0x%d 0x%d 0x%d\n", a, b, c);
 			break;
 		case MUL:
-			fprintf(file, "MUL %d %d %d\n", a, b, c);
+			fprintf(file, "MUL 0x%d 0x%d 0x%d\n", a, b, c);
 			break;
 		case SOU:
-			fprintf(file, "SOU %d %d %d\n", a, b, c);
+			fprintf(file, "SOU 0x%d 0x%d 0x%d\n", a, b, c);
 			break;
 		case DIV:
-			fprintf(file, "DIV %d %d %d\n", a, b, c);
+			fprintf(file, "DIV 0x%d 0x%d 0x%d\n", a, b, c);
 			break;
 		case COP:
-			fprintf(file, "COP %d %d\n",a,b );
+			fprintf(file, "COP 0x%d 0x%d\n",a,b );
 			break;
 		case AFC:
-			fprintf(file, "AFC %d %d\n",a,b);
+			fprintf(file, "AFC 0x%d %d\n",a,b);
 			break;
 		case LOAD:
-			fprintf(file, "LOAD %d %d\n",a,b);
+			fprintf(file, "LOAD 0x%d 0x%d\n",a,b);
 			break;
 		case STORE:
-			fprintf(file, "STORE %d %d\n",a,b);
+			fprintf(file, "STORE 0x%d 0x%d\n",a,b);
 			break;
 		case EQU: // a=1 si b=c sinon a=0
 			fprintf(file, "EQU %d %d %d\n", a, b, c);

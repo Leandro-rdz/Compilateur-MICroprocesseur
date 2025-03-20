@@ -133,7 +133,7 @@ ConstantDeclaration:
 
 VariableDeclaration:
       Variables tSC 
-    | Variables tEq Expression tSC {  ASM(AFC,$1,$3,0);removeFromSymbolTable($3);}
+    | Variables tEq Expression tSC { ASM(COP,$1,$3,0);removeFromSymbolTable($3);}
     ;
 
 Variables : 
@@ -172,9 +172,9 @@ Return:
 //$$ = "remonte la valeur"
 Expression:
       tNegate Expression
-    | Expression tAdd Expression { ASM(ADD, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
+    | Expression tAdd Expression { ASM(ADD, $1,$1,$3); removeFromSymbolTable($3); $$ =$1; }
     | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
-    | Expression tMul Expression { ASM(MUL, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
+    | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
     | tID tOP ArgList tCP { printf("Expression\n"); }
