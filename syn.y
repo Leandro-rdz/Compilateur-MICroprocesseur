@@ -28,7 +28,7 @@
 %type <type> Type
 %type <nb> Expression
 %type <nb> Value
-%type <id> Variables
+%type <nb> Variables
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
 %left tAdd tSub
@@ -133,12 +133,12 @@ ConstantDeclaration:
 
 VariableDeclaration:
       Variables tSC 
-    | Variables tEq Expression tSC { Symbol * s =searchSymbol($1); int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
+    | Variables tEq Expression tSC {  ASM(AFC,$1,$3,0);removeFromSymbolTable($3);}
     ;
 
 Variables : 
-       Type tID { addToSymbolTable($2,$1); $$=$2}
-      |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1);} ; 
+       Type tID { addToSymbolTable($2,$1); Symbol * s =searchSymbol($2); $$=s->address;};
+      |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1); } ; 
 
 
 Type: 
