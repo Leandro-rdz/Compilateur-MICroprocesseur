@@ -25,6 +25,7 @@ void removeFromSymbolTable(int *tempVar) {
 	if (tempVar != NULL) {
 		for (int i = 0; i < tableIndex; i++) {
 			if (st[i].address == *tempVar && st[i].name[0] == '_') { 
+				stp -= st[i].size;
 				for (int j = i; j < tableIndex - 1; j++) {
 					st[j] = st[j + 1];
 				}
