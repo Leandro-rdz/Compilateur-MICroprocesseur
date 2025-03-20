@@ -192,8 +192,8 @@ Arguments:
 Value: 
       tNB { $$=$1; }
     | tNBF { $$=$1; }
-    | tSTRING { $$=$1;}
-    | tID { $$=$1;}
+    | tSTRING { $$=atoi($1);}
+    | tID { $$=atoi($1);}
     ; 
 
 %%
