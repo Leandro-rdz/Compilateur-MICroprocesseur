@@ -1,5 +1,7 @@
 #include "symbol_table.h"
 
+#define debug 1
+
 static Symbol * st;    // table des symbole
 static int tableIndex = 0; // index dans la table des symboles
 static int scope = 0;
@@ -51,7 +53,7 @@ int addToSymbolTable(char * name, char * type) {
 		int old_stp = stp;
 		stp = stp + size;
 		tableIndex++;
-		printSymbolTable();
+		if(debug) printSymbolTable();
 		return old_stp;
 	} else {
 		printf("Erreur de compilation : Table des symboles full\n");
@@ -72,7 +74,7 @@ void clearCurrentScope() { // supprime les éléments du scope qu'on vient de fe
 	for(; st[tableIndex-1].scope > scope; tableIndex--) {
 		stp -= st[tableIndex-1].size;
 	}
-	printSymbolTable();
+	if(debug) printSymbolTable();
 }
 
 Symbol * searchSymbol(char * name) {
