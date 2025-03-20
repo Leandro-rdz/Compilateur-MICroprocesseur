@@ -51,12 +51,12 @@ int addToSymbolTable(char * name, char * type) {
 		int old_stp = stp;
 		stp = stp + size;
 		tableIndex++;
+		printSymbolTable();
 		return old_stp;
 	} else {
 		printf("Erreur de compilation : Table des symboles full\n");
 		exit(1);
 	}
-	printSymbolTable();
 }
 
 void enterScope() {
