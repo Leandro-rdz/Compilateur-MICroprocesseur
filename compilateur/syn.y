@@ -31,6 +31,7 @@
 %type <nb> Variables
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
+%nonassoc tElse
 %left tAdd tSub
 %left tMul tDiv
 %start Code
@@ -86,9 +87,12 @@ Instruction:
     ;
 
 If:
-      tIf tOP Condition tCP ControlBody { printf("IF\n"); }
-    | tIf tOP Condition tCP ControlBody tElse ControlBody %prec LOWER_THAN_ELSE  { printf("IF-ELSE\n"); }
+      tIf tOP Condition tCP ControlBody Else
     ;
+
+Else : 
+      %prec LOWER_THAN_ELSE  
+      |tElse ControlBody ;
 
 ControlBody:
       Body
@@ -171,8 +175,8 @@ Return:
     ;
 //$$ = "remonte la valeur"
 Expression:
-      tNegate Expression
-    | Expression tAdd Expression { ASM(ADD, $1,$1,$3); removeFromSymbolTable($3); $$ =$1; }
+      //tNegate Expression |
+      Expression tAdd Expression { ASM(ADD, $1,$1,$3); removeFromSymbolTable($3); $$ =$1; }
     | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
@@ -203,7 +207,7 @@ Value:
 int main(void) {
       yydebug = 0; 
       initSymbolTable();
-      initOUTPUT("output.asm");
+      initOUTPUT("out/output.asm");
       printf("Compilateur C\n\n");
       yyparse();
       printSymbolTable();

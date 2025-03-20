@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-enum OpCode { ADD, MUL, SOU, DIV, COP, AFC, LOAD, STORE, EQU, INF, INFE, SUP, SUPE, JMP, JMPC};
+enum OpCode { ADD, MUL, SOU, DIV, COP, AFC, LOAD, STORE, EQU, INF, INFE, SUP, SUPE, JMP, JMPF};
 
 void initOUTPUT(char * filename);
 
