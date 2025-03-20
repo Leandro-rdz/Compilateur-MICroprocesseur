@@ -1,8 +1,8 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
-#include "src/symbol_table.h"
-#include "src/write_asm.h"
+#include "symbol_table.h"
+#include "write_asm.h"
 
 #define YYDEBUG 1
 
