@@ -19,7 +19,7 @@ typedef struct {
 
 void initSymbolTable();
 
-Symbol newSymbol(char * name, int size, int address); // size en octet
+Symbol newSymbol(char * name, int size, int address, char type[16]); // size en octet
 
 void removeFromSymbolTable(int *tempVar);
 
