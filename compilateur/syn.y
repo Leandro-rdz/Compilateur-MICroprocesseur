@@ -1,10 +1,11 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
-#include "compilateur/symbol_table.h"
-#include "compilateur/write_asm.h"
+#include "src/symbol_table.h"
+#include "src/write_asm.h"
 
 #define YYDEBUG 1
+
 %}
 
 %union {
@@ -27,7 +28,7 @@
 %type <type> Type
 %type <nb> Expression
 %type <nb> Value
-%type <id> Variables
+%type <nb> Variables
 %right tNegate
 %nonassoc LOWER_THAN_ELSE
 %left tAdd tSub
@@ -132,12 +133,12 @@ ConstantDeclaration:
 
 VariableDeclaration:
       Variables tSC 
-    | Variables tEq Expression tSC  
+    | Variables tEq Expression tSC { ASM(COP,$1,$3,0);removeFromSymbolTable($3);}
     ;
 
 Variables : 
-       Type tID { addToSymbolTable($2,$1);}
-      |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1);} ; 
+       Type tID { addToSymbolTable($2,$1); Symbol * s =searchSymbol($2); $$=s->address;};
+      |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1); } ; 
 
 
 Type: 
@@ -156,7 +157,7 @@ Statement:
 
 /* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { ASM(AFC,$1,$3,0);}
+      tID tEq Expression tSC { Symbol * s =searchSymbol($1); int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
     ;
 
 /* Print statement: printf(expression); */
@@ -171,10 +172,10 @@ Return:
 //$$ = "remonte la valeur"
 Expression:
       tNegate Expression
-    | Expression tAdd Expression { ASM(ADD, $1,$1,$3); }
-    | Expression tSub Expression { ASM(SOU, $1,$1,$3); }
-    | Expression tMul Expression { ASM(MUL, $1,$1,$3); }
-    | Expression tDiv Expression { ASM(DIV, $1,$1,$3); }
+    | Expression tAdd Expression { ASM(ADD, $1,$1,$3); removeFromSymbolTable($3); $$ =$1; }
+    | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
+    | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
+    | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
@@ -191,9 +192,9 @@ Arguments:
 
 Value: 
       tNB { $$=$1; }
-    | tNBF { printf("float : %f\n", $1); }
-    | tSTRING { printf("string : %s\n", $1);}
-    | tID { printf("id : %s\n", $1);}
+    | tNBF { $$=$1; }
+    | tSTRING { $$=atoi($1);}
+    | tID { $$=atoi($1);}
     ; 
 
 %%

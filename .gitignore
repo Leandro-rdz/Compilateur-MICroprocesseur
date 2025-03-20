@@ -1,7 +1,7 @@
-out
-lex.l.c
-lex.yy.c
-y.tab.c
-y.tab.h
-y.output
-output.asm
+compilateur/out
+compilateur/lex.l.c
+compilateur/lex.yy.c
+compilateur/y.tab.c
+compilateur/y.tab.h
+compilateur/y.output
+compilateur/output.asm

@@ -10,17 +10,31 @@ void initSymbolTable() {
 	st = malloc(sizeof(Symbol) * TABLE_SIZE);
 }
 
-Symbol newSymbol(char * name, int size, int address) {
+Symbol newSymbol(char * name, int size, int address, char * type) {
     Symbol sym;
     strncpy(sym.name, name, SYMBOL_NAME_SIZE - 1); // on est passé à 2 doigts(1 char) du buffer overflow ici ;)
     sym.name[SYMBOL_NAME_SIZE - 1] = '\0';
     sym.scope = scope;
     sym.size = size;
+    strncpy(sym.type, type, 16);
     sym.address = address;
     return sym;
 }
 
-int addToSymbolTable(char * name, char type[16]) {
+void removeFromSymbolTable(int tempAddr) {
+	for (int i = 0; i < tableIndex; i++) {
+		if (st[i].address == tempAddr && st[i].name[0] == '_') { 
+			stp -= st[i].size;
+			for (int j = i; j < tableIndex - 1; j++) {
+				st[j] = st[j + 1];
+			}
+			tableIndex--;
+			break;
+		}
+	}
+}
+
+int addToSymbolTable(char * name, char * type) {
 	int size;
 	if (strcmp(type, "int") == 0) {
 		size = ADDRESS_SIZE;
@@ -32,16 +46,17 @@ int addToSymbolTable(char * name, char type[16]) {
 		size = 1;
 	}
 	if(tableIndex <= TABLE_SIZE) {
-		Symbol newsymbol = newSymbol(name, size, stp);
+		Symbol newsymbol = newSymbol(name, size, stp, type);
 		st[tableIndex] = newsymbol;
 		int old_stp = stp;
 		stp = stp + size;
 		tableIndex++;
+		printSymbolTable();
 		return old_stp;
 	} else {
-		printf("Table des symboles full");
+		printf("Erreur de compilation : Table des symboles full\n");
+		exit(1);
 	}
-	printSymbolTable();
 }
 
 void enterScope() {
@@ -58,6 +73,17 @@ void clearCurrentScope() { // supprime les éléments du scope qu'on vient de fe
 		stp -= st[tableIndex-1].size;
 	}
 	printSymbolTable();
+}
+
+Symbol * searchSymbol(char * name) {
+	for (int i = tableIndex - 1; i >= 0; i--) {
+		if(strcmp(st[i].name, name) == 0) {
+			printf("---- %s %d\n", name, st[i].address);
+			return &st[i];
+		}
+	}
+	printf("Erreur de compilation : Symbole non trouvé : \"%s\" \n", name);
+	exit(1);
 }
 
 void printSymbolTable() {

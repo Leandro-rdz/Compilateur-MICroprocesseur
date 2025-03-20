@@ -3,11 +3,11 @@ LEX = lex.l
 BIN = out
 
 CC = gcc
-CFLAGS = compilateur/* -I compilateur -Wall -g -Wno-unused-function -Wno-implicit-function-declaration
+CFLAGS = src/* -I src -Wall -g -Wno-unused-function -Wno-implicit-function-declaration
 YFLAGS = -d -v #-Wcounterexamples
 LEX_C = flex
 SYN_C = yacc
-TEST_FILE = test_algeb.c
+TEST_FILE = test_files/test_algeb.c
 
 OBJ = 
 
