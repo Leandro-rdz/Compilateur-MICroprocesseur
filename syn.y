@@ -5,6 +5,7 @@
 #include "compilateur/write_asm.h"
 
 #define YYDEBUG 1
+
 %}
 
 %union {
@@ -132,11 +133,11 @@ ConstantDeclaration:
 
 VariableDeclaration:
       Variables tSC 
-    | Variables tEq Expression tSC  
+    | Variables tEq Expression tSC { Symbol * s =searchSymbol($1); int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
     ;
 
 Variables : 
-       Type tID { addToSymbolTable($2,$1);}
+       Type tID { addToSymbolTable($2,$1); $$=$2}
       |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1);} ; 
 
 
@@ -156,7 +157,7 @@ Statement:
 
 /* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { Symbol * s =searchSymbol($1); int addr =s->address; ASM(AFC,addr,$3,0);}
+      tID tEq Expression tSC { Symbol * s =searchSymbol($1); int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
     ;
 
 /* Print statement: printf(expression); */
