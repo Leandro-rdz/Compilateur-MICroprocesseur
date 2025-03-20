@@ -40,7 +40,7 @@
 %%
 
 Code:
-      Declarations { printf("Code\n"); }
+      Declarations {   writeOutputASM("out/output.asm"); }
     ;
 
 Declarations:
@@ -88,12 +88,12 @@ Instruction:
     ;
 
 If:
-      tIf tOP Condition {ASM(JMPF,-1,$3,0);}tCP ControlBody Else //{UPDATE ASM JUMPF}
+      tIf tOP Condition {pushJumpf($3); }tCP ControlBody   Else 
     ;
 
 Else : 
-      %prec LOWER_THAN_ELSE  
-      |tElse ControlBody ;
+      %prec LOWER_THAN_ELSE   { popJumpf(); }
+      |  tElse  {pushJump(); popJumpf();}  ControlBody {popJump();} ;
 
 ControlBody:
       Body
@@ -206,7 +206,6 @@ int main(void) {
       initSymbolTable();
       printf("Compilateur C\n\n");
       yyparse();
-      writeOutputASM("out/output.asm");
       return 0;
 }
 

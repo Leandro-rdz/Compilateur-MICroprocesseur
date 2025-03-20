@@ -39,6 +39,7 @@ STRING    \"[^"]*\"
 "char"       { strncpy(yylval.string, "char", 15);
                 yylval.string[16] = '\0';
                return tChar; }
+"=="         { return tEqq; }
 "="          { return tEq; }
 "-"          { return tSub; }
 "+"          { return tAdd; }
@@ -55,7 +56,6 @@ STRING    \"[^"]*\"
 ">="         { return tGE; } 
 "<="         { return tLE; }
 "!="         { return tDif; }
-"=="         { return tEqq; }
 "if"         { return tIf; }
 "else"       { return tElse; }
 "for"        { return tFor; }

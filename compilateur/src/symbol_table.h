@@ -9,6 +9,7 @@
 #define SYMBOL_NAME_SIZE 30
 #define ADDRESS_SIZE 4 // taille d'une adressse dans notre architecture en octet
 
+
 typedef struct {
 	char name[SYMBOL_NAME_SIZE];
 	char type[16];
