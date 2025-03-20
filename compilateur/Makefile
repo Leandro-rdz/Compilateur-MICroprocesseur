@@ -1,41 +1,41 @@
 GRM = syn.y
 LEX = lex.l
-BIN = out
+BIN = out/compiler
+OUT_DIR = out
 
 CC = gcc
 CFLAGS = src/* -I src -Wall -g -Wno-unused-function -Wno-implicit-function-declaration
-YFLAGS = -d -v #-Wcounterexamples
+YFLAGS = -d -v
 LEX_C = flex
 SYN_C = yacc
 TEST_FILE = test_files/test_algeb.c
 
-OBJ = 
+all: $(OUT_DIR) $(BIN)
 
-all: $(BIN)
+$(OUT_DIR):
+	mkdir -p $(OUT_DIR)
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
-lex_compile:
-	$(LEX_C) -o $(LEX).c $(LEX)
-	$(CC) $(LEX).c -o $(BIN)
+lex_compile: $(OUT_DIR)
+	$(LEX_C) $(LEX)  # Génère lex.yy.c
+	mv lex.yy.c $(OUT_DIR)/lex.yy.c  # Déplace dans `out/`
 
-syn_compile:
-	$(LEX_C) $(LEX)
-	$(SYN_C) $(YFLAGS) $(GRM)
-	$(CC) $(CFLAGS) y.tab.c lex.yy.c -o $(BIN)
+syn_compile: lex_compile
+	cd $(OUT_DIR) && $(SYN_C) $(YFLAGS) ../$(GRM)  # Génère y.tab.c et y.tab.h dans `out/`
+	cd ..
+	$(CC) $(CFLAGS) $(OUT_DIR)/y.tab.c $(OUT_DIR)/lex.yy.c -o $(BIN)
 
 run:
 	make syn_compile
 	./$(BIN)
+
 test:
 	clear
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
-	cat output.asm
-
-$(BIN): $(OBJ)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
+	cat $(OUT_DIR)/output.asm
 
 clean:
-	rm -f $(OBJ) $(LEX).c $(BIN) y.tab.c lex.yy.c y.tab.h
+	rm -rf $(OUT_DIR)  # Supprime tout le dossier `out/`
