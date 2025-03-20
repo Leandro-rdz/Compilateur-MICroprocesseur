@@ -22,16 +22,14 @@ Symbol newSymbol(char * name, int size, int address, char type[16]) {
 }
 
 void removeFromSymbolTable(int tempAddr) {
-	if (tempAddr != NULL) {
-		for (int i = 0; i < tableIndex; i++) {
-			if (st[i].address == tempAddr && st[i].name[0] == '_') { 
-				stp -= st[i].size;
-				for (int j = i; j < tableIndex - 1; j++) {
-					st[j] = st[j + 1];
-				}
-				tableIndex--;
-				break;
+	for (int i = 0; i < tableIndex; i++) {
+		if (st[i].address == tempAddr && st[i].name[0] == '_') { 
+			stp -= st[i].size;
+			for (int j = i; j < tableIndex - 1; j++) {
+				st[j] = st[j + 1];
 			}
+			tableIndex--;
+			break;
 		}
 	}
 }
