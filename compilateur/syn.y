@@ -57,7 +57,7 @@ Declaration:
 
 
 Function: 
-      Type tID { addToSymbolTable($2,$1);} tOP Parameters tCP Body { printf("Function %s\n", $2); }
+      Type tID { addToSymbolTable($2,$1,0);} tOP Parameters tCP Body { printf("Function %s\n", $2); }
     ;
 
 Parameters:
@@ -120,7 +120,7 @@ Condition:
     //| Value tOr Value
     //| tTrue 
     //| tFalse
-    | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
+    | Value {int addr = addToSymbolTable("__tmp","int",0); ASM(AFC,addr,$1,0); $$=addr;}
     //| tNegate Value
     ;
 
@@ -130,7 +130,7 @@ Parameter:
     ;
 
 ConstantDeclaration:
-      tConst Type tID { addToSymbolTable($3, $2);} tEq Expression tSC 
+      tConst Type tID { addToSymbolTable($3, $2,1);} tEq Expression tSC 
     ;
 
 VariableDeclaration:
@@ -139,8 +139,8 @@ VariableDeclaration:
     ;
 
 Variables : 
-       Type tID { addToSymbolTable($2,$1); Symbol * s =searchSymbol($2); $$=s->address;};
-      |Type tID { addToSymbolTable($2,$1);} tComa tID { addToSymbolTable($5,$1); } ; 
+       Type tID { addToSymbolTable($2,$1,0); Symbol * s =searchSymbol($2); $$=s->address;};
+      |Type tID { addToSymbolTable($2,$1,0);} tComa tID { addToSymbolTable($5,$1,0); } ; 
 
 
 Type: 
@@ -159,7 +159,7 @@ Statement:
 
 /* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { Symbol * s =searchSymbol($1); int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
+      tID tEq Expression tSC { Symbol * s =searchSymbol($1); if(s->const_flag){printf("Erreur , essai de modifier un const\n"); exit(1);}; int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
     ;
 
 /* Print statement: printf(expression); */
@@ -178,7 +178,7 @@ Expression:
     | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
-    | Value {int addr = addToSymbolTable("__tmp","int"); ASM(AFC,addr,$1,0); $$=addr;}
+    | Value {int addr = addToSymbolTable("__tmp","int",0); ASM(AFC,addr,$1,0); $$=addr;}
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
 

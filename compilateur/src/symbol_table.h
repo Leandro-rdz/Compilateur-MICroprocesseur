@@ -16,17 +16,18 @@ typedef struct {
 	int size;
 	int scope;
 	int address;
+	int const_flag;
 } Symbol;
 
 void initSymbolTable();
 
-Symbol newSymbol(char * name, int size, int address, char * type); // size en octet
+Symbol newSymbol(char * name, int size, int address, char * type, int const_flag); // size en octet
 
 void removeFromSymbolTable(int tempAddr);
 
 char* getTypeFromSymbolTable(char* name); 
 
-int addToSymbolTable(char * name, char * type);
+int addToSymbolTable(char * name, char * type, int const_flag);
 
 void enterScope();
 void exitScope();

@@ -12,12 +12,13 @@ void initSymbolTable() {
 	st = malloc(sizeof(Symbol) * TABLE_SIZE);
 }
 
-Symbol newSymbol(char * name, int size, int address, char * type) {
+Symbol newSymbol(char * name, int size, int address, char * type, int const_flag) {
     Symbol sym;
     strncpy(sym.name, name, SYMBOL_NAME_SIZE - 1); // on est passé à 2 doigts(1 char) du buffer overflow ici ;)
     sym.name[SYMBOL_NAME_SIZE - 1] = '\0';
     sym.scope = scope;
     sym.size = size;
+    sym.const_flag = const_flag;
     strncpy(sym.type, type, 16);
     sym.address = address;
     return sym;
@@ -36,7 +37,7 @@ void removeFromSymbolTable(int tempAddr) {
 	}
 }
 
-int addToSymbolTable(char * name, char * type) {
+int addToSymbolTable(char * name, char * type, int const_flag) {
 	int size;
 	if (strcmp(type, "int") == 0) {
 		size = ADDRESS_SIZE;
@@ -48,7 +49,7 @@ int addToSymbolTable(char * name, char * type) {
 		size = 1;
 	}
 	if(tableIndex <= TABLE_SIZE) {
-		Symbol newsymbol = newSymbol(name, size, stp, type);
+		Symbol newsymbol = newSymbol(name, size, stp, type, const_flag);
 		st[tableIndex] = newsymbol;
 		int old_stp = stp;
 		stp = stp + size;
