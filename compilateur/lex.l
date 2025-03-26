@@ -25,8 +25,7 @@ STRING    \"[^"]*\"
 
 
 "{"          { return tOB; }
-"&"          { return tAddr; }   
-"£"          { return tPtr; }           
+"&"          { return tAddr; }            
 "}"          { return tCB; }
 "const"      { return tConst; }
 "int"        { strncpy(yylval.string, "int", 15);

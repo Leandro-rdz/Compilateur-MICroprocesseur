@@ -16,8 +16,12 @@
     char string[64];
     char type[16];
 }
+//TODO: Implementer And or negate ect.... Donc faire NOT 
+//TODO: Implementer les fonctions(maybe les for / tab)
+//TODO: Implementer l'emulateur
+//FIXME: Clean code
 
-%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tPtr tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
+%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
@@ -193,7 +197,7 @@ Expression:
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Value {int addr = addToSymbolTable("__tmp","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
-    | tPtr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
+    | tMul tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
     | tAddr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(AFC,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
