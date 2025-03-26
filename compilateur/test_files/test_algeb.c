@@ -7,6 +7,7 @@ int main(){
         while (a<2){
             int a = 8+2*3;
             int b = 1;
+            printf("3");
         }
         int a = 8+2*3;
         int b = 1;

@@ -83,6 +83,9 @@ void ASM(enum OpCode op, int a, int b, int c) {
         case EQU:
             sprintf(Instructions[instruction_counter++], "EQU 0x%d 0x%d 0x%d\n", a, b, c);
             break;
+        case PRI:
+            sprintf(Instructions[instruction_counter++], "PRI 0x%d\n",a);
+            break;
         case INF:
             sprintf(Instructions[instruction_counter++], "INF 0x%d 0x%d 0x%d\n", a, b, c);
             break;

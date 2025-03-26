@@ -8,7 +8,7 @@
 
 extern int instruction_counter;
 
-enum OpCode { ADD, MUL, SOU, DIV, COP, AFC, LOAD, STORE, EQU, INF, INFE, SUP, SUPE, JMP, JMPF};
+enum OpCode { ADD, MUL, SOU, DIV, COP, AFC, LOAD, STORE, EQU, INF, INFE, SUP, SUPE, JMP, JMPF,PRI};
 
 void pushJumpf(int condition) ;
 

@@ -164,7 +164,7 @@ Affectation:
 
 /* Print statement: printf(expression); */
 Print:
-      tPrint tOP Expression tCP tSC { printf("printf \n"); }
+      tPrint tOP Expression tCP tSC { ASM(PRI,$3,0,0); }
     ;
 
 /* Return statement: return expression; */
