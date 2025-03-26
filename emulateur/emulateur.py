@@ -36,6 +36,8 @@ def execute_instruction(instruction, *args):
         print(f"Jump to address: {args[0]}")
     elif instruction == "JMPF":
         print(f"Jump if not zero to address: {args[0]} if {args[1]} != 0")
+    elif instruction == "PRI":
+        print(f"Print what's in 0x{args[0]}")
 
 
 with open('../compilateur/out/output.asm', encoding="utf-8") as f:
@@ -45,10 +47,10 @@ with open('../compilateur/out/output.asm', encoding="utf-8") as f:
         
         match = line.split(" ")
         if match:
-            instruction = match[0]
-            arg1 = int(match[1], 16)  # Convertir de hexadécimal à entier
-            arg2 = int(match[2], 16)
-            arg3 = int(match[3], 16) if len(match) > 3 and match[3] is not None else None
+            instruction = match[1]
+            arg1 = int(match[2], 16) if len(match) > 2 and match[2] is not None else None
+            arg2 = int(match[3], 16) if len(match) > 3 and match[3] is not None else None
+            arg3 = int(match[4], 16) if len(match) > 4 and match[4] is not None else None
 
             if arg3 is not None:
                 execute_instruction(instruction, arg1, arg2, arg3)
