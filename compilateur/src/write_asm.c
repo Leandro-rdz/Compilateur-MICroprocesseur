@@ -2,6 +2,8 @@
 
 static FILE *file = NULL;
 
+#define debug 0
+
 int Jumpf_Table[4096];
 char Instructions[4096][40];
 int instruction_counter =0 ;
@@ -161,7 +163,7 @@ void writeOutputOPCode(char * filename) {
         else if (strcmp(op, "AFC") == 0) {
             parsed = sscanf(Instructions[i], "%s 0x%x %d", op, &a, &b); // re-parsing car passage de valeur
             opcode = 0x06;
-            parsed = 3;
+            parsed = 2;
         }
         else if (strcmp(op, "LOAD") == 0) { opcode = 0x07; parsed = 2; }
         else if (strcmp(op, "STORE") == 0) { opcode = 0x08; parsed = 2; }
@@ -170,8 +172,9 @@ void writeOutputOPCode(char * filename) {
         else if (strcmp(op, "INFE") == 0) opcode = 0x0B;
         else if (strcmp(op, "SUP") == 0) opcode = 0x0C;
         else if (strcmp(op, "SUPE") == 0) opcode = 0x0D;
-        else if (strcmp(op, "JMP") == 0) { opcode = 0x0E; parsed = 1; a *= 4; }
-        else if (strcmp(op, "JMPF") == 0) { opcode = 0x0F; parsed = 2; a *= 4; }
+        else if (strcmp(op, "JMP") == 0) { opcode = 0x0E; parsed = 1; }
+        else if (strcmp(op, "JMPF") == 0) { opcode = 0x0F; parsed = 2;}
+        else if (strcmp(op, "PRI") == 0) { opcode = 0x10; parsed = 1; }
 
 
         char opcode_out[ADDRESS_SIZE * 8 + 1], addr[ADDRESS_SIZE * 8 + 1], a_out[ADDRESS_SIZE * 8 + 1], b_out[ADDRESS_SIZE * 8 + 1], c_out[ADDRESS_SIZE * 8 + 1], zero[ADDRESS_SIZE * 8 + 1];
@@ -182,14 +185,30 @@ void writeOutputOPCode(char * filename) {
         _binaryToString(c_out, c);
         _binaryToString(zero, 0);
 
-        if (parsed == 4) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, c_out);
-        } else if (parsed == 3) {
+        if (parsed == 2) {
             fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, zero);
-        } else if (parsed == 2) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, zero, zero);
+            if(debug) {
+                if(strcmp(op, "AFC") == 0) {
+                    fprintf(file, "0x%x 0x%x(%s) 0x%x %x\n", i*4, opcode, op, a, b);
+                } else {
+                    fprintf(file, "0x%x 0x%x(%s) 0x%x 0x%x\n", i*4, opcode, op, a, b);
+                }
+            }
         } else if (parsed == 1) {
+            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, zero, zero);
+            if(debug) {
+                fprintf(file, "0x%x 0x%x(%s) 0x%x\n", i*4, opcode, op, a);
+            }
+        } else if (parsed == 0) {
             fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, zero, zero, zero);
+            if(debug) {
+                fprintf(file, "0x%x 0x%x(%s)\n", i*4, opcode, op);
+            }
+        } else {
+            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, c_out);
+            if(debug) {
+                fprintf(file, "0x%x 0x%x(%s) 0x%x 0x%x 0x%x\n", i*4, opcode, op, a, b, c);
+            }
         }
     }
     fflush(file);
