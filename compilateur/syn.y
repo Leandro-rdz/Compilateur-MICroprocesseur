@@ -193,8 +193,8 @@ Expression:
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Value {int addr = addToSymbolTable("__tmp","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
-    | tPtr tID {int addr = addToSymbolTable("__tmp","int",0,0); ASM(LCOP,addr,$2,0); $$=addr;} // déréferencement avec '£'
-    | tAddr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(COP,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
+    | tPtr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
+    | tAddr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(AFC,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
 
@@ -219,7 +219,7 @@ Value:
 
 /* Main code */
 int main(void) {
-      yydebug = 0; 
+      yydebug = 0;
       initSymbolTable();
       yyparse();
       return 0;

@@ -59,58 +59,58 @@ int popJump() {
 void ASM(enum OpCode op, int a, int b, int c) {
     switch (op) {
         case ADD:
-            sprintf(Instructions[instruction_counter++], "ADD 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "ADD 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case MUL:
-            sprintf(Instructions[instruction_counter++], "MUL 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "MUL 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case SOU:
-            sprintf(Instructions[instruction_counter++], "SOU 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "SOU 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case DIV:
-            sprintf(Instructions[instruction_counter++], "DIV 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "DIV 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case COP:
-            sprintf(Instructions[instruction_counter++], "COP 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "COP 0x%x 0x%x\n", a, b);
             break;
         case LCOP:
-            sprintf(Instructions[instruction_counter++], "LCOP 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "LCOP 0x%x 0x%x\n", a, b);
             break;
         case RCOP:
-            sprintf(Instructions[instruction_counter++], "RCOP 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "RCOP 0x%x 0x%x\n", a, b);
             break;
         case AFC:
-            sprintf(Instructions[instruction_counter++], "AFC 0x%d %d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "AFC 0x%x #%d\n", a, b);
             break;
         case LOAD:
-            sprintf(Instructions[instruction_counter++], "LOAD 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "LOAD 0x%x 0x%x\n", a, b);
             break;
         case STORE:
-            sprintf(Instructions[instruction_counter++], "STORE 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "STORE 0x%x 0x%x\n", a, b);
             break;
         case EQU:
-            sprintf(Instructions[instruction_counter++], "EQU 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "EQU 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case PRI:
-            sprintf(Instructions[instruction_counter++], "PRI 0x%d\n",a);
+            sprintf(Instructions[instruction_counter++], "PRI 0x%x\n",a);
             break;
         case INF:
-            sprintf(Instructions[instruction_counter++], "INF 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "INF 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case INFE:
-            sprintf(Instructions[instruction_counter++], "INFE 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "INFE 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case SUP:
-            sprintf(Instructions[instruction_counter++], "SUP 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "SUP 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case SUPE:
-            sprintf(Instructions[instruction_counter++], "SUPE 0x%d 0x%d 0x%d\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "SUPE 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case JMP:
             sprintf(Instructions[instruction_counter++], "JMP 0x%x\n", a * 4);
             break;
         case JMPF:
-            sprintf(Instructions[instruction_counter++], "JMPF 0x%x 0x%d\n", a * 4, b);
+            sprintf(Instructions[instruction_counter++], "JMPF 0x%x 0x%x\n", a * 4, b);
             break;
     }
 }
