@@ -74,10 +74,10 @@ void ASM(enum OpCode op, int a, int b, int c) {
             sprintf(Instructions[instruction_counter++], "COP 0x%d 0x%d\n", a, b);
             break;
         case LCOP:
-            sprintf(Instructions[instruction_counter++], "COP 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "LCOP 0x%d 0x%d\n", a, b);
             break;
         case RCOP:
-            sprintf(Instructions[instruction_counter++], "COP 0x%d 0x%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "RCOP 0x%d 0x%d\n", a, b);
             break;
         case AFC:
             sprintf(Instructions[instruction_counter++], "AFC 0x%d %d\n", a, b);
@@ -182,6 +182,8 @@ void writeOutputOPCode(char * filename) {
         else if (strcmp(op, "SUPE") == 0) opcode = 0x0E;
         else if (strcmp(op, "LOAD") == 0) { opcode = 0x0F; parsed = 2; }
         else if (strcmp(op, "STORE") == 0) { opcode = 0x10; parsed = 2; }
+        else if (strcmp(op, "LCOP") == 0) { opcode = 0x1A; parsed = 2; }
+        else if (strcmp(op, "RCOP") == 0) { opcode = 0x1B; parsed = 2; }
 
 
         char opcode_out[ADDRESS_SIZE * 8 + 1], addr[ADDRESS_SIZE * 8 + 1], a_out[ADDRESS_SIZE * 8 + 1], b_out[ADDRESS_SIZE * 8 + 1], c_out[ADDRESS_SIZE * 8 + 1], zero[ADDRESS_SIZE * 8 + 1];
