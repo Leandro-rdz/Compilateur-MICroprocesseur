@@ -7,7 +7,7 @@
 
 #define TABLE_SIZE 256
 #define SYMBOL_NAME_SIZE 30
-#define ADDRESS_SIZE 2 // taille d'une adressse dans notre architecture en octet
+#define ADDRESS_SIZE 4 // taille d'une adressse dans notre architecture en octet
 
 
 typedef struct {
@@ -17,17 +17,18 @@ typedef struct {
 	int scope;
 	int address;
 	int const_flag;
+	int ptr_flag;
 } Symbol;
 
 void initSymbolTable();
 
-Symbol newSymbol(char * name, int size, int address, char * type, int const_flag); // size en octet
+Symbol newSymbol(char * name, int size, int address, char * type, int const_flag, int ptr_flag); // size en octet
 
 void removeFromSymbolTable(int tempAddr);
 
 char* getTypeFromSymbolTable(char* name); 
 
-int addToSymbolTable(char * name, char * type, int const_flag);
+int addToSymbolTable(char * name, char * type, int const_flag, int ptr_flag);
 
 void enterScope();
 void exitScope();

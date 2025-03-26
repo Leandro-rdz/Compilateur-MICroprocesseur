@@ -17,7 +17,7 @@
     char type[16];
 }
 
-%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tDif tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
+%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tPtr tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
@@ -56,8 +56,8 @@ Declaration:
     ;
 
 
-Function: 
-      Type tID { addToSymbolTable($2,$1,0);} tOP Parameters tCP Body { printf("Function %s\n", $2); }
+Function:
+      Type tID { addToSymbolTable($2,$1,0,0);} tOP Parameters tCP Body { printf("Function %s\n", $2); }
     ;
 
 Parameters:
@@ -120,7 +120,7 @@ Condition:
     //| Value tOr Value
     //| tTrue 
     //| tFalse
-    | Value {int addr = addToSymbolTable("__tmp","int",0); ASM(AFC,addr,$1,0); $$=addr;}
+    | Value {int addr = addToSymbolTable("__tmp","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
     //| tNegate Value
     ;
 
@@ -130,7 +130,7 @@ Parameter:
     ;
 
 ConstantDeclaration:
-      tConst Type tID { addToSymbolTable($3, $2,1);} tEq Expression tSC 
+      tConst Type tID { addToSymbolTable($3, $2,1,0);} tEq Expression tSC {ASM(COP,$3,$6,0); removeFromSymbolTable($6);}
     ;
 
 VariableDeclaration:
@@ -139,8 +139,10 @@ VariableDeclaration:
     ;
 
 Variables : 
-       Type tID { addToSymbolTable($2,$1,0); Symbol * s =searchSymbol($2); $$=s->address;};
-      |Type tID { addToSymbolTable($2,$1,0);} tComa tID { addToSymbolTable($5,$1,0); } ; 
+       Type tID { addToSymbolTable($2,$1,0,0); Symbol * s =searchSymbol($2); $$=s->address;};
+      |Type tID { addToSymbolTable($2,$1,0,0);} tComa tID { addToSymbolTable($5,$1,0,0); } ; 
+      |Type tMul tID { addToSymbolTable($3,"int",0,1); Symbol * s =searchSymbol($3); $$=s->address;}; // int car une addresse(ici pointeur) a la taille d'un int
+      |Type tMul tID { addToSymbolTable($3,"int",0,1);} tComa tID { addToSymbolTable($6,"int",0,1); } ; 
 
 
 Type: 
@@ -159,7 +161,18 @@ Statement:
 
 /* Affectation: id = expression ; */
 Affectation:
-      tID tEq Expression tSC { Symbol * s =searchSymbol($1); if(s->const_flag){printf("Erreur , essai de modifier un const\n"); exit(1);}; int addr =s->address; ASM(AFC,addr,$3,0);removeFromSymbolTable($3);}
+      tID tEq Expression tSC { Symbol * s =searchSymbol($1); 
+                              if(s->const_flag){
+                                    printf("Erreur , essai de modifier un const\n");
+                                    exit(1);}
+                              ASM(AFC,s->address,$3,0);
+                              removeFromSymbolTable($3);}
+      |tMul tID tEq Expression tSC { Symbol * s =searchSymbol($2);
+                                    if(s->const_flag){
+                                          printf("Erreur , essai de modifier un const\n");
+                                    exit(1);}
+                                    ASM(RCOP,s->address,$4,0);
+                                    removeFromSymbolTable($4);} 
     ;
 
 /* Print statement: printf(expression); */
@@ -179,7 +192,9 @@ Expression:
     | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
-    | Value {int addr = addToSymbolTable("__tmp","int",0); ASM(AFC,addr,$1,0); $$=addr;}
+    | Value {int addr = addToSymbolTable("__tmp","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
+    | tPtr tID {int addr = addToSymbolTable("__tmp","int",0,0); ASM(LCOP,addr,$2,0); $$=addr;} // déréferencement avec '£'
+    | tAddr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(COP,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
     | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
 
