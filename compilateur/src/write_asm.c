@@ -120,7 +120,7 @@ void writeOutputASM(char *filename) {
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < instruction_counter; i++) {
-        fprintf(file, "%x : %s", i * 4, Instructions[i]);
+        fprintf(file, "%x %s", i * 4, Instructions[i]);
     }
     fflush(file);
 
@@ -165,16 +165,17 @@ void writeOutputOPCode(char * filename) {
             opcode = 0x06;
             parsed = 2;
         }
-        else if (strcmp(op, "LOAD") == 0) { opcode = 0x07; parsed = 2; }
-        else if (strcmp(op, "STORE") == 0) { opcode = 0x08; parsed = 2; }
-        else if (strcmp(op, "EQU") == 0) opcode = 0x09;
-        else if (strcmp(op, "INF") == 0) opcode = 0x0A;
-        else if (strcmp(op, "INFE") == 0) opcode = 0x0B;
-        else if (strcmp(op, "SUP") == 0) opcode = 0x0C;
-        else if (strcmp(op, "SUPE") == 0) opcode = 0x0D;
-        else if (strcmp(op, "JMP") == 0) { opcode = 0x0E; parsed = 1; }
-        else if (strcmp(op, "JMPF") == 0) { opcode = 0x0F; parsed = 2;}
-        else if (strcmp(op, "PRI") == 0) { opcode = 0x10; parsed = 1; }
+        else if (strcmp(op, "JMP") == 0) { opcode = 0x07; parsed = 1; }
+        else if (strcmp(op, "JMPF") == 0) { opcode = 0x08; parsed = 2;}
+        else if (strcmp(op, "INF") == 0) opcode = 0x09;
+        else if (strcmp(op, "SUP") == 0) opcode = 0x0A;
+        else if (strcmp(op, "EQU") == 0) opcode = 0x0B;
+        else if (strcmp(op, "PRI") == 0) { opcode = 0x0C; parsed = 1; }
+
+        else if (strcmp(op, "INFE") == 0) opcode = 0x0D;
+        else if (strcmp(op, "SUPE") == 0) opcode = 0x0E;
+        else if (strcmp(op, "LOAD") == 0) { opcode = 0x0F; parsed = 2; }
+        else if (strcmp(op, "STORE") == 0) { opcode = 0x10; parsed = 2; }
 
 
         char opcode_out[ADDRESS_SIZE * 8 + 1], addr[ADDRESS_SIZE * 8 + 1], a_out[ADDRESS_SIZE * 8 + 1], b_out[ADDRESS_SIZE * 8 + 1], c_out[ADDRESS_SIZE * 8 + 1], zero[ADDRESS_SIZE * 8 + 1];
