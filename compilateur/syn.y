@@ -124,7 +124,7 @@ Condition:
     //| Value tOr Value
     //| tTrue 
     //| tFalse
-    | Value {int addr = addToSymbolTable("__tmp","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
+    | Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
     //| tNegate Value
     ;
 
@@ -134,7 +134,7 @@ Parameter:
     ;
 
 ConstantDeclaration:
-      tConst Type tID { addToSymbolTable($3, $2,1,0);} tEq Expression tSC {ASM(COP,$3,$6,0); removeFromSymbolTable($6);}
+      tConst Type tID tEq Expression tSC { int addr =addToSymbolTable($3, $2,1,0);ASM(COP,addr,$5,0); removeFromSymbolTable($5);}
     ;
 
 VariableDeclaration:
@@ -169,7 +169,7 @@ Affectation:
                               if(s->const_flag){
                                     printf("Erreur , essai de modifier un const\n");
                                     exit(1);}
-                              ASM(AFC,s->address,$3,0);
+                              ASM(COP,s->address,$3,0);
                               removeFromSymbolTable($3);}
       |tMul tID tEq Expression tSC { Symbol * s =searchSymbol($2);
                                     if(s->const_flag){
@@ -196,10 +196,11 @@ Expression:
     | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
     | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
     | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
-    | Value {int addr = addToSymbolTable("__tmp","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
-    | tMul tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
-    | tAddr tID {int addr = addToSymbolTable("__tmp","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(AFC,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
-    | tID tOP ArgList tCP { printf("Expression\n"); }
+    | Value {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
+    | tMul tID {int addr = addToSymbolTable("__tmpArith","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
+    | tAddr tID {int addr = addToSymbolTable("__tmpArith","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(AFC,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
+    |tID { Symbol * s =searchSymbol($1);if(s->const_flag){printf("Erreur , essai de modifier un const\n");exit(1);}int addr= addToSymbolTable("__tmpArithVar",s->type,0,0);$$=addr; }
+   // | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
 
 ArgList:
