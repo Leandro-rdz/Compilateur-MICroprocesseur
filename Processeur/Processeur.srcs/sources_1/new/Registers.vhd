@@ -16,8 +16,39 @@ entity registers is
     );
 end registers;
 
-ARCHITECTURE Behavior OF registers IS
+Architecture Behavior of registers is
+    -- 16 registres de 8 bits initialisés à 0
+    type reg_array is array (15 downto 0) of std_logic_vector(7 downto 0);
+    signal regfile : reg_array := (others => (others => '0'));
+begin
+    process(CLK)
+    begin
+        if rising_edge(CLK) then
+            if RST = '0' then
+                regfile <= (others => (others => '0'));
+            elsif W = '1' then
+                regfile(to_integer(unsigned(ADW))) <= Data;
+            end if;
+        end if;
+    end process;
 
-BEGIN
+    process(ADA, ADB, ADW, W, Data, regfile)
+    begin
+        -- Lecture port A avec bypass
+        if W = '1' and ADA = ADW then
+            QA <= Data;
+        else
+            QA <= regfile(to_integer(unsigned(ADA)));
+        end if;
 
-END Behavior;
+        -- Lecture port B avec bypass
+        if W = '1' and ADB = ADW then
+            QB <= Data;
+        else
+            QB <= regfile(to_integer(unsigned(ADB)));
+        end if;
+    end process;
+
+end Behavior;
+
+
