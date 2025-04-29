@@ -1,0 +1,28 @@
+srcscan starts
+=============== Using vdb files for VHDL std libs ===========
+INFO: VHDL library search path for library "std" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/std" (VHDL-1505)
+INFO: VHDL library search path for library "synopsys" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/synopsys" (VHDL-1505)
+INFO: VHDL library search path for library "ieee" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/ieee" (VHDL-1505)
+INFO: VHDL library search path for library "unimacro" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/unimacro" (VHDL-1505)
+INFO: VHDL library search path for library "unisim" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/unisim" (VHDL-1505)
+INFO: VHDL library search path for library "vl" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/vl" (VHDL-1505)
+INFO: VHDL library search path for library "xpm" is now "/usr/local/insa/Xilinx/Vivado/2023.1/data/precomp_hsv/vhdl/xpm" (VHDL-1505)
+-- Analyzing VHDL file "/home/rebillar/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/ALU.vhd" into library xil_defaultlib (VHDL-9003)
+INFO: analyzing entity 'ALU' (VHDL-1012)
+INFO: analyzing architecture 'Behavior' of entity 'alu' (VHDL-9006)
+-- Analyzing VHDL file "/home/rebillar/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sim_1/new/ALU_test.vhd" into library xil_defaultlib (VHDL-9003)
+INFO: analyzing entity 'ALU_tb' (VHDL-1012)
+INFO: analyzing architecture 'Behavioral' of entity 'alu_tb' (VHDL-9006)
+-- Analyzing VHDL file "/home/rebillar/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/Registers.vhd" into library xil_defaultlib (VHDL-9003)
+INFO: analyzing entity 'registers' (VHDL-1012)
+INFO: analyzing architecture 'Behavior' of entity 'registers' (VHDL-9006)
+Listing tops:
+VHDLTop: library:xil_defaultlib entity:alu_tb arch:
+VHDLTop: library:xil_defaultlib entity:alu_tb arch:
+VHDLTop: library:xil_defaultlib entity:registers arch:
+VHDLTop: library:xil_defaultlib entity:registers arch:
+END of tops
+/home/rebillar/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sim_1/new/ALU_test.vhd(5): INFO: processing 'ALU_tb_default(Behavioral)' (VHDL-1067)
+/home/rebillar/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/ALU.vhd(5): INFO: processing 'ALU_default(Behavior)' (VHDL-1067)
+/home/rebillar/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/Registers.vhd(5): INFO: processing 'registers_default(Behavior)' (VHDL-1067)
+srcscan exits with return value 0
