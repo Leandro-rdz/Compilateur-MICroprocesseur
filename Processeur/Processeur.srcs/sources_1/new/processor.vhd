@@ -14,7 +14,8 @@ architecture Behavioral of processor is
     signal A3, B3_alu_in, B3_alu_out, B3_mux, C3, OP3 : std_logic_vector(7 downto 0);                               -- UAL
     signal A4, B4_in, B4_mux1, B4_out, B4_mux2, OP4 : std_logic_vector(7 downto 0);                                 -- Memoire des données
     signal A5, B5, OP5 : std_logic_vector(7 downto 0);                                                              -- Avant écriture dans les bancs de registres 
-        
+    signal RW_LC, W_LC : std_logic := '0';
+    
     -- signaux ignorés pour l'instant genre les FLAG de l'ALU on s'en fiche pour l'instant 
     signal IGNORED_1, IGNORED_6, IGNORED_7 : std_logic_vector(7 downto 0) := (others => '0');
     signal IGNORED_2, IGNORED_3, IGNORED_4, IGNORED_5 : std_logic := '0';
@@ -56,7 +57,7 @@ begin
             ADA   => B2_select_in,
             ADB   => C2_in,
             ADW   => A5,
-            W     => '0', -- TODO : donner OP5 si ça correspond bien au OPCODE d'écriture dans les registres
+            W     => W_LC, -- TODO : donner OP5 si ça correspond bien au OPCODE d'écriture dans les registres
             Data  => B5, -- TODO
             RST   => '0', -- TODO
             CLK   => '0', -- TODO
@@ -85,7 +86,7 @@ begin
             A   => B3_alu_in,
             B   => C3,
             S   => B3_alu_out,
-            SEL => IGNORED_1, -- FLAG IGNORED
+            SEL => OP3,
             CAR => IGNORED_2, -- FLAG IGNORED
             OVF => IGNORED_3, -- FLAG IGNORED
             NEG => IGNORED_4, -- FLAG IGNORED
@@ -109,7 +110,7 @@ begin
         port map (
         Addr     => B4_mux1,
         Data_In  => B4_mux1, -- TODO on doit donner à mux1 soit B4_in soit A4 selon la situation
-        RW       => '0',     -- donner OP4 que si ça correspond au bon OPCODE
+        RW       => RW_LC,     -- donner OP4 que si ça correspond au bon OPCODE
         RST      => '0',
         CLK      => '0',
         Data_Out => B4_out
@@ -127,7 +128,25 @@ begin
             c_out  => IGNORED_7,
             op_out => OP5
         );
-        
+
+    -- MUX Banc de registre
+    B2_mux <= B2_select_in when (OP2 = "00100001" or OP2 = "00100101") else B2_select_out; -- si AFC OR LOAD
+    
+    -- MUX UAL
+    B3_mux <= B3_alu_out when (OP3(7 downto 4) = "0001") else B3_alu_in; -- si appartient à ALU ou non
+    
+    -- MUX1 Mémoire de donnée
+    B4_mux1 <= B4_in when (OP4 = "00100101") else A4; -- si LOAD
+    
+    -- LC Mémoire de donnée
+    RW_LC <= '1' when (OP4 = "00100110") else '1'; -- si STORE on écrit, tout le reste on écrit pas
+    
+    -- MUX2 Mémoire de donnée
+    B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD
+    
+    -- LC après Mem/RE
+    W_LC <= '0' when (OP4 = "00100101") else '1'; -- on écrit dans le banc de registre sauf si on store
+    
     --stim_proc: process
     --begin
     --end process;

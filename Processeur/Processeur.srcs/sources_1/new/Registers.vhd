@@ -4,9 +4,9 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity registers is
     Port(
-        ADA   : in  std_logic_vector(3 downto 0);
-        ADB   : in  std_logic_vector(3 downto 0);
-        ADW   : in  std_logic_vector(3 downto 0);
+        ADA   : in  std_logic_vector(7 downto 0);
+        ADB   : in  std_logic_vector(7 downto 0);
+        ADW   : in  std_logic_vector(7 downto 0);
         W     : in  std_logic;
         Data  : in  std_logic_vector(7 downto 0);
         RST   : in  std_logic;

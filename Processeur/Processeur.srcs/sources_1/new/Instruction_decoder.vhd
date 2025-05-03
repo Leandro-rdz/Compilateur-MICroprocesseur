@@ -7,7 +7,7 @@ entity Instruction_decoder is
     A : out std_logic_vector(7 downto 0);
     B : out std_logic_vector(7 downto 0);
     C : out std_logic_vector(7 downto 0);
-    OP : out std_logic_vector(3 downto 0)
+    OP : out std_logic_vector(7 downto 0)
   );
 end Instruction_decoder;
 
@@ -21,9 +21,9 @@ begin
   -- Instruction(11 downto 4)  -> C
   -- Instruction(3 downto 0) is ignored
 
-  OP <= Instruction(31 downto 28);
-  A  <= Instruction(27 downto 20);
-  B  <= Instruction(19 downto 12);
-  C  <= Instruction(11 downto 4);
+  OP <= Instruction(31 downto 24);
+  A  <= Instruction(23 downto 16);
+  B  <= Instruction(15 downto 8);
+  C  <= Instruction(7 downto 0);
 
 end Behavioral;

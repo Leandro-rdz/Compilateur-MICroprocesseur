@@ -7,12 +7,12 @@ entity interface_element is
         a_in  : in  std_logic_vector(7 downto 0);
         b_in  : in  std_logic_vector(7 downto 0);
         c_in  : in  std_logic_vector(7 downto 0);
-        op_in : in  std_logic_vector(3 downto 0);
+        op_in : in  std_logic_vector(7 downto 0);
 
         a_out  : out std_logic_vector(7 downto 0);
         b_out  : out std_logic_vector(7 downto 0);
         c_out  : out std_logic_vector(7 downto 0);
-        op_out : out std_logic_vector(3 downto 0)
+        op_out : out std_logic_vector(7 downto 0)
     );
 end interface_element;
 
