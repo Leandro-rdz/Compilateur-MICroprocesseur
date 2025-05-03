@@ -7,7 +7,7 @@ entity ALU is
         A   : in  std_logic_vector(7 downto 0);
         B   : in  std_logic_vector(7 downto 0);
         S   : out std_logic_vector(7 downto 0);
-        SEL : in  std_logic_vector(3 downto 0);
+        SEL : in  std_logic_vector(7 downto 0);
         CAR : out std_logic;
         OVF : out std_logic;
         NEG : out std_logic;
@@ -26,7 +26,7 @@ BEGIN
     variable sum : unsigned(8 downto 0);
     BEGIN
         CASE SEL IS
-            WHEN "0000" => -- Addition
+            WHEN "00010000" => -- Addition
                 sum := unsigned('0' & A) + unsigned('0' & B);
                 result <= std_logic_vector(sum);
                 
@@ -43,7 +43,7 @@ BEGIN
                 end if;
                 ovf_out  <= '0';
                 neg_out  <= '0';
-            WHEN "0001" => -- Soustraction
+            WHEN "00010001" => -- Soustraction
                 if ( unsigned(A) < unsigned (B)) then
                     neg_out <=  '1';
                 else 
@@ -57,7 +57,7 @@ BEGIN
                 else
                     nul_out <= '0';
                 end if;
-            WHEN "0010" => -- Multiplication
+            WHEN "00010010" => -- Multiplication
                 result <= std_logic_vector(to_unsigned((to_integer(unsigned(A)) * to_integer(unsigned(B))),9)) ;
                 if (unsigned(A) * unsigned(B) > 255) then 
                 ovf_out <= '1';
@@ -71,7 +71,7 @@ BEGIN
                 else
                     nul_out <= '0';
                 end if;
-            WHEN "0100" => --DIV
+            WHEN "00010011" => --DIV
                 if (unsigned(B) =0) then 
                      nul_out <= '1';
                      car_out <= '1';
@@ -85,25 +85,80 @@ BEGIN
                      neg_out <= '0';
                      ovf_out <= '0';
                 end if;
-            WHEN "0011" => -- AND
+            WHEN "00010100" => -- AND
                 result <= ('0' & A) AND ('0' & B);
                 car_out  <= '0';
                 ovf_out <= '0';
                 neg_out   <= '0';
-            WHEN "0101" => -- XOR
+           WHEN "00010101" => -- OR
+                result<= ('0' & A) OR ('0' & B);
+                car_out    <= '0';
+                ovf_out <= '0';
+                neg_out   <= '0';
+                nul_out <= '0';
+            WHEN "00010110" => -- XOR
                 result        <= ('0' & A) XOR ('0' & B);
                 car_out  <= '0';
                 ovf_out <= '0';
                 neg_out   <= '0';
                  nul_out <= '0';
-            WHEN "0110" => -- NOT A
+            WHEN "00010111" => -- NOT A
                 result        <= NOT ('0' & A);
                 car_out    <= '0';
                 ovf_out <= '0';
                 neg_out   <= '0';
                  nul_out <= '0';
-           WHEN "0111" => -- OR
-                result<= ('0' & A) OR ('0' & B);
+            WHEN "00011000" => -- INF
+                IF ('0' & A) < ('0' & B) THEN
+                    result <= (others => '0');
+                    result(0) <= '1';
+                ELSE
+                    result <= (others => '0');  -- "faux"
+                END IF;
+                car_out    <= '0';
+                ovf_out <= '0';
+                neg_out   <= '0';
+                nul_out <= '0';
+            WHEN "00011001" => -- INFE
+                IF ('0' & A) <= ('0' & B) THEN
+                    result <= (others => '0');
+                    result(0) <= '1';
+                ELSE
+                    result <= (others => '0');  -- "faux"
+                END IF;
+                car_out    <= '0';
+                ovf_out <= '0';
+                neg_out   <= '0';
+                nul_out <= '0';
+            WHEN "00011010" => -- SUP
+                IF ('0' & A) > ('0' & B) THEN
+                    result <= (others => '0');
+                    result(0) <= '1';
+                ELSE
+                    result <= (others => '0');  -- "faux"
+                END IF;
+                car_out    <= '0';
+                ovf_out <= '0';
+                neg_out   <= '0';
+                nul_out <= '0';
+            WHEN "00011011" => -- SUPE
+                IF ('0' & A) >= ('0' & B) THEN
+                    result <= (others => '0');
+                    result(0) <= '1';
+                ELSE
+                    result <= (others => '0');  -- "faux"
+                END IF;
+                car_out    <= '0';
+                ovf_out <= '0';
+                neg_out   <= '0';
+                nul_out <= '0';
+            WHEN "00011100" => -- EQU
+                IF ('0' & A) = ('0' & B) THEN
+                    result <= (others => '0');
+                    result(0) <= '1';
+                ELSE
+                    result <= (others => '0');  -- "faux"
+                END IF;
                 car_out    <= '0';
                 ovf_out <= '0';
                 neg_out   <= '0';
