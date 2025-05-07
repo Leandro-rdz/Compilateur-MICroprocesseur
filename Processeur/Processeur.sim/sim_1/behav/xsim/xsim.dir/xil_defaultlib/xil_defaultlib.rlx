@@ -2,9 +2,11 @@
 2020.2
 Nov  8 2024
 22:36:57
-F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/ALU.vhd,1746265131,vhdl,F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,alu,,,,,,,,
-F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/Instruction_decoder.vhd,1746282866,vhdl,F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,instruction_decoder,,,,,,,,
-F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/Registers.vhd,1746283001,vhdl,F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,registers,,,,,,,,
-F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/interface.vhd,1746282928,vhdl,F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,interface_element,,,,,,,,
-F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/memory_bench.vhd,1745992397,vhdl,F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,data_memory;instr_memory,,,,,,,,
-F:/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,1746282698,vhdl,,,,processor,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sim_1/new/Test.vhd,1746610669,vhdl,,,,test,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/ALU.vhd,1746609386,vhdl,C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,alu,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/Instruction_decoder.vhd,1746609386,vhdl,C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,instruction_decoder,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/Registers.vhd,1746609386,vhdl,C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,registers,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/instruction_counter.vhd,1746611773,vhdl,C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,instr_counter,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/interface.vhd,1746609539,vhdl,C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,interface_element,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/memory_bench.vhd,1746610405,vhdl,C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,,,data_memory;instr_memory,,,,,,,,
+C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd,1746611367,vhdl,,,,processor,,,,,,,,

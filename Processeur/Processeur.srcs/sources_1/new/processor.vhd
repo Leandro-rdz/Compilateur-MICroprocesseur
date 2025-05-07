@@ -136,7 +136,7 @@ begin
             a_in   => A4,
             b_in   => B4_mux2, -- on a B4_in ou B4_out donner à manger selon le OP4
             c_in   => (others => '0'),
-            op_in  => OP3,
+            op_in  => OP4,
             a_out  => A5,
             b_out  => B5,
             c_out  => IGNORED_7,
@@ -154,7 +154,7 @@ begin
     B4_mux1 <= B4_in when (OP4 = "00100101") else A4; -- si LOAD
     
     -- LC Mémoire de donnée
-    RW_LC <= '1' when (OP4 = "00100110") else '1'; -- si STORE on écrit, tout le reste on écrit pas
+    RW_LC <= '1' when (OP4 = "00100110") else '0'; -- si STORE on écrit, tout le reste on écrit pas
     
     -- MUX2 Mémoire de donnée
     B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD

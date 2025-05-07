@@ -21,11 +21,17 @@ end Instr_counter;
 
 architecture Behavioral of Instr_counter is
     signal count : std_logic_vector(7 downto 0) := (others => '0');
+    signal prescaler: integer:=0;
+
 begin
     process (CLK)
     begin
         if rising_edge(CLK) then
-            count <= count + 1;
+            prescaler <= prescaler + 1;
+            if (prescaler = 5) then 
+                prescaler <= 0;
+                count <= count +1;
+            end if;
         end if;
     end process;
     Addr <= count;

@@ -61,7 +61,9 @@ architecture Behavior of Instr_Memory is
   type mem_array is array (0 to 2**8-1) of std_logic_vector(31 downto 0);
   -- Preload your program here via initialization or via a file read at elaboration
   constant rom : mem_array := (
-    0 => x"0B0E0E0F",  
+    0 => x"21010001",  -- AFC R1, 1
+    1 => x"21020002",  -- AFC R2, 2
+    2 => x"10030102",  -- ADD R3, R1, R2
     others => (others => '0')
   );
   signal out_reg : std_logic_vector(31 downto 0);
