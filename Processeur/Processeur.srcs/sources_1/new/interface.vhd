@@ -12,14 +12,20 @@ entity interface_element is
         a_out  : out std_logic_vector(7 downto 0);
         b_out  : out std_logic_vector(7 downto 0);
         c_out  : out std_logic_vector(7 downto 0);
-        op_out : out std_logic_vector(7 downto 0)
+        op_out : out std_logic_vector(7 downto 0);
+        clk    : in std_logic
     );
 end interface_element;
 
 architecture Behavioral of interface_element is
 begin
-    a_out  <= a_in;
-    b_out  <= b_in;
-    c_out  <= c_in;
-    op_out <= op_in;
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            a_out  <= a_in;
+            b_out  <= b_in;
+            c_out  <= c_in;
+            op_out <= op_in;
+        end if;
+    end process;
 end Behavioral;

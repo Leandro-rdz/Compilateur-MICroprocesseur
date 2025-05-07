@@ -3,10 +3,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity tb_Memories is
+entity memory_tb is
 end entity;
 
-architecture Behavioral of tb_Memories is
+architecture Behavioral of memory_tb is
   -- Signals for Data_Memory
   signal clk       : std_logic := '0';
   signal rst       : std_logic;
@@ -71,7 +71,6 @@ begin
     for i in 0 to 3 loop
       addr_i <= std_logic_vector(to_unsigned(i, 8));
       wait for 10 ns;
-      report "Instr_Memory[" & integer'image(i) & "] = " & to_hstring(instr_out);
     end loop;
 
     wait;
