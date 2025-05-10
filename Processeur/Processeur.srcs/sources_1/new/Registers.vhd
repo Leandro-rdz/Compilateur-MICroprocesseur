@@ -34,6 +34,7 @@ begin
 
     process(ADA, ADB, ADW, W, Data, regfile)
     begin
+    if to_integer(unsigned(ADA))<16 and to_integer(unsigned(ADB))<16 then 
         -- Lecture port A avec bypass
         if W = '1' and ADA = ADW then
             QA <= Data;
@@ -47,6 +48,7 @@ begin
         else
             QB <= regfile(to_integer(unsigned(ADB)));
         end if;
+    end if;
     end process;
 
 end Behavior;

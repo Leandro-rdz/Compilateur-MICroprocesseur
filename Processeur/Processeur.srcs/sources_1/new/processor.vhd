@@ -71,7 +71,7 @@ begin
             ADW   => A5,
             W     => W_LC, -- donner OP5 si ça correspond bien au OPCODE d'écriture dans les registres
             Data  => B5,
-            RST   => '0', -- TODO ?
+            RST   => '1', -- TODO ?
             CLK   => CLK,
             QA    => B2_select_out,
             QB    => C2_out
