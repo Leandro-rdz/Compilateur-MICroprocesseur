@@ -71,7 +71,7 @@ begin
             ADW   => A5,
             W     => W_LC, -- donner OP5 si ça correspond bien au OPCODE d'écriture dans les registres
             Data  => B5,
-            RST   => '1', -- TODO ?
+            RST   => '1',
             CLK   => CLK,
             QA    => B2_select_out,
             QB    => C2_out
@@ -125,7 +125,7 @@ begin
         Addr     => B4_mux1,
         Data_In  => B4_mux1, -- on doit donner à mux1 soit B4_in soit A4 selon la situation
         RW       => RW_LC,     -- OP4 que si ça correspond au bon OPCODE
-        RST      => '0',
+        RST      => '1',
         CLK      => CLK,
         Data_Out => B4_out
         );
@@ -160,5 +160,5 @@ begin
     B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD
     
     -- LC après Mem/RE
-    W_LC <= '0' when (OP4 = "00100101") else '1'; -- on écrit dans le banc de registre sauf si on store
+    W_LC <= '0' when (OP5 = "00100101" or OP5="00000000") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE
 end Behavioral;

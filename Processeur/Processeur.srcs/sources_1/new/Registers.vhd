@@ -27,6 +27,7 @@ begin
             if RST = '0' then
                 regfile <= (others => (others => '0'));
             elsif W = '1' then
+                -- on écrit si W=1
                 regfile(to_integer(unsigned(ADW))) <= Data;
             end if;
         end if;

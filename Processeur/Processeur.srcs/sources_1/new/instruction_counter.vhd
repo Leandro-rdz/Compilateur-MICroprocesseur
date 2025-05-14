@@ -34,5 +34,5 @@ begin
             end if;
         end if;
     end process;
-    Addr <= count;
+    Addr <= count when prescaler = 0 else "00000000";
 end Behavioral;
