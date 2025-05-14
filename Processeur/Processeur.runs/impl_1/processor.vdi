@@ -1,0 +1,335 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Wed May 14 16:03:15 2025
+# Process ID         : 12404
+# Current directory  : C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.runs/impl_1
+# Command line       : vivado.exe -log processor.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source processor.tcl -notrace
+# Log file           : C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.runs/impl_1/processor.vdi
+# Journal file       : C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.runs/impl_1\vivado.jou
+# Running On         : Antares
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26100
+# Processor Detail   : AMD Ryzen 7 8845HS w/ Radeon 780M Graphics
+# CPU Frequency      : 3793 MHz
+# CPU Physical cores : 8
+# CPU Logical cores  : 16
+# Host memory        : 33618 MB
+# Swap memory        : 2147 MB
+# Total Virtual      : 35765 MB
+# Available Virtual  : 14729 MB
+#-----------------------------------------------------------
+source processor.tcl -notrace
+Command: link_design -top processor -part xc7a35tcpg236-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 527.066 ; gain = 0.000
+INFO: [Project 1-479] Netlist was created with Vivado 2024.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc]
+WARNING: [Vivado 12-584] No ports matched 'CAR'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:1]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:1]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'OVF'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:2]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:2]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'NEG'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:3]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:3]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'NUL'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:4]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:4]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SEL[2]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:5]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:5]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SEL[1]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:6]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:6]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'SEL[0]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:7]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:7]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[7]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:8]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:8]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[6]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:9]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:9]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[5]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:10]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:10]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[4]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:11]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:11]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[3]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:12]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:12]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[2]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:13]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:13]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[1]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:14]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:14]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'A[0]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[7]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:16]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:16]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[6]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:17]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:17]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[5]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:18]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:18]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[4]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:19]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:19]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[3]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:20]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:20]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[2]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[1]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'B[0]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:23]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:23]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[7]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:24]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:24]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[6]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:25]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:25]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[5]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[4]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[3]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:28]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:28]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[2]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:29]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:29]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[1]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:30]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:30]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'S[0]'. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:31]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc:31]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+Finished Parsing XDC File [C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/constrs_1/new/ALU_fpga.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 654.719 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+5 Infos, 31 Warnings, 31 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.398 . Memory (MB): peak = 660.945 ; gain = 6.227
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1143.129 ; gain = 482.184
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+Phase 1.1 Core Generation And Design Setup | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Phase 1.2 Setup Constraints And Sort Netlist
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Phase 1 Initialization | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Phase 2 Timer Update And Timing Data Collection
+
+Phase 2.1 Timer Update
+Phase 2.1 Timer Update | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Phase 2.2 Timing Data Collection
+Phase 2.2 Timing Data Collection | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Phase 2 Timer Update And Timing Data Collection | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Phase 3 Retarget
+INFO: [Opt 31-1851] Number of loadless carry chains removed were: 0
+INFO: [Opt 31-1834] Total Chains To Be Transformed Were: 0 AND Number of Transformed insts Created are: 0
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 3 Retarget | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Retarget | Checksum: 1124e77d3
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+
+Phase 4 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 4 Constant propagation | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Constant propagation | Checksum: 1124e77d3
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 5 Sweep
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Phase 5 Sweep | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Sweep | Checksum: 1124e77d3
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+
+Phase 6 BUFG optimization
+Phase 6 BUFG optimization | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.036 . Memory (MB): peak = 1543.047 ; gain = 0.000
+BUFG optimization | Checksum: 1124e77d3
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 7 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 7 Shift Register Optimization | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Shift Register Optimization | Checksum: 1124e77d3
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 8 Post Processing Netlist
+Phase 8 Post Processing Netlist | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.038 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Post Processing Netlist | Checksum: 1124e77d3
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+
+Phase 9 Finalization
+
+Phase 9.1 Finalizing Design Cores and Updating Shapes
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.039 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Phase 9.2 Verifying Netlist Connectivity
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Phase 9 Finalization | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               0  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               0  |               0  |                                              0  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Ending Logic Optimization Task | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1543.047 ; gain = 0.000
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1543.047 ; gain = 0.000
+Ending Netlist Obfuscation Task | Checksum: 1124e77d3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1543.047 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+25 Infos, 31 Warnings, 31 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1543.047 ; gain = 888.328
+INFO: [Vivado 12-24828] Executing command : report_drc -file processor_drc_opted.rpt -pb processor_drc_opted.pb -rpx processor_drc_opted.rpx
+Command: report_drc -file processor_drc_opted.rpt -pb processor_drc_opted.pb -rpx processor_drc_opted.rpx
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2024.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.runs/impl_1/processor_drc_opted.rpt.
+report_drc completed successfully
+INFO: [Timing 38-480] Writing timing data to binary archive.
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.runs/impl_1/processor_opt.dcp' has been generated.
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Starting Placer Task
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1550.535 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: a0815c57
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1550.535 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: a0815c57
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1550.535 ; gain = 0.000
+ERROR: [Place 30-494] The design is empty
+Resolution: Check if opt_design has removed all the leaf cells of your design.  Check whether you have instantiated and connected all of the top level ports.
+Ending Placer Task | Checksum: a0815c57
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1550.535 ; gain = 0.000
+42 Infos, 31 Warnings, 31 Critical Warnings and 2 Errors encountered.
+place_design failed
+ERROR: [Common 17-69] Command failed: Placer could not place all instances
+INFO: [Common 17-206] Exiting Vivado at Wed May 14 16:03:29 2025...
