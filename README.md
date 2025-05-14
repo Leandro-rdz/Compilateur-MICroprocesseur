@@ -6,7 +6,6 @@ Set d'instructions :
 | Instr ALU   | Binaire     | Hexa  |
 |-------------|-------------|-------|
 | NOP         | 0000 0000   | 0x0   |
-
 | ADD         | 0001 0000   | 0x10  |
 | SOU         | 0001 0001   | 0x11  |
 | MUL         | 0001 0010   | 0x12  |
@@ -20,7 +19,6 @@ Set d'instructions :
 | SUP         | 0001 1010   | 0x1A  |
 | SUPE        | 0001 1011   | 0x1B  |
 | EQU         | 0001 1100   | 0x1C  |
-
 | COP         | 0010 0000   | 0x20  |
 | AFC         | 0010 0001   | 0x21  |
 | JMP         | 0010 0010   | 0x22  |
