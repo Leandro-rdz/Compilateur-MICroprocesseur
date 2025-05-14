@@ -5,6 +5,8 @@
 Set d'instructions : 
 | Instr ALU   | Binaire     | Hexa  |
 |-------------|-------------|-------|
+| NOP         | 0000 0000   | 0x0   |
+
 | ADD         | 0001 0000   | 0x10  |
 | SOU         | 0001 0001   | 0x11  |
 | MUL         | 0001 0010   | 0x12  |
