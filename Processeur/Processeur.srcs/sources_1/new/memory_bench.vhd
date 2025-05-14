@@ -76,7 +76,7 @@ architecture Behavior of Instr_Memory is
     --DIV
     9  => x"21090800",  -- AFC R9, 8
     10 => x"210A5000",  -- AFC R10, 80
-    11 => x"120B0A09",  -- DIV R11,R10,R9
+    11 => x"130B0A09",  -- DIV R11,R10,R9
     others => (others => '0')
   );
   signal out_reg : std_logic_vector(31 downto 0);
