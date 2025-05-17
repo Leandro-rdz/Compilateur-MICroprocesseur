@@ -57,6 +57,7 @@ STRING    \"[^"]*\"
 ">="         { return tGE; } 
 "<="         { return tLE; }
 "!="         { return tDif; }
+"^"          { return tXor; }
 "if"         { return tIf; }
 "else"       { return tElse; }
 "for"        { return tFor; }

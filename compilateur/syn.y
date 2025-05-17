@@ -21,7 +21,7 @@
 //TODO: Implementer l'emulateur
 //FIXME: Clean code
 
-%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
+%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif  tXor tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
@@ -120,12 +120,13 @@ Condition:
     | Value tLE Value { ASM(INFE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
     | Value tEqq Value{ ASM(EQU,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
     //| Value tDif Value
-    //| Value tAnd Value 
-    //| Value tOr Value
-    //| tTrue 
-    //| tFalse
+    | Value tAnd Value { ASM(AND,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
+    | Value tOr Value   { ASM(OR,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
+    | Value tXor Value { ASM(XOR,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
+    //| tTrue { int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;} 
+    //| tFalse { int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
     | Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
-    //| tNegate Value
+    | tNegate Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); ASM(NOT,addr,$2,0); $$=addr;}
     ;
 
 /* Declaration of function parameters */

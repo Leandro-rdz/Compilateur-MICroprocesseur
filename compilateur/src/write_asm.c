@@ -112,6 +112,18 @@ void ASM(enum OpCode op, int a, int b, int c) {
         case JMPF:
             sprintf(Instructions[instruction_counter++], "JMPF 0x%x 0x%x\n", a * 4, b);
             break;
+        case AND:
+            sprintf(Instructions[instruction_counter++], "AND 0x%x 0x%x 0x%x\n", a, b, c);
+            break;
+        case OR:
+            sprintf(Instructions[instruction_counter++], "OR 0x%x 0x%x 0x%x\n", a, b, c);
+            break;
+        case NOT:
+            sprintf(Instructions[instruction_counter++], "NOT 0x%x 0x%x\n", a, b);
+            break;
+        case XOR:
+            sprintf(Instructions[instruction_counter++], "XOR 0x%x 0x%x 0x%x\n", a, b, c);
+            break;
     }
 }
 
@@ -184,6 +196,11 @@ void writeOutputOPCode(char * filename) {
         else if (strcmp(op, "STORE") == 0) { opcode = 0x10; parsed = 2; }
         else if (strcmp(op, "LCOP") == 0) { opcode = 0x1A; parsed = 2; }
         else if (strcmp(op, "RCOP") == 0) { opcode = 0x1B; parsed = 2; }
+
+        else if (strcmp(op, "AND") == 0) opcode = 0x14;
+        else if (strcmp(op, "OR") == 0) opcode = 0x15;
+        else if (strcmp(op, "NOT") == 0) { opcode = 0x17; parsed = 1; }
+        else if (strcmp(op, "XOR") == 0) opcode = 0x16;
 
 
         char opcode_out[ADDRESS_SIZE * 8 + 1], addr[ADDRESS_SIZE * 8 + 1], a_out[ADDRESS_SIZE * 8 + 1], b_out[ADDRESS_SIZE * 8 + 1], c_out[ADDRESS_SIZE * 8 + 1], zero[ADDRESS_SIZE * 8 + 1];
