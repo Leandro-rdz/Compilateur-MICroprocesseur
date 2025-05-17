@@ -157,7 +157,7 @@ begin
     B4_mux1 <= B4_in when (OP4 = "00100101") else A4; -- si LOAD
     
     -- LC Mémoire de donnée
-    RW_LC <= '1' when (OP4 = "00100101") else '0'; -- si LOAD on écrit, tout le reste on écrit pas
+    RW_LC <= '0' when (OP4 = "00100110") else '1'; -- si STORE on écrit, tout le reste on écrit pas
         
     -- MUX2 Mémoire de donnée
     B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
