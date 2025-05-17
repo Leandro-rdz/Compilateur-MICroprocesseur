@@ -1,5 +1,10 @@
 int main(){
-    int a = 7 | 1;
-    int b = 9;
-    b = a + b ;
+    int a = 5;
+    int c = 2;
+    if  ( a | c){ 
+        a = 1;
+    } else {
+        a = 0;
+    }
+
 }

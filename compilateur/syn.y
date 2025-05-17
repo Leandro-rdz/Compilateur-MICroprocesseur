@@ -126,7 +126,7 @@ Condition:
     //| tTrue { int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;} 
     //| tFalse { int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
     | Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
-    | tNegate Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); ASM(NOT,addr,$2,0); $$=addr;}
+    | tNegate Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$2,0); ASM(NOT,addr,0,0); $$=addr;}
     ;
 
 /* Declaration of function parameters */
