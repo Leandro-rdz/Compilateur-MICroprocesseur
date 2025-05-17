@@ -19,6 +19,9 @@ architecture Behavioral of processor is
     signal A4, B4_in, B4_mux1, B4_out, B4_mux2, OP4 : std_logic_vector(7 downto 0);                                 -- Memoire des données
     signal A5, B5, OP5 : std_logic_vector(7 downto 0);                                                              -- Avant écriture dans les bancs de registres 
     signal RW_LC, W_LC : std_logic := '0';
+    signal B4_mem_reg : std_logic_vector(7 downto 0);
+    signal OP4_reg : std_logic_vector(7 downto 0) := (others => '0'); -- pour suivre OP4 un cycle
+
     
     -- signaux ignorés pour l'instant genre les FLAG de l'ALU on s'en fiche pour l'instant 
     signal IGNORED_1, IGNORED_6, IGNORED_7 : std_logic_vector(7 downto 0) := (others => '0');
@@ -122,8 +125,8 @@ begin
         
     memory_inst : entity work.Data_Memory
         port map (
-        Addr     => B4_mux1,
-        Data_In  => B4_mux1, -- on doit donner à mux1 soit B4_in soit A4 selon la situation
+        Addr     => B4_mux1,-- on doit donner à mux1 soit B4_in soit A4 selon la situation
+        Data_In  => B4_in, 
         RW       => RW_LC,     -- OP4 que si ça correspond au bon OPCODE
         RST      => '1',
         CLK      => CLK,
@@ -154,11 +157,19 @@ begin
     B4_mux1 <= B4_in when (OP4 = "00100101") else A4; -- si LOAD
     
     -- LC Mémoire de donnée
-    RW_LC <= '1' when (OP4 = "00100110") else '0'; -- si STORE on écrit, tout le reste on écrit pas
+    RW_LC <= '1' when (OP4 = "00100101") else '0'; -- si LOAD on écrit, tout le reste on écrit pas
+    
+    process(CLK)
+    begin
+    if rising_edge(CLK) then
+            B4_mem_reg <= B4_out;
+            OP4_reg <= OP4;
+    end if;
+    end process;
     
     -- MUX2 Mémoire de donnée
-    B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD
+    B4_mux2 <= B4_mem_reg when (OP4_reg = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
     
     -- LC après Mem/RE
-    W_LC <= '0' when (OP5 = "00100101" or OP5="00000000") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE
+    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE
 end Behavioral;

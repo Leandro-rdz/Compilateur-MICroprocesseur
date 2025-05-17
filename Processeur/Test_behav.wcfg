@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="49,554.920 ns"></ZoomStartTime>
-      <ZoomEndTime time="51,289.016 ns"></ZoomEndTime>
-      <Cursor1Time time="50,270.355 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="939.805 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="251"></NameColumnWidth>
-      <ValueColumnWidth column_width="236"></ValueColumnWidth>
+      <ValueColumnWidth column_width="180"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="32" />
+   <WVObjectSize size="33" />
    <wvobject fp_name="/Test/uut/CLK" type="logic">
       <obj_property name="ElementShortName">CLK</obj_property>
       <obj_property name="ObjectShortName">CLK</obj_property>
@@ -190,18 +190,24 @@
    <wvobject fp_name="/Test/uut/RW_LC" type="logic">
       <obj_property name="ElementShortName">RW_LC</obj_property>
       <obj_property name="ObjectShortName">RW_LC</obj_property>
-      <obj_property name="CustomSignalColor">#008080</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject fp_name="/Test/uut/W_LC" type="logic">
       <obj_property name="ElementShortName">W_LC</obj_property>
       <obj_property name="ObjectShortName">W_LC</obj_property>
-      <obj_property name="CustomSignalColor">#008080</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject fp_name="/Test/uut/regfile_inst/regfile" type="array">
-      <obj_property name="ElementShortName">regfile[15:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">regfile[15:0][7:0]</obj_property>
+      <obj_property name="ElementShortName">regfile[0:15][7:0]</obj_property>
+      <obj_property name="ObjectShortName">regfile[0:15][7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/Test/uut/memory_inst/mem" type="array">
+      <obj_property name="ElementShortName">mem[0:255][7:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[0:255][7:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>

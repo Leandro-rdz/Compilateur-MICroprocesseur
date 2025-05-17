@@ -1,5 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/memory_bench.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'Data_Memory'
-INFO: [VRFC 10-3107] analyzing entity 'Instr_Memory'
 INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Fofog/Documents/GitHub/Compilateur-MICroprocesseur/Processeur/Processeur.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
 INFO: [VRFC 10-3107] analyzing entity 'processor'
