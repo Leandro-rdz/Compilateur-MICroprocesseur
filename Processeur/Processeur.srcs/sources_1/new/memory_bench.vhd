@@ -30,10 +30,12 @@ begin
     elsif RW = '0' then
       -- Write operation
       mem(to_integer(unsigned(Addr))) <= Data_In;
-    elsif RW = '1' then
-      -- Read operation
-      out_reg <= mem(to_integer(unsigned(Addr)));
     end if;
+  end if;
+  
+  if falling_edge(CLK) and RW = '1' then
+      -- Read operation
+    out_reg <= mem(to_integer(unsigned(Addr)));
   end if;
 end process;
 

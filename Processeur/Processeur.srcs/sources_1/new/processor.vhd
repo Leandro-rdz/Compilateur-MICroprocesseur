@@ -158,17 +158,9 @@ begin
     
     -- LC Mémoire de donnée
     RW_LC <= '1' when (OP4 = "00100101") else '0'; -- si LOAD on écrit, tout le reste on écrit pas
-    
-    process(CLK)
-    begin
-    if rising_edge(CLK) then
-            B4_mem_reg <= B4_out;
-            OP4_reg <= OP4;
-    end if;
-    end process;
-    
+        
     -- MUX2 Mémoire de donnée
-    B4_mux2 <= B4_mem_reg when (OP4_reg = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
+    B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
     
     -- LC après Mem/RE
     W_LC <= '0' when (OP5 = "00100110" or OP5="00000000") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE
