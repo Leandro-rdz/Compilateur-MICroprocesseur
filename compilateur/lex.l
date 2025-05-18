@@ -25,6 +25,8 @@ STRING    \"[^"]*\"
 
 
 "{"          { return tOB; }
+"&&"          { return tAnd; }
+"||"          { return tOr; }
 "&"          { return tAddr; }            
 "}"          { return tCB; }
 "const"      { return tConst; }
@@ -62,10 +64,6 @@ STRING    \"[^"]*\"
 "else"       { return tElse; }
 "for"        { return tFor; }
 "while"      { return tWhile; }
-"&"          { return tAnd; }
-"|"          { return tOr; }
-"true"       { return tTrue; }
-"false"      { return tFalse; }
 "!"          { return tNegate; }
 [a-z_][a-z0-9_]*  { 
                         strncpy(yylval.id, yytext, 15);

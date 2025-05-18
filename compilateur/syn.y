@@ -21,7 +21,7 @@
 //TODO: Implementer l'emulateur
 //FIXME: Clean code
 
-%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif  tXor tIf tElse tFor tWhile tAnd tOr tEqq tTrue tNegate tFalse
+%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tXor tIf tElse tFor tWhile tAnd tOr tEqq tNegate 
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
@@ -40,6 +40,8 @@
 %nonassoc tElse
 %left tAdd tSub
 %left tMul tDiv
+%left tLT tGT tGE tLE tDif tEqq
+%left tAnd tOr tXor
 %start Code
 
 %%
@@ -114,18 +116,16 @@ For:
     ;
 
 Condition: 
-      Value tLT Value { ASM(INF,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
-    | Value tGT Value { ASM(SUP,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    | Value tGE Value { ASM(SUPE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    | Value tLE Value { ASM(INFE,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    | Value tEqq Value{ ASM(EQU,$1, $1, $3);removeFromSymbolTable($3); $$ =$1;}
-    //| Value tDif Value
-    | Value tAnd Value { ASM(AND,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
-    | Value tOr Value   { ASM(OR,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
-    | Value tXor Value { ASM(XOR,$1, $1, $3);removeFromSymbolTable($3); $$ =$1; }
-    //| tTrue { int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;} 
-    //| tFalse { int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
-    | Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
+      Condition tLT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INF,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+    | Condition tGT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUP,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+    | Condition tGE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUPE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1);$$ =addr;}
+    | Condition tLE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INFE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+    | Condition tEqq Condition{int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+    | Value tDif Value {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(EQU,addr, $1, $3);ASM(NOT,addr,0,0);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+    | Condition tAnd Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AND,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+    | Condition tOr Condition   {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(OR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+    | Condition tXor Condition { int addr = addToSymbolTable("__tmpCond","int",0,0);ASM(XOR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+    | Value {$$ =$1;}
     | tNegate Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$2,0); ASM(NOT,addr,0,0); $$=addr;}
     ;
 
@@ -187,38 +187,38 @@ Print:
 
 /* Return statement: return expression; */
 Return:
-      tRET Expression tSC { printf("Return \n"); }
+      tRET Value tSC { printf("Return \n"); }
     ;
 //$$ = "remonte la valeur"
 Expression:
       //tNegate Expression |
       tOP Expression tCP {$$= $2;}
-    | Expression tAdd Expression { ASM(ADD, $1,$1,$3); removeFromSymbolTable($3); $$ =$1; }
-    | Expression tSub Expression { ASM(SOU, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
-    | Expression tMul Expression { ASM(MUL, $1,$1,$3); removeFromSymbolTable($3);$$ =$1; }
-    | Expression tDiv Expression { ASM(DIV, $1,$1,$3);removeFromSymbolTable($3); $$ = $1; }
-    | Value {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(AFC,addr,$1,0); $$=addr;}
+    | Expression tAdd Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(ADD, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
+    | Expression tSub Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(SOU, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
+    | Expression tMul Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(MUL, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
+    | Expression tDiv Expression {int addr = addToSymbolTable("__tmpArith","int",0,0);  ASM(DIV, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
+    | Value {$$=$1;}
     | tMul tID {int addr = addToSymbolTable("__tmpArith","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
     | tAddr tID {int addr = addToSymbolTable("__tmpArith","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(AFC,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
-    |tID { Symbol * s =searchSymbol($1);if(s->const_flag){printf("Erreur , essai de modifier un const\n");exit(1);}int addr= addToSymbolTable("__tmpArithVar",s->type,0,0);$$=addr; }
    // | tID tOP ArgList tCP { printf("Expression\n"); }
     ;
 
-ArgList:
-      /* empty */
-    | Arguments
-    ;
+//ArgList:
+//      /* empty */
+//    | Arguments
+//    ;
 
-Arguments:
-      Expression
-    | Expression tComa Arguments
-    ;
+//Arguments:
+//      Expression
+//    | Expression tComa Arguments
+//    ;
 
 Value: 
-      tNB { $$=$1; }
-    | tNBF { $$=$1; }
-    | tSTRING { $$=atoi($1);}
-    | tID { Symbol * s =searchSymbol($1); $$=s->address;}
+      tNB{int addr = addToSymbolTable("__tmpValue","int",0,0); ASM(AFC,addr,$1,0); $$=addr;} 
+    | tNBF {int addr = addToSymbolTable("__tmpValue","float",0,0); ASM(AFC,addr,$1,0); $$=addr;}
+    | tSTRING {int addr = addToSymbolTable("__tmpValue","char",0,0); ASM(AFC,addr,atoi($1),0); $$=addr;}
+    |tID { Symbol * s =searchSymbol($1);$$=s->address; }
+
     ; 
 
 %%
