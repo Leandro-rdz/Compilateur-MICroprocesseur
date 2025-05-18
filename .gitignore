@@ -53,9 +53,10 @@ dkms.conf
 
 vivado*
 Processeur/vivado*
-Processeur/.Xil
-Processeur/Processeur.cache
-Processeur/Processeur.hw
-Processeur/Processeur.runs
-Processeur/Processeur.sim
-Processeur/Processeur.ip_user_files
+Processeur/.Xil/
+Processeur/Processeur.cache/
+Processeur/Processeur.hw/
+Processeur/Processeur.runs/
+Processeur/Processeur.sim/
+Processeur/Processeur.ip_user_files/
+Processeur/Processeur.xpr
