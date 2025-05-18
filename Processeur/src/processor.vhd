@@ -19,9 +19,6 @@ architecture Behavioral of processor is
     signal A4, B4_in, B4_mux1, B4_out, B4_mux2, OP4 : std_logic_vector(7 downto 0);                                 -- Memoire des données
     signal A5, B5, OP5 : std_logic_vector(7 downto 0);                                                              -- Avant écriture dans les bancs de registres 
     signal RW_LC, W_LC : std_logic := '0';
-    signal B4_mem_reg : std_logic_vector(7 downto 0);
-    signal OP4_reg : std_logic_vector(7 downto 0) := (others => '0'); -- pour suivre OP4 un cycle
-
     
     -- signaux ignorés pour l'instant genre les FLAG de l'ALU on s'en fiche pour l'instant 
     signal IGNORED_1, IGNORED_6, IGNORED_7 : std_logic_vector(7 downto 0) := (others => '0');
