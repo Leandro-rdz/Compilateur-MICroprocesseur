@@ -26,11 +26,10 @@ int main(){
         }
     }
     printf("Ouais");
-    int x = add(5, 6);
+    int x = 2;
 
     return 0;
 }
 
-int add(int a, int b){
-    return a + b;
-}
+
+

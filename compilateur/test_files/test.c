@@ -1,10 +1,3 @@
-int add(int a, int b){
-    return a + b;
-}
-
-
-
-
 int main(){
     float x = 0.9;
     int y = 86;
@@ -27,7 +20,7 @@ int main(){
         }
     }
     printf("Ouais");
-    int x = add(5, 6);
+    int x = 2e2;
 
     return 0;
 }

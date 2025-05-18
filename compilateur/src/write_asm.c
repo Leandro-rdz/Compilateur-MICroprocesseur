@@ -199,7 +199,7 @@ void writeOutputOPCode(char * filename) {
 
         else if (strcmp(op, "AND") == 0) opcode = 0x14;
         else if (strcmp(op, "OR") == 0) opcode = 0x15;
-        else if (strcmp(op, "NOT") == 0) { opcode = 0x17; parsed = 1; }
+        else if (strcmp(op, "NOT") == 0) { opcode = 0x17; parsed = 2; }
         else if (strcmp(op, "XOR") == 0) opcode = 0x16;
 
 

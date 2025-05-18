@@ -16,7 +16,7 @@
     char string[64];
     char type[16];
 }
-//TODO: Implementer And or negate ect.... Donc faire NOT 
+
 //TODO: Implementer les fonctions(maybe les for / tab)
 //TODO: Implementer l'emulateur
 //FIXME: Clean code
@@ -56,19 +56,19 @@ Declarations:
     ;
 
 Declaration: 
-      Function  { printf("Declaration de fonction \n"); }
-    | VariableDeclaration { printf("Declaration de variable \n"); }
-    | ConstantDeclaration { printf("Declaration de constante \n"); }
+      Function  {/* printf("Declaration de fonction \n");*/ }
+    | VariableDeclaration { /*printf("Declaration de variable \n");*/ }
+    | ConstantDeclaration {/* printf("Declaration de constante \n");*/ }
     ;
 
 
 Function:
-      Type tID { addToSymbolTable($2,$1,0,0);} tOP Parameters tCP Body { printf("Function %s\n", $2); }
+      Type tID { addToSymbolTable($2,$1,0,0);} tOP Parameters tCP Body { /*printf("Function %s\n", $2);*/ }
     ;
 
 Parameters:
       /* empty */
-    | ParamList
+    | ParamList 
     ;
 
 ParamList:
@@ -116,22 +116,22 @@ For:
     ;
 
 Condition: 
-      Condition tLT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INF,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-    | Condition tGT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUP,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-    | Condition tGE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUPE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1);$$ =addr;}
-    | Condition tLE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INFE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-    | Condition tEqq Condition{int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-    | Value tDif Value {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(EQU,addr, $1, $3);ASM(NOT,addr,0,0);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-    | Condition tAnd Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AND,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-    | Condition tOr Condition   {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(OR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-    | Condition tXor Condition { int addr = addToSymbolTable("__tmpCond","int",0,0);ASM(XOR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-    | Value {$$ =$1;}
-    | tNegate Value {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AFC,addr,$2,0); ASM(NOT,addr,0,0); $$=addr;}
+            Condition tLT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INF,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+      | Condition tGT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUP,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+      | Condition tGE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUPE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1);$$ =addr;}
+      | Condition tLE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INFE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+      | Condition tEqq Condition{int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
+      | Condition tDif Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);int addr2 = addToSymbolTable("__tmpCond","int",0,0); ASM(NOT,addr2,addr,0);removeFromSymbolTable($3);removeFromSymbolTable($1); removeFromSymbolTable(addr);$$ =addr2;}
+      | Condition tAnd Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AND,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+      | Condition tOr Condition   {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(OR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+      | Condition tXor Condition { int addr = addToSymbolTable("__tmpCond","int",0,0);ASM(XOR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+      | tNegate Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(NOT,$2,addr,0); $$=addr;}
+      | Value {$$ =$1;}
     ;
 
 /* Declaration of function parameters */
 Parameter:
-      Type tID
+      Type tID { addToSymbolTable($2,$1,0,0);}
     ;
 
 ConstantDeclaration:
@@ -187,7 +187,7 @@ Print:
 
 /* Return statement: return expression; */
 Return:
-      tRET Value tSC { printf("Return \n"); }
+      tRET Value tSC {/* printf("Return \n"); */}
     ;
 //$$ = "remonte la valeur"
 Expression:

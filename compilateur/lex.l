@@ -13,9 +13,8 @@ STRING    \"[^"]*\"
 
 %%
 
-{INTEGER}    { yylval.nb = strtod(yytext,NULL); return tNB; }
 {FLOATNUM}   { yylval.nbf = strtod(yytext,NULL);return tNBF; }
-
+{INTEGER}    { yylval.nb = strtod(yytext,NULL); return tNB; }
 {STRING} { 
           strncpy(yylval.string, yytext, 63);
           yylval.string[64] = '\0';
@@ -59,7 +58,7 @@ STRING    \"[^"]*\"
 ">="         { return tGE; } 
 "<="         { return tLE; }
 "!="         { return tDif; }
-"^"          { return tXor; }
+"^"          { return tXor;}
 "if"         { return tIf; }
 "else"       { return tElse; }
 "for"        { return tFor; }
