@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <ZoomStartTime time="4.690 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,342.143 ns"></ZoomEndTime>
       <Cursor1Time time="939.805 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="251"></NameColumnWidth>
-      <ValueColumnWidth column_width="180"></ValueColumnWidth>
+      <ValueColumnWidth column_width="172"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="33" />
+   <WVObjectSize size="35" />
    <wvobject fp_name="/Test/uut/CLK" type="logic">
       <obj_property name="ElementShortName">CLK</obj_property>
       <obj_property name="ObjectShortName">CLK</obj_property>
@@ -200,8 +200,8 @@
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject fp_name="/Test/uut/regfile_inst/regfile" type="array">
-      <obj_property name="ElementShortName">regfile[0:15][7:0]</obj_property>
-      <obj_property name="ObjectShortName">regfile[0:15][7:0]</obj_property>
+      <obj_property name="ElementShortName">regfile[15:0][7:0]</obj_property>
+      <obj_property name="ObjectShortName">regfile[15:0][7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/Test/uut/memory_inst/mem" type="array">
@@ -209,5 +209,13 @@
       <obj_property name="ObjectShortName">mem[0:255][7:0]</obj_property>
       <obj_property name="CustomSignalColor">#FFFFFF</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Test/uut/control_inst/RST" type="logic">
+      <obj_property name="ElementShortName">RST</obj_property>
+      <obj_property name="ObjectShortName">RST</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Test/uut/control_inst/cond" type="array">
+      <obj_property name="ElementShortName">cond[7:0]</obj_property>
+      <obj_property name="ObjectShortName">cond[7:0]</obj_property>
    </wvobject>
 </wave_config>
