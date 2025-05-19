@@ -37,7 +37,8 @@ test:
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
 	cat $(OUT_DIR)/output.asm
-	cat $(OUT_DIR)/output.opcode
+	#cat $(OUT_DIR)/output.opcode
+	python3 $(CURDIR)/cross-compil/cross-compilateur.py 
 
 clean:
 	rm -rf $(OUT_DIR)  # Supprime tout le dossier `out/`
