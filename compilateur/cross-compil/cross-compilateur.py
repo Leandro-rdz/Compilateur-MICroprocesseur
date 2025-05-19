@@ -108,10 +108,8 @@ def convert_file(input_lines):
         elif op == "COP":
             dst, arg = args
             rA = temp_reg
-            rD = temp_reg + 1
             insert_lines.append(encode_instruction("LOAD", [rA, arg]))
-            insert_lines.append(encode_instruction(op, [rD, rA]))
-            insert_lines.append(encode_instruction("STORE", [dst, rD]))
+            insert_lines.append(encode_instruction("STORE", [dst, rA]))
         elif op == "NOT":
             dst, arg = args
             rA = temp_reg
@@ -121,7 +119,7 @@ def convert_file(input_lines):
         elif op == "AFC" and args[0].startswith("0x"):
             addr, val = args
             rA = temp_reg
-            insert_lines.append(encode_instruction("AFC", [rA, val]))
+            insert_lines.append(encode_instruction(op, [rA, val]))
             insert_lines.append(encode_instruction("STORE", [addr, rA]))
         elif op in {"JMP", "JMPF"}:
             final_lines.append(f"{index} => x\"{encode_instruction(op, args)}\",")
@@ -136,7 +134,7 @@ def convert_file(input_lines):
             final_lines.append(f"{index} => x\"{hex_instr}\",")
             index += 1
 
-    final_lines.append("others => (others => '0');")
+    final_lines.append("others => (others => '0')")
     return final_lines
 # === Main ===
 

@@ -1,6 +1,6 @@
 #include "symbol_table.h"
 
-#define debug 0
+#define debug 1
 
 static Symbol * st;    // table des symbole
 static int tableIndex = 0; // index dans la table des symboles
@@ -31,6 +31,7 @@ void removeFromSymbolTable(int tempAddr) {
 			stp -= st[i].size;
 			for (int j = i; j < tableIndex - 1; j++) {
 				st[j] = st[j + 1];
+				st[j].address = st[j].address - st[i].size;
 			}
 			tableIndex--;
 			break;
