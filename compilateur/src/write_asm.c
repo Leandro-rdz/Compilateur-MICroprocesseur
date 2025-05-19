@@ -13,7 +13,7 @@ int Jump_Table[4096];
 int jump_counter = 0;
 
 void pushJumpf(int condition) {
-    int index = instruction_counter;  // Sauvegarde l'adresse actuelle
+    int index = instruction_counter; // Sauvegarde l'adresse actuelle
     if (jumpf_counter >= 4096) {
         fprintf(stderr, "Erreur : dépassement de la table des sauts\n");
         exit(EXIT_FAILURE);
