@@ -41,7 +41,7 @@ def encode_instruction(op, args):
         rD, rA, rB = args
         return f"{opcode:02X}{rD:02X}{rA:02X}{rB:02X}"
     elif op in {"NOT", "COP"}:
-        rD, rA = args
+        rD = args
         return f"{opcode:02X}{rD:02X}0000"
     elif op == "AFC":
         rD, val = args
@@ -51,7 +51,7 @@ def encode_instruction(op, args):
         return f"{opcode:02X}{addr:02X}0000"
     elif op == "JMPF":
         addr, r = args
-        return f"{opcode:02X}{r:02X}{addr:02X}00"
+        return f"{opcode:02X}{addr:02X}{r:02X}00"
     elif op == "LOAD":
         rD, addr = args
         return f"{opcode:02X}{rD:02X}{addr:02X}00"
@@ -70,11 +70,36 @@ def parse_line(line):
     args = parts[2:]
     return addr, op, args
 
-
 def convert_file(input_lines):
     final_lines = []
-    temp_reg = 0 # Registres    
-    #ADD a NOP au debut
+    temp_reg = 0  # Registres temporaires
+
+    # Pass 1: construire la table addr -> index
+    addr_to_index = {}
+    index = 1  # commence à 1, car NOP à l'index 0
+    for line in input_lines:
+        if not line.strip() or line.strip().startswith("#"):
+            continue
+        parsed = parse_line(line)
+        if parsed is None:
+            continue
+        addr, op, args = parsed
+        if (debug):
+            print(f"Addr: {addr:X}, Op: {op}, Index: {index}")
+        addr_to_index[addr] = index
+
+        if op in {"ADD", "SOU", "MUL", "DIV", "AND", "OR", "XOR", "INF", "INFE", "SUP", "SUPE", "EQU"}:
+            index += 4  
+        elif op == "NOT":
+            index += 3  
+        elif op in {"COP","AFC","JMPF"}:
+            index += 2  
+        elif op == "JMP":
+            index += 1  
+        else:
+            index += 1  # par défaut
+
+    # Repasser pour générer le vrai code
     final_lines.append("0 => x\"00000000\",")
     index = 1
 
@@ -84,9 +109,8 @@ def convert_file(input_lines):
         parsed = parse_line(line)
         if parsed is None:
             continue
-        _, op, args = parsed
+        addr, op, args = parsed
 
-        # Mémoire -> Registre
         insert_lines = []
 
         if op in {"ADD", "SOU", "MUL", "DIV", "AND", "OR", "XOR", "INF", "INFE", "SUP", "SUPE", "EQU"}:
@@ -94,17 +118,10 @@ def convert_file(input_lines):
             rA = temp_reg
             rB = temp_reg + 1
             rD = temp_reg + 2
-
-            # LOAD source 1
             insert_lines.append(encode_instruction("LOAD", [rA, arg1]))
-            # LOAD source 2
             insert_lines.append(encode_instruction("LOAD", [rB, arg2]))
-            # ALU operation
             insert_lines.append(encode_instruction(op, [rD, rA, rB]))
-            # STORE result
             insert_lines.append(encode_instruction("STORE", [dst, rD]))
-
-
         elif op == "COP":
             dst, arg = args
             rA = temp_reg
@@ -116,18 +133,26 @@ def convert_file(input_lines):
             insert_lines.append(encode_instruction("LOAD", [rA, arg]))
             insert_lines.append(encode_instruction(op, [rA]))
             insert_lines.append(encode_instruction("STORE", [dst, rA]))
-        elif op == "AFC" and args[0].startswith("0x"):
-            addr, val = args
+        elif op == "AFC":
+            dst, val = args
             rA = temp_reg
-            insert_lines.append(encode_instruction(op, [rA, val]))
-            insert_lines.append(encode_instruction("STORE", [addr, rA]))
-        elif op in {"JMP", "JMPF"}:
-            final_lines.append(f"{index} => x\"{encode_instruction(op, args)}\",")
-            index += 1
-            continue
+            insert_lines.append(encode_instruction("AFC", [rA, val]))
+            insert_lines.append(encode_instruction("STORE", [dst, rA]))
+        elif op == "JMP":
+            target = int(args[0], 16) if isinstance(args[0], str) else int(args[0])
+            jump_addr = addr_to_index.get(target, 0)
+            insert_lines.append(encode_instruction(op, [jump_addr]))
+        elif op == "JMPF":
+            target_addr = int(args[0], 16) if isinstance(args[0], str) and args[0].startswith("0x") else int(args[0])
+            if(debug):
+                print(f"JMPF vers addr {target_addr} -> index {addr_to_index[target_addr]}")
+            cond_addr = int(args[1], 16) if isinstance(args[1], str) and args[1].startswith("0x") else int(args[1])
+            jump_index = addr_to_index.get(target_addr, 0)
 
+            temp_r = temp_reg  # registre temporaire
+            insert_lines.append(encode_instruction("LOAD", [temp_r, cond_addr]))
+            insert_lines.append(encode_instruction(op, [jump_index,temp_r]))
         else:
-            # Cas simple
             insert_lines.append(encode_instruction(op, args))
 
         for hex_instr in insert_lines:
@@ -136,6 +161,7 @@ def convert_file(input_lines):
 
     final_lines.append("others => (others => '0')")
     return final_lines
+
 # === Main ===
 
 if __name__ == "__main__":

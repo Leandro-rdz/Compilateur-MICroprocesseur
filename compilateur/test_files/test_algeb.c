@@ -6,6 +6,15 @@ int main(){
     int d = 2 * (a + c) - 3; 
     a = 2 * (a + c) - 1;
     int f = a*2;
-
+    b = a + c;
+    if  ( 3 || 2){   
+        a = 1;
+    } else {
+        a = 0;
+    }
+    while (a < 10) {
+        a = a + 1;
+    }
+    return 0;
 
 }
