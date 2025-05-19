@@ -116,7 +116,7 @@ begin
         port map (
             CLK  => CLK,
             OP   => OP3,
-            cond => B3_alu_out,
+            cond => B3_alu_in,
             RST  => jump_reset
         );
         
@@ -174,5 +174,5 @@ begin
     B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
     
     -- LC après Mem/RE
-    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE
+    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000" or OP5="00100010" or OP5="00100011") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE ou un JMP ou un JMPF
 end Behavioral;
