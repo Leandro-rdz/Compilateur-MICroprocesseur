@@ -1,5 +1,7 @@
 import os
 
+debug = 0
+
 # Table des opcodes
 OPCODES = {
     "NOP": 0x00,
@@ -25,15 +27,14 @@ OPCODES = {
     "STORE":0x26
 }
 
-def to_hex8(val):
-    return f"{val & 0xFF:02X}"
-
 def encode_instruction(op, args):
     opcode = OPCODES.get(op.upper(), 0x00)
     if op == "NOP":
         return "00000000"
 
-    args = [int(a, 16) if isinstance(a, str) and a.startswith("0x") else int(a) for a in args]
+    args = [int(a,16) if isinstance(a, str) and a.startswith("0x") else int(a) for a in args]
+    if (debug):
+        print(op,args)
 
 
     if op in {"ADD", "SOU", "MUL", "DIV", "AND", "OR", "XOR", "INF", "INFE", "SUP", "SUPE", "EQU"}:
@@ -44,7 +45,7 @@ def encode_instruction(op, args):
         return f"{opcode:02X}{rD:02X}0000"
     elif op == "AFC":
         rD, val = args
-        return f"{opcode:02X}{rD:02X}{val:04X}"
+        return f"{opcode:02X}{rD:02X}{val:02X}00"
     elif op == "JMP":
         addr = args[0]
         return f"{opcode:02X}{addr:02X}0000"
@@ -69,14 +70,10 @@ def parse_line(line):
     args = parts[2:]
     return addr, op, args
 
-def is_memory_address(val):
-    # Une adresse mémoire est un multiple de 4 supérieur ou égal à 0x0
-    return val.startswith("0x")
-
 
 def convert_file(input_lines):
     final_lines = []
-    temp_reg = 100  # registre temporaire >= 100 pour éviter collision
+    temp_reg = 0 # Registres
     index = 0
 
     for line in input_lines:
@@ -105,7 +102,6 @@ def convert_file(input_lines):
             # STORE result
             insert_lines.append(encode_instruction("STORE", [dst, rD]))
 
-            temp_reg += 3
 
         elif op == "COP":
             dst, arg = args
@@ -114,20 +110,17 @@ def convert_file(input_lines):
             insert_lines.append(encode_instruction("LOAD", [rA, arg]))
             insert_lines.append(encode_instruction(op, [rD, rA]))
             insert_lines.append(encode_instruction("STORE", [dst, rD]))
-            temp_reg += 2
         elif op == "NOT":
             dst, arg = args
             rA = temp_reg
             insert_lines.append(encode_instruction("LOAD", [rA, arg]))
             insert_lines.append(encode_instruction(op, [rA]))
             insert_lines.append(encode_instruction("STORE", [dst, rA]))
-            temp_reg += 1
-        elif op == "AFC" and is_memory_address(args[0]):
+        elif op == "AFC" and args[0].startswith("0x"):
             addr, val = args
             rA = temp_reg
             insert_lines.append(encode_instruction("AFC", [rA, val]))
             insert_lines.append(encode_instruction("STORE", [addr, rA]))
-            temp_reg += 1
         elif op in {"JMP", "JMPF"}:
             final_lines.append(f"{index} => x\"{encode_instruction(op, args)}\",")
             index += 1
