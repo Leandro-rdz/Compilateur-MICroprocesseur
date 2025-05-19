@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 
 -- Uncomment the following library declaration if using
@@ -28,13 +29,15 @@ architecture Behavioral of Instr_counter is
 begin
     process (CLK)
     begin
-        if RST = '1' then
-            count <= std_logic_vector(('0' & unsigned(Addr_rst)) - ('0' & "00000001"));
-        else
-            prescaler <= prescaler + 1;
-            if (prescaler = 5) then 
-                prescaler <= 0;
-                count <= std_logic_vector(('0' & unsigned(Addr_rst)) + ('0' & "00000001"));
+        if rising_edge(CLK) then
+            if RST = '1' then
+                count <= Addr_rst-1;
+            else
+                prescaler <= prescaler + 1;
+                if (prescaler = 5) then 
+                    prescaler <= 0;
+                    count <= count + 1;
+                end if;
             end if;
         end if;
     end process;

@@ -133,6 +133,14 @@ architecture Behavior of Instr_Memory is
     51 => x"21021300",  -- AFC R2, 19   
     52 => x"26100200",  -- STORE @10, R2
     53 => x"25031000",  -- LOAD R3, @10
+    
+    
+    --JUMP ET JUMPF
+    --0 => x"00000000",   -- NOP
+    --1 => x"21000100",   -- AFC R0, 1
+    --2 => x"21010100",   -- AFC R1, 1
+    --3 => x"10000100",   -- ADD R0,R1,R0
+    --4 => x"22030000",   -- JUMP to instr 3
     others => (others => '0')
   );
   --signal out_reg : std_logic_vector(31 downto 0);
