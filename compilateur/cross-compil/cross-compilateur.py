@@ -73,8 +73,10 @@ def parse_line(line):
 
 def convert_file(input_lines):
     final_lines = []
-    temp_reg = 0 # Registres
-    index = 0
+    temp_reg = 0 # Registres    
+    #ADD a NOP au debut
+    final_lines.append("0 => x\"00000000\",")
+    index = 1
 
     for line in input_lines:
         if not line.strip() or line.strip().startswith("#"):
