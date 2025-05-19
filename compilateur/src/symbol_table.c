@@ -1,6 +1,6 @@
 #include "symbol_table.h"
 
-#define debug 0
+#define debug 1
 
 static Symbol * st;    // table des symbole
 static int tableIndex = 0; // index dans la table des symboles

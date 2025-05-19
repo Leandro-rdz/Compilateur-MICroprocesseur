@@ -27,13 +27,13 @@ int popJumpf() {
         fprintf(stderr, "Erreur : tentative de dépiler une table des sauts vide\n");
         exit(EXIT_FAILURE);
     }
-	int jumpf_index = Jumpf_Table[jumpf_counter - 1];
-    char *line = Instructions[jumpf_index];
+	int jumpf_index = Jumpf_Table[jumpf_counter - 1]; // Récupère l'index du dernier saut
+    char *line = Instructions[jumpf_index]; // Récupère la ligne à patcher
     int condition;
     sscanf(line, "JMPF TMP 0x%x", &condition);
-    // Écriture dans la bonne ligne (pas jump_index - 1)
-    sprintf(Instructions[jumpf_index], "JMPF 0x%x 0x%x\n", instruction_counter * 4, condition);
-    jumpf_counter--;
+
+    sprintf(Instructions[jumpf_index], "JMPF 0x%x 0x%x\n", instruction_counter * 4, condition);    // Écriture dans la bonne ligne
+    jumpf_counter--; // Dépile l'index
 	return jumpf_index;
 }
 

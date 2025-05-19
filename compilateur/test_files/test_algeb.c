@@ -1,3 +1,4 @@
+int instruction_counter = 0;
 int main(){
     int a = 5;
     int c = 2;
