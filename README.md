@@ -28,3 +28,4 @@ Set d'instructions :
 | STORE       | 0010 0110   | 0x26  | -       |               | x          |
 | LCOP        | 0010 0111   | 0x27  | x       |               |            |
 | RCOP        | 0010 1000   | 0x28  | x       |               |            |
+| WRITE       | 0010 1001   | 0x29  |         |               |            |
