@@ -7,7 +7,7 @@ int main(){
     a = 2 * (a + c) - 1;
     int f = a*2;
     b = a + c;
-    if  ( 3 || 2){   
+    if  ( 2 || 3){   
         a = 1;
     } else {
         a = 0;
