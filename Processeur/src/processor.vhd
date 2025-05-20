@@ -4,7 +4,13 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity processor is
     Port (
-        CLK : in std_logic
+        CLK         : in std_logic;
+        contr_ld1   : out std_logic_vector(7 downto 0); -- contraintes board FPGA
+        contr_ld2   : out std_logic_vector(7 downto 0); -- contraintes board FPGA
+        contr_itr1  : in std_logic_vector(7 downto 0);  -- contraintes board FPGA
+        contr_itr2  : in std_logic_vector(7 downto 0);  -- contraintes board FPGA
+        contr_btn   : in std_logic_vector(4 downto 0)   -- contraintes board FPGA
+        
     );
 end processor;
 
@@ -15,7 +21,8 @@ architecture Behavioral of processor is
     signal jump_reset : std_logic := '0';
     signal instruction_selected : std_logic_vector(31 downto 0) := (others => '0');                                 -- post fetch
     signal A1, B1, C1, OP1 : std_logic_vector(7 downto 0);                                                          -- post decode
-    signal A2, B2_select_in, B2_select_out, B2_mux, C2_in, C2_out, OP2 : std_logic_vector(7 downto 0);              -- banc de registre
+    signal A2, B2_select_in, B2_select_out, B2_mux2, C2_in, C2_out, OP2 : std_logic_vector(7 downto 0);             -- banc de registre
+    signal input_board, B2_mux1 : std_logic_vector(7 downto 0) := (others => '0');                                  -- input board (for ex buttons)
     signal A3, B3_alu_in, B3_alu_out, B3_mux, C3, OP3 : std_logic_vector(7 downto 0);                               -- UAL
     signal A4, B4_in, B4_mux1, B4_out, B4_mux2, OP4 : std_logic_vector(7 downto 0);                                 -- Memoire des données
     signal A5, B5, OP5 : std_logic_vector(7 downto 0);                                                              -- Avant écriture dans les bancs de registres 
@@ -79,13 +86,28 @@ begin
             QA    => B2_select_out,
             QB    => C2_out
         );
+
+    -- Instanciation de l'interface IO
+    io_inst : entity work.IO
+        port map (
+            LD1   => contr_ld1,  -- contrainte board, ne pas router
+            LD2   => contr_ld2,  -- contrainte board, ne pas router
+            INT1  => contr_itr1, -- contrainte board, ne pas router
+            INT2  => contr_itr2, -- contrainte board, ne pas router
+            BTN   => contr_btn,  -- contrainte board, ne pas router
+            CLK         => CLK,
+            OP          => OP5, --pour détecter si y'a écriture à l'étage 5 car il lit quoi qu'il arrive
+            Input_addr  => A5,
+            Output_addr => A2,
+            Output      => input_board,
+            Input       => B5
+        );
        
-        
     -- Instanciation de DI/EX
     di_ex_inst : entity work.interface_element
         port map (
             a_in   => A2,
-            b_in   => B2_mux, -- on a B2_select_out ou B2_select_in à donner à manger ici (b_in) selon le OP2 
+            b_in   => B2_mux2, -- on a B2_select_out ou B2_select_in à donner à manger ici (b_in) selon le OP2 
             c_in   => C2_out,
             op_in  => OP2,
             a_out  => A3,
@@ -156,9 +178,12 @@ begin
             op_out => OP5,
             CLK    => CLK
         );
+    
+    -- MUX IO
+    B2_mux1 <= input_board when (OP2 = "00101001") else B2_select_out; -- si OP2=READ on sort du mux1 le input_board.
 
     -- MUX Banc de registre
-    B2_mux <= B2_select_in when (OP2 = "00100001" or OP2 = "00100101") else B2_select_out; -- si AFC OR LOAD
+    B2_mux2 <= B2_select_in when (OP2 = "00100001" or OP2 = "00100101") else B2_mux1; -- si AFC OR LOAD
     
     -- MUX UAL
     B3_mux <= B3_alu_out when (OP3(7 downto 4) = "0001") else B3_alu_in; -- si appartient à ALU ou non
@@ -173,5 +198,5 @@ begin
     B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
     
     -- LC après Mem/RE
-    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000" or OP5="00100010" or OP5="00100011") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE ou un JMP ou un JMPF
+    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000" or OP5="00100010" or OP5="00100011" or OP5="00100100") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE ou un JMP ou un JMPF ou un PRINT
 end Behavioral;
