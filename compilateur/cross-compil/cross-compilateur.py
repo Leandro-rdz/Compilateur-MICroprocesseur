@@ -166,7 +166,7 @@ def convert_file(input_lines):
 
 if __name__ == "__main__":
     input_path = os.path.join("..","compilateur", "out", "output.asm")
-    output_path = os.path.join("..","compilateur", "out","output_vivado.txt")
+    output_path = os.path.join("..","compilateur", "out","output_vivado.vhdl")
 
     if not os.path.exists(input_path):
         print(f"Fichier introuvable : {input_path}")
