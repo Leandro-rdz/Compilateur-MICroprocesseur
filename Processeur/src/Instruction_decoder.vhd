@@ -12,6 +12,7 @@ entity Instruction_decoder is
 end Instruction_decoder;
 
 architecture Behavioral of Instruction_decoder is
+signal j_flg : std_logic :='0';
 begin
 
   -- Assign bits based on given format:
@@ -24,6 +25,5 @@ begin
   OP <= Instruction(31 downto 24);
   A  <= Instruction(23 downto 16);
   B  <= Instruction(15 downto 8);
-  C  <= Instruction(7 downto 0);
-
+  C  <= Instruction(7 downto 0) ;
 end Behavioral;

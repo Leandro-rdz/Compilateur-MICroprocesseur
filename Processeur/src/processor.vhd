@@ -14,14 +14,16 @@ architecture Behavioral of processor is
     signal instruction_pointer : std_logic_vector(7 downto 0) := (others => '0');
     signal jump_reset : std_logic := '0';
     signal instruction_selected : std_logic_vector(31 downto 0) := (others => '0');                                 -- post fetch
-    signal A1, B1, C1, OP1 : std_logic_vector(7 downto 0);                                                          -- post decode
+    signal A1, B1, C1, OP1 : std_logic_vector(7 downto 0);        
+    signal A2f, B2f_select_in, C2f_in, OP2f : std_logic_vector(7 downto 0);           
     signal A2, B2_select_in, B2_select_out, B2_mux, C2_in, C2_out, OP2 : std_logic_vector(7 downto 0);              -- banc de registre
     signal A3, B3_alu_in, B3_alu_out, B3_mux, C3, OP3 : std_logic_vector(7 downto 0);                               -- UAL
     signal A4, B4_in, B4_mux1, B4_out, B4_mux2, OP4 : std_logic_vector(7 downto 0);                                 -- Memoire des données
     signal A5, B5, OP5 : std_logic_vector(7 downto 0);                                                              -- Avant écriture dans les bancs de registres 
     signal RW_LC, W_LC : std_logic := '0';
-    
-    -- signaux ignorés pour l'instant genre les FLAG de l'ALU on s'en fiche pour l'instant 
+    signal alea : std_logic := '0';
+    signal jump_flag : std_logic := '0';
+        -- signaux ignorés pour l'instant genre les FLAG de l'ALU on s'en fiche pour l'instant 
     signal IGNORED_1, IGNORED_6, IGNORED_7 : std_logic_vector(7 downto 0) := (others => '0');
     signal IGNORED_2, IGNORED_3, IGNORED_4, IGNORED_5 : std_logic := '0';
 begin
@@ -31,7 +33,9 @@ begin
             CLK         =>  CLK,
             RST         => jump_reset,
             Addr_rst    => A3,
-            Addr_out    => instruction_pointer
+            Addr_out    => instruction_pointer,
+            Alea        => alea,
+            FLG         => jump_flag
         );
         
     -- Instanciation de la mémoire des instructions
@@ -53,24 +57,40 @@ begin
         );
         
     -- Instanciation de LI/DI
-    li_di_inst : entity work.interface_element
+    li_di_inst : entity work.interface_variant
         port map (
-            a_in   => A1,
-            b_in   => B1,
-            c_in   => C1,
+            a_in   => A1 ,
+            b_in   => B1 ,
+            c_in   => C1 ,
             op_in  => OP1,
             a_out  => A2,
             b_out  => B2_select_in,
             c_out  => C2_in,
             op_out => OP2,
-            CLK    => CLK
+            CLK    => CLK,
+            flg    => jump_flag
         );
 
+            
+    -- Instanciation de l'interface pour l'aléa
+    memory_alea_inst : entity work.interface_memory
+        port map (
+            a_in   => A2 ,
+            b_in   => B2_select_in ,
+            c_in   => C2_in ,
+            op_in  => OP2,
+            a_out  => A2f ,
+            b_out  => B2f_select_in,
+            c_out  => C2f_in,
+            op_out => OP2f,
+            CLK    => CLK,
+            Alea   => Alea  
+        );
     -- Instanciation du banc de registres
     regfile_inst : entity work.registers
         port map (
-            ADA   => B2_select_in,
-            ADB   => C2_in,
+            ADA   => B2f_select_in,
+            ADB   => C2f_in,
             ADW   => A5,
             W     => W_LC, -- donner OP5 si ça correspond bien au OPCODE d'écriture dans les registres
             Data  => B5,
@@ -84,10 +104,10 @@ begin
     -- Instanciation de DI/EX
     di_ex_inst : entity work.interface_element
         port map (
-            a_in   => A2,
-            b_in   => B2_mux, -- on a B2_select_out ou B2_select_in à donner à manger ici (b_in) selon le OP2 
-            c_in   => C2_out,
-            op_in  => OP2,
+            a_in   => A2f ,
+            b_in   => B2_mux , -- on a B2_select_out ou B2_select_in à donner à manger ici (b_in) selon le OP2 
+            c_in   => C2_out ,
+            op_in  => OP2f,
             a_out  => A3,
             b_out  => B3_alu_in,
             c_out  => C3,
@@ -124,7 +144,7 @@ begin
         port map (
             a_in   => A3,
             b_in   => B3_mux, -- on a B3_alu_in ou B3_alu_out à donner à manger selon le OP3
-            c_in   => (others => '0'),
+            c_in   => (others => '0') ,
             op_in  => OP3,
             a_out  => A4,
             b_out  => B4_in,
@@ -141,6 +161,27 @@ begin
         RST      => '1',
         CLK      => CLK,
         Data_Out => B4_out
+        );
+    
+    risk_inst : entity work.risk_control
+        port map(
+        CLK  => CLK,
+        RST  => '1',
+        ALEA => alea,
+        A2 => A2,
+        B2 => B2_select_in,
+        C2 => C2_in,
+        OP2=> OP2,
+        A3 => A3,
+        B3 => B3_alu_in,
+        C3 => C3,
+        OP3=> OP3,
+        A4 => A4,
+        B4 => B4_in,
+        OP4=> OP4,
+        A5 => A5,
+        B5 => B5,
+        OP5=> OP5
         );
     
     -- Instanciation de MEM/RE

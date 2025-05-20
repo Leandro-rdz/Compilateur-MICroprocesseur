@@ -18,28 +18,25 @@ entity Instr_counter is
         CLK    : in  std_logic;
         RST : in std_logic;
         Addr_rst : in std_logic_vector(7 downto 0);
-        Addr_out   : out std_logic_vector(7 downto 0)
+        Addr_out   : out std_logic_vector(7 downto 0);
+        Alea : in std_logic ;
+        FLG : in std_logic
     );
 end Instr_counter;
 
 architecture Behavioral of Instr_counter is
     signal count : std_logic_vector(7 downto 0) := (others => '0');
-    signal prescaler: integer:=0;
-
+    
 begin
     process (CLK)
     begin
         if rising_edge(CLK) then
             if RST = '1' then
-                count <= Addr_rst-1;
-            else
-                prescaler <= prescaler + 1;
-                if (prescaler = 5) then 
-                    prescaler <= 0;
-                    count <= count + 1;
-                end if;
+                count <= Addr_rst+1;    
+            elsif Alea = '0' then
+                count <= count + 1; 
             end if;
         end if;
     end process;
-    Addr_out <= count when prescaler = 0 else "00000000";
+    Addr_out <= count when (Alea = '0' or FLG = '1') else count -1 ;
 end Behavioral;
