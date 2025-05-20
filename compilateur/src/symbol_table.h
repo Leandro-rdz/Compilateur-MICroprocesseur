@@ -7,7 +7,7 @@
 
 #define TABLE_SIZE 256
 #define SYMBOL_NAME_SIZE 30
-#define ADDRESS_SIZE 4 // taille d'une adressse dans notre architecture en octet
+#define ADDRESS_SIZE 1 // taille d'une adressse dans notre architecture en octet
 
 
 typedef struct {

@@ -12,6 +12,8 @@ architecture Behavioral of processor is
 
     -- Signaux internes pour liaison entre les modules
     signal instruction_pointer : std_logic_vector(7 downto 0) := (others => '0');
+    signal jump_reset : std_logic := '0';
+    signal jump_addr_reset : std_logic_vector(7 downto 0);
     signal instruction_selected : std_logic_vector(31 downto 0) := (others => '0');                                 -- post fetch
     signal A1, B1, C1, OP1 : std_logic_vector(7 downto 0);                                                          -- post decode
     signal A2, B2_select_in, B2_select_out, B2_mux, C2_in, C2_out, OP2 : std_logic_vector(7 downto 0);              -- banc de registre
@@ -28,7 +30,9 @@ begin
     instruction_counter_inst : entity work.Instr_counter
         port map (
             CLK         =>  CLK,
-            Addr        =>  instruction_pointer
+            RST         => jump_reset,
+            Addr_rst    => A3,
+            Addr_out    => instruction_pointer
         );
         
     -- Instanciation de la mémoire des instructions
@@ -106,6 +110,16 @@ begin
             NUL => IGNORED_5  -- FLAG IGNORED
         );
         
+        
+    -- Instanciation de l'unité de contrôle
+    control_inst : entity work.control_unit
+        port map (
+            CLK  => CLK,
+            OP   => OP3,
+            cond => B3_alu_in,
+            RST  => jump_reset
+        );
+        
     -- Instanciation de EX/MEM
     ex_mem_inst : entity work.interface_element
         port map (
@@ -160,5 +174,5 @@ begin
     B4_mux2 <= B4_out when (OP4 = "00100101") else B4_in; -- si LOAD, on utilise la donnée mémoire, sinon valeur directe
     
     -- LC après Mem/RE
-    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE
+    W_LC <= '0' when (OP5 = "00100110" or OP5="00000000" or OP5="00100010" or OP5="00100011") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE ou un JMP ou un JMPF
 end Behavioral;

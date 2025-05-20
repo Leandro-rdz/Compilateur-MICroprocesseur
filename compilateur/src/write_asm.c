@@ -80,7 +80,7 @@ void ASM(enum OpCode op, int a, int b, int c) {
             sprintf(Instructions[instruction_counter++], "RCOP 0x%x 0x%x\n", a, b);
             break;
         case AFC:
-            sprintf(Instructions[instruction_counter++], "AFC 0x%x #%d\n", a, b);
+            sprintf(Instructions[instruction_counter++], "AFC 0x%x %d\n", a, b);
             break;
         case LOAD:
             sprintf(Instructions[instruction_counter++], "LOAD 0x%x 0x%x\n", a, b);
@@ -98,7 +98,7 @@ void ASM(enum OpCode op, int a, int b, int c) {
             sprintf(Instructions[instruction_counter++], "INF 0x%x 0x%x 0x%x\n", a, b, c);
             break;
         case INFE:
-            sprintf(Instructions[instruction_counter++], "INFE 0x%x 0x%x 0x%x\n", a, b, c);
+            sprintf(Instructions[instruction_counter++], "INFE 0x%x 0x%x #0x%x\n", a, b, c);
             break;
         case SUP:
             sprintf(Instructions[instruction_counter++], "SUP 0x%x 0x%x 0x%x\n", a, b, c);

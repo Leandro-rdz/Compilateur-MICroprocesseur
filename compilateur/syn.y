@@ -116,15 +116,15 @@ For:
     ;
 
 Condition: 
-            Condition tLT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INF,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-      | Condition tGT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUP,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-      | Condition tGE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUPE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1);$$ =addr;}
-      | Condition tLE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INFE,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-      | Condition tEqq Condition{int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr;}
-      | Condition tDif Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);int addr2 = addToSymbolTable("__tmpCond","int",0,0); ASM(NOT,addr2,addr,0);removeFromSymbolTable($3);removeFromSymbolTable($1); removeFromSymbolTable(addr);$$ =addr2;}
-      | Condition tAnd Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AND,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-      | Condition tOr Condition   {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(OR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
-      | Condition tXor Condition { int addr = addToSymbolTable("__tmpCond","int",0,0);ASM(XOR,addr, $1, $3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ =addr; }
+            Condition tLT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INF,addr, $1, $3); $$ =addr; }
+      | Condition tGT Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUP,addr, $1, $3); $$ =addr;}
+      | Condition tGE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(SUPE,addr, $1, $3);$$ =addr;}
+      | Condition tLE Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(INFE,addr, $1, $3); $$ =addr;}
+      | Condition tEqq Condition{int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3); $$ =addr;}
+      | Condition tDif Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(EQU,addr, $1, $3);int addr2 = addToSymbolTable("__tmpCond","int",0,0); ASM(NOT,addr2,addr,0); removeFromSymbolTable(addr);$$ =addr2;}
+      | Condition tAnd Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(AND,addr, $1, $3); $$ =addr; }
+      | Condition tOr Condition   {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(OR,addr, $1, $3); $$ =addr; }
+      | Condition tXor Condition { int addr = addToSymbolTable("__tmpCond","int",0,0);ASM(XOR,addr, $1, $3); $$ =addr; }
       | tNegate Condition {int addr = addToSymbolTable("__tmpCond","int",0,0); ASM(NOT,$2,addr,0); $$=addr;}
       | Value {$$ =$1;}
     ;
@@ -193,10 +193,10 @@ Return:
 Expression:
       //tNegate Expression |
       tOP Expression tCP {$$= $2;}
-    | Expression tAdd Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(ADD, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
-    | Expression tSub Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(SOU, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
-    | Expression tMul Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(MUL, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
-    | Expression tDiv Expression {int addr = addToSymbolTable("__tmpArith","int",0,0);  ASM(DIV, addr,$1,$3);removeFromSymbolTable($3);removeFromSymbolTable($1); $$ = addr; }
+    | Expression tAdd Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(ADD, addr,$1,$3); $$ = addr; }
+    | Expression tSub Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(SOU, addr,$1,$3); $$ = addr; }
+    | Expression tMul Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(MUL, addr,$1,$3); $$ = addr; }
+    | Expression tDiv Expression {int addr = addToSymbolTable("__tmpArith","int",0,0);  ASM(DIV, addr,$1,$3); $$ = addr; }
     | Value {$$=$1;}
     | tMul tID {int addr = addToSymbolTable("__tmpArith","int",0,0); Symbol * ptr = searchSymbol($2); ASM(LCOP,addr,ptr->address,0); $$=addr;} // déréferencement avec '£'
     | tAddr tID {int addr = addToSymbolTable("__tmpArith","int",0,0); Symbol * ptr = searchSymbol($2) ; ASM(AFC,addr,ptr->address,0); $$=addr;} // @ de pointeur avec '&'
