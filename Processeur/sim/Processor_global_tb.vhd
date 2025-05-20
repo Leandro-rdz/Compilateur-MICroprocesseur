@@ -8,7 +8,7 @@ architecture Behavioral of Test is
 
     signal CLK : std_logic := '0';
 
-    signal contr_ld1, contr_ld2, contr_itr1, contr_itr2 : std_logic_vector(7 downto 0) := (others => '0');
+    signal contr_ld1, contr_ld2, contr_itr1, contr_itr2 : std_logic_vector(7 downto 0) := "00000010";
     signal contr_btn : std_logic_vector(4 downto 0) := (others => '0');
 
     -- Instance du processeur
