@@ -21,7 +21,7 @@
 //TODO: Implementer l'emulateur
 //FIXME: Clean code
 
-%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tXor tIf tElse tFor tWhile tAnd tOr tEqq tNegate 
+%token tOB tCB tConst tEq tSub tAdd tMul tDiv tOP tCP tComa tSC tRET tPrint tLT tGT tGE tLE tAddr tDif tXor tIf tElse tFor tWhile tAnd tOr tEqq tNegate treadIO twriteIO
 %token <nb> tNB
 %token <id> tID
 %token <nbf> tNBF
@@ -47,7 +47,7 @@
 %%
 
 Code:
-      Declarations { writeOutputASM("out/output.asm"); writeOutputOPCode("out/output.opcode");}
+      Declarations { writeOutputASM("out/output.asm"); }
     ;
 
 Declarations:
@@ -92,6 +92,11 @@ Instruction:
     | If 
     | While 
     | For
+    | Write
+    ;
+
+Write:
+      twriteIO tOP tNB tComa Value tCP tSC { ASM(PRI, $3, $5, 0); removeFromSymbolTable($3); removeFromSymbolTable($5);} 
     ;
 
 If:
@@ -193,6 +198,7 @@ Return:
 Expression:
       //tNegate Expression |
       tOP Expression tCP {$$= $2;}
+    | treadIO tOP tNB tCP {int addr = addToSymbolTable("__tmpIO", "int", 0, 0); ASM(READ, addr,$3, 0); $$ = addr; }    
     | Expression tAdd Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(ADD, addr,$1,$3); $$ = addr; }
     | Expression tSub Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(SOU, addr,$1,$3); $$ = addr; }
     | Expression tMul Expression {int addr = addToSymbolTable("__tmpArith","int",0,0); ASM(MUL, addr,$1,$3); $$ = addr; }

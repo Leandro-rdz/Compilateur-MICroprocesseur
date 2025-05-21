@@ -24,7 +24,8 @@ OPCODES = {
     "JMPF":0x23,
     "PRI": 0x24,
     "LOAD":0x25,
-    "STORE":0x26
+    "STORE":0x26,
+    "READ":0x29
 }
 
 def encode_instruction(op, args):
@@ -58,6 +59,12 @@ def encode_instruction(op, args):
     elif op == "STORE":
         addr, rA = args
         return f"{opcode:02X}{addr:02X}{rA:02X}00"
+    elif op == "PRI":    
+        val, rA = args
+        return f"{opcode:02X}{val:02X}{rA:02X}00"
+    elif op == "READ":
+        rA, val = args
+        return f"{opcode:02X}{rA:02X}{val:02X}00"
     else:
         return "00000000"
 
@@ -90,9 +97,9 @@ def convert_file(input_lines):
 
         if op in {"ADD", "SOU", "MUL", "DIV", "AND", "OR", "XOR", "INF", "INFE", "SUP", "SUPE", "EQU"}:
             index += 4  
-        elif op == "NOT":
+        elif op in {"NOT","READ"}:
             index += 3  
-        elif op in {"COP","AFC","JMPF"}:
+        elif op in {"COP","AFC","JMPF", "PRI"}:
             index += 2  
         elif op == "JMP":
             index += 1  
@@ -152,6 +159,17 @@ def convert_file(input_lines):
             temp_r = temp_reg  # registre temporaire
             insert_lines.append(encode_instruction("LOAD", [temp_r, cond_addr]))
             insert_lines.append(encode_instruction(op, [jump_index,temp_r]))
+        elif op == "PRI":
+            val, dst = args
+            rA = temp_reg
+            insert_lines.append(encode_instruction("LOAD", [rA, dst]))
+            insert_lines.append(encode_instruction(op, [val, rA]))
+        elif op == "READ":
+            dst, val = args
+            rA = temp_reg
+            insert_lines.append(encode_instruction("LOAD", [rA, dst]))
+            insert_lines.append(encode_instruction(op, [rA, val]))
+            insert_lines.append(encode_instruction("STORE", [dst, rA]))
         else:
             insert_lines.append(encode_instruction(op, args))
 

@@ -91,9 +91,6 @@ void ASM(enum OpCode op, int a, int b, int c) {
         case EQU:
             sprintf(Instructions[instruction_counter++], "EQU 0x%x 0x%x 0x%x\n", a, b, c);
             break;
-        case PRI:
-            sprintf(Instructions[instruction_counter++], "PRI 0x%x\n",a);
-            break;
         case INF:
             sprintf(Instructions[instruction_counter++], "INF 0x%x 0x%x 0x%x\n", a, b, c);
             break;
@@ -124,6 +121,12 @@ void ASM(enum OpCode op, int a, int b, int c) {
         case XOR:
             sprintf(Instructions[instruction_counter++], "XOR 0x%x 0x%x 0x%x\n", a, b, c);
             break;
+        case PRI:
+            sprintf(Instructions[instruction_counter++], "PRI %x 0x%x\n",a, b);
+            break;
+        case READ:
+            sprintf(Instructions[instruction_counter++], "READ 0x%x %x\n",a, b);
+            break;
     }
 }
 
@@ -153,94 +156,4 @@ void _binaryToString(char out[ADDRESS_SIZE * 8 + 1], int num) {
         out[ADDRESS_SIZE * 8 - 1 - i] = ((num >> i) & 1) ? '1' : '0';
     }
     out[ADDRESS_SIZE * 8] = '\0';
-}
-
-
-void writeOutputOPCode(char * filename) {
-    if (file != NULL) {
-        fclose(file);
-    }
-
-    file = fopen(filename, "w");
-    if (file == NULL) {
-        perror("Erreur lors de l'ouverture du fichier");
-        exit(EXIT_FAILURE);
-    }
-    for (int i = 0; i < instruction_counter; i++) {
-        char op[10];
-        int a, b, c;
-        int opcode = 0;
-
-        int parsed = sscanf(Instructions[i], "%s 0x%x 0x%x 0x%x", op, &a, &b, &c); //parsing
-
-        if (strcmp(op, "ADD") == 0) opcode = 0x01;
-        else if (strcmp(op, "MUL") == 0) opcode = 0x02;
-        else if (strcmp(op, "SOU") == 0) opcode = 0x03;
-        else if (strcmp(op, "DIV") == 0) opcode = 0x04;
-        else if (strcmp(op, "COP") == 0) { opcode = 0x05; parsed = 2; }
-        else if (strcmp(op, "AFC") == 0) {
-            parsed = sscanf(Instructions[i], "%s 0x%x %d", op, &a, &b); // re-parsing car passage de valeur
-            opcode = 0x06;
-            parsed = 2;
-        }
-        else if (strcmp(op, "JMP") == 0) { opcode = 0x07; parsed = 1; }
-        else if (strcmp(op, "JMPF") == 0) { opcode = 0x08; parsed = 2;}
-        else if (strcmp(op, "INF") == 0) opcode = 0x09;
-        else if (strcmp(op, "SUP") == 0) opcode = 0x0A;
-        else if (strcmp(op, "EQU") == 0) opcode = 0x0B;
-        else if (strcmp(op, "PRI") == 0) { opcode = 0x0C; parsed = 1; }
-
-        else if (strcmp(op, "INFE") == 0) opcode = 0x0D;
-        else if (strcmp(op, "SUPE") == 0) opcode = 0x0E;
-        else if (strcmp(op, "LOAD") == 0) { opcode = 0x0F; parsed = 2; }
-        else if (strcmp(op, "STORE") == 0) { opcode = 0x10; parsed = 2; }
-        else if (strcmp(op, "LCOP") == 0) { opcode = 0x1A; parsed = 2; }
-        else if (strcmp(op, "RCOP") == 0) { opcode = 0x1B; parsed = 2; }
-
-        else if (strcmp(op, "AND") == 0) opcode = 0x14;
-        else if (strcmp(op, "OR") == 0) opcode = 0x15;
-        else if (strcmp(op, "NOT") == 0) { opcode = 0x17; parsed = 2; }
-        else if (strcmp(op, "XOR") == 0) opcode = 0x16;
-
-
-        char opcode_out[ADDRESS_SIZE * 8 + 1], addr[ADDRESS_SIZE * 8 + 1], a_out[ADDRESS_SIZE * 8 + 1], b_out[ADDRESS_SIZE * 8 + 1], c_out[ADDRESS_SIZE * 8 + 1], zero[ADDRESS_SIZE * 8 + 1];
-        _binaryToString(opcode_out, opcode);
-        _binaryToString(addr, i*4);
-        _binaryToString(a_out, a);
-        _binaryToString(b_out, b);
-        _binaryToString(c_out, c);
-        _binaryToString(zero, 0);
-
-        if (parsed == 2) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, zero);
-            if(debug) {
-                if(strcmp(op, "AFC") == 0) {
-                    fprintf(file, "0x%x 0x%x(%s) 0x%x %x\n", i*4, opcode, op, a, b);
-                } else {
-                    fprintf(file, "0x%x 0x%x(%s) 0x%x 0x%x\n", i*4, opcode, op, a, b);
-                }
-            }
-        } else if (parsed == 1) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, zero, zero);
-            if(debug) {
-                fprintf(file, "0x%x 0x%x(%s) 0x%x\n", i*4, opcode, op, a);
-            }
-        } else if (parsed == 0) {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, zero, zero, zero);
-            if(debug) {
-                fprintf(file, "0x%x 0x%x(%s)\n", i*4, opcode, op);
-            }
-        } else {
-            fprintf(file, "%s %s %s %s %s\n", addr, opcode_out, a_out, b_out, c_out);
-            if(debug) {
-                fprintf(file, "0x%x 0x%x(%s) 0x%x 0x%x 0x%x\n", i*4, opcode, op, a, b, c);
-            }
-        }
-    }
-    fflush(file);
-
-    if (file != NULL) {
-        fclose(file);
-        file = NULL;
-    }
 }
