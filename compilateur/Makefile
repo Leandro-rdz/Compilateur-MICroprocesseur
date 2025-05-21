@@ -9,6 +9,7 @@ YFLAGS = -d -v
 LEX_C = flex
 SYN_C = yacc
 TEST_FILE = test_files/test_io.c
+TEST_FILE2 = test_files/test_algeb.c
 
 all: $(OUT_DIR) $(BIN)
 
@@ -31,11 +32,21 @@ run:
 	make syn_compile
 	./$(BIN)
 
-test:
+test1:
 	make clean
 	clear
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
+	cat $(OUT_DIR)/output.asm
+	#cat $(OUT_DIR)/output.opcode
+	python3 $(CURDIR)/cross-compil/cross-compilateur.py
+	cat $(OUT_DIR)/output_vivado.vhdl
+
+test2:
+	make clean
+	clear
+	make syn_compile
+	./$(BIN) < $(TEST_FILE2)
 	cat $(OUT_DIR)/output.asm
 	#cat $(OUT_DIR)/output.opcode
 	python3 $(CURDIR)/cross-compil/cross-compilateur.py
