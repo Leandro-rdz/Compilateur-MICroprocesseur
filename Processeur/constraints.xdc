@@ -6,6 +6,9 @@
 # LEDs:
 # L1, P1, N3, P3, U3, W3, V3, V13, V14, U14, U15, W18, V19, U19, E19, U16
 
+#desactivation optimisations
+set_property DONT_TOUCH true [get_nets my_net]
+
 #clock
 set_property -dict { PACKAGE_PIN W5 IOSTANDARD LVCMOS33 } [get_ports CLK]
 

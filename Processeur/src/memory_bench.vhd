@@ -143,11 +143,13 @@ architecture Behavior of Instr_Memory is
 --    --4 => x"22030000",   -- JUMP to instr 3
 --    others => (others => '0')
     0 => x"00000000",   -- NOP
-    1 => x"29000300",   -- READ R0, 1
-    2 => x"29010400",   -- READ R1, 1
-    3 => x"10000100",   -- ADD R0,R1,R0
-    4 => x"24020000",   -- PRI 2 R0
-    5 => x"22010000",   -- JUMP to instr 1
+    1 => x"29000300",   -- READ R0, 3
+    2 => x"29010400",   -- READ R1, 4
+    3 => x"10020100",   -- ADD R2,R1,R0
+    4 => x"24020200",   -- PRI 2 R2
+    5 => x"11030001",   -- SOU R3,R0,R1
+    6 => x"24010300",   -- PRI 1 R3
+    7 => x"22010000",   -- JUMP to instr 1
     others => (others => '0')
 
 
