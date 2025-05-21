@@ -98,7 +98,7 @@ begin
             CLK         => CLK,
             OP          => OP5, --pour détecter si y'a écriture à l'étage 5 car il lit quoi qu'il arrive
             Input_addr  => A5,
-            Output_addr => A2,
+            Output_addr => B2_select_in,
             Output      => input_board,
             Input       => B5
         );

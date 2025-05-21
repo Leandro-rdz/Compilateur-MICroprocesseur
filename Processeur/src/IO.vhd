@@ -68,10 +68,6 @@ begin
                 end case;
             end if;
         end if;
-    end process;
-
-    process(Output_addr, OP, INT1, INT2, BTN)
-    begin
         case Output_addr is
             when "00000011" =>  reg_out<=INT1; -- Interrupteur 1
             when "00000100" =>  reg_out<=INT2; -- Interrupteur 2
