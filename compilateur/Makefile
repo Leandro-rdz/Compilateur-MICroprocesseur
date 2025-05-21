@@ -8,7 +8,7 @@ CFLAGS = src/* -I src -Wall -g -Wno-unused-function -Wno-implicit-function-decla
 YFLAGS = -d -v
 LEX_C = flex
 SYN_C = yacc
-TEST_FILE = test_files/test_algeb.c
+TEST_FILE = test_files/test_io.c
 
 all: $(OUT_DIR) $(BIN)
 
@@ -36,7 +36,7 @@ test:
 	clear
 	make syn_compile
 	./$(BIN) < $(TEST_FILE)
-	#cat $(OUT_DIR)/output.asm
+	cat $(OUT_DIR)/output.asm
 	#cat $(OUT_DIR)/output.opcode
 	python3 $(CURDIR)/cross-compil/cross-compilateur.py
 	cat $(OUT_DIR)/output_vivado.vhdl
