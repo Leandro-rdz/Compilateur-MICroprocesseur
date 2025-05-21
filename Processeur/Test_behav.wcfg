@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="132.801 ns"></ZoomEndTime>
-      <Cursor1Time time="0.000 ns"></Cursor1Time>
+      <ZoomStartTime time="1,635.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,969.001 ns"></ZoomEndTime>
+      <Cursor1Time time="862.334 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="251"></NameColumnWidth>
-      <ValueColumnWidth column_width="116"></ValueColumnWidth>
+      <ValueColumnWidth column_width="112"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="46" />
+   <WVObjectSize size="45" />
    <wvobject fp_name="/Test/uut/CLK" type="logic">
       <obj_property name="ElementShortName">CLK</obj_property>
       <obj_property name="ObjectShortName">CLK</obj_property>
@@ -193,24 +193,20 @@
       <obj_property name="ElementShortName">regfile[15:0][7:0]</obj_property>
       <obj_property name="ObjectShortName">regfile[15:0][7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/LD1" type="array">
-      <obj_property name="ElementShortName">LD1[7:0]</obj_property>
-      <obj_property name="ObjectShortName">LD1[7:0]</obj_property>
+   <wvobject fp_name="/Test/uut/io_inst/Input_addr" type="array">
+      <obj_property name="ElementShortName">Input_addr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Input_addr[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/LD2" type="array">
-      <obj_property name="ElementShortName">LD2[7:0]</obj_property>
-      <obj_property name="ObjectShortName">LD2[7:0]</obj_property>
+   <wvobject fp_name="/Test/uut/io_inst/Output_addr" type="array">
+      <obj_property name="ElementShortName">Output_addr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Output_addr[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/INT1" type="array">
-      <obj_property name="ElementShortName">INT1[7:0]</obj_property>
-      <obj_property name="ObjectShortName">INT1[7:0]</obj_property>
+   <wvobject fp_name="/Test/uut/io_inst/Output" type="array">
+      <obj_property name="ElementShortName">Output[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Output[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/INT2" type="array">
-      <obj_property name="ElementShortName">INT2[7:0]</obj_property>
-      <obj_property name="ObjectShortName">INT2[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/BTN" type="array">
-      <obj_property name="ElementShortName">BTN[4:0]</obj_property>
-      <obj_property name="ObjectShortName">BTN[4:0]</obj_property>
+   <wvobject fp_name="/Test/uut/io_inst/Input" type="array">
+      <obj_property name="ElementShortName">Input[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Input[7:0]</obj_property>
    </wvobject>
 </wave_config>
