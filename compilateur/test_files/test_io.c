@@ -7,7 +7,7 @@ void main() {
       a = readIO(3);
       b = readIO(4);
       c = a+b;
-      writeIO(22, c);
+      writeIO(1, c);
    }
 
    return 0;
