@@ -29,3 +29,6 @@ Set d'instructions :
 | LCOP        | 0010 0111   | 0x27  | x       | -             | -          |
 | RCOP        | 0010 1000   | 0x28  | x       | -             | -          |
 | READ        | 0010 1001   | 0x29  | x       | x             | x          |
+
+
+Une démo est disponible ici : https://baptiste-reb/demo-si-project
