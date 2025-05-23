@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity processor is
     Port (
-        CLK         : in std_logic;
+        CLK   : in std_logic;
         contr_ld1   : out std_logic_vector(7 downto 0); -- contraintes board FPGA
         contr_ld2   : out std_logic_vector(7 downto 0); -- contraintes board FPGA
         contr_itr1  : in std_logic_vector(7 downto 0);  -- contraintes board FPGA
@@ -15,7 +15,10 @@ entity processor is
 end processor;
 
 architecture Behavioral of processor is
-
+    -- new clock
+    signal CLK_divided : std_logic := '0';
+    signal clk_div_counter : integer range 0 to 99 := 0;
+    
     -- Signaux internes pour liaison entre les modules
     signal instruction_pointer : std_logic_vector(7 downto 0) := (others => '0');
     signal jump_reset : std_logic := '0';
@@ -32,10 +35,23 @@ architecture Behavioral of processor is
     signal IGNORED_1, IGNORED_6, IGNORED_7 : std_logic_vector(7 downto 0) := (others => '0');
     signal IGNORED_2, IGNORED_3, IGNORED_4, IGNORED_5 : std_logic := '0';
 begin
+    -- clock divider
+    clk_divider_process : process(CLK)
+    begin
+        if rising_edge(CLK) then
+            if clk_div_counter = 99 then
+                clk_div_counter <= 0;
+                CLK_divided <= not CLK_divided; -- toggle clock
+            else
+                clk_div_counter <= clk_div_counter + 1;
+            end if;
+        end if;
+    end process;
+
     -- Instanciation de la mémoire des instructions
     instruction_counter_inst : entity work.Instr_counter
         port map (
-            CLK         =>  CLK,
+            CLK         => CLK_divided,
             RST         => jump_reset,
             Addr_rst    => A3,
             Addr_out    => instruction_pointer
@@ -45,7 +61,7 @@ begin
     instruction_memory_inst : entity work.Instr_Memory
         port map (
             Addr        =>  instruction_pointer,
-            CLK         =>  CLK,
+            CLK         =>  CLK_divided,
             Instr_Out   =>  instruction_selected
         );
         
@@ -70,7 +86,7 @@ begin
             b_out  => B2_select_in,
             c_out  => C2_in,
             op_out => OP2,
-            CLK    => CLK
+            CLK    => CLK_divided
         );
 
     -- Instanciation du banc de registres
@@ -82,7 +98,7 @@ begin
             W     => W_LC, -- donner OP5 si ça correspond bien au OPCODE d'écriture dans les registres
             Data  => B5,
             RST   => '1',
-            CLK   => CLK,
+            CLK   => CLK_divided,
             QA    => B2_select_out,
             QB    => C2_out
         );
@@ -95,7 +111,7 @@ begin
             INT1  => contr_itr1, -- contrainte board, ne pas router
             INT2  => contr_itr2, -- contrainte board, ne pas router
             BTN   => contr_btn,  -- contrainte board, ne pas router
-            CLK         => CLK,
+            CLK         => CLK_divided,
             OP          => OP5, --pour détecter si y'a écriture à l'étage 5 car il lit quoi qu'il arrive
             Input_addr  => A5,
             Output_addr => B2_select_in,
@@ -114,7 +130,7 @@ begin
             b_out  => B3_alu_in,
             c_out  => C3,
             op_out => OP3,
-            CLK    => CLK
+            CLK    => CLK_divided
         );
         
 
@@ -135,7 +151,7 @@ begin
     -- Instanciation de l'unité de contrôle
     control_inst : entity work.control_unit
         port map (
-            CLK  => CLK,
+            CLK  => CLK_divided,
             OP   => OP3,
             cond => B3_alu_in,
             RST  => jump_reset
@@ -152,7 +168,7 @@ begin
             b_out  => B4_in,
             c_out  => IGNORED_6,
             op_out => OP4,
-            CLK    => CLK
+            CLK    => CLK_divided
         );
         
     memory_inst : entity work.Data_Memory
@@ -161,7 +177,7 @@ begin
         Data_In  => B4_in, 
         RW       => RW_LC,     -- OP4 que si ça correspond au bon OPCODE
         RST      => '1',
-        CLK      => CLK,
+        CLK      => CLK_divided,
         Data_Out => B4_out
         );
     
@@ -176,7 +192,7 @@ begin
             b_out  => B5,
             c_out  => IGNORED_7,
             op_out => OP5,
-            CLK    => CLK
+            CLK    => CLK_divided
         );
     
     -- MUX IO
