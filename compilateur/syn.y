@@ -231,7 +231,7 @@ Value:
 
 /* Main code */
 int main(void) {
-      yydebug = 0;
+      yydebug = 1;
       initSymbolTable();
       yyparse();
       return 0;
