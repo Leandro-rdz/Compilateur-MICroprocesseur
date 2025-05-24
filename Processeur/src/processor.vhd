@@ -22,15 +22,16 @@ architecture Behavioral of processor is
     -- Signaux internes pour liaison entre les modules
     signal instruction_pointer : std_logic_vector(7 downto 0) := (others => '0');
     signal jump_reset : std_logic := '0';
-    signal instruction_selected : std_logic_vector(31 downto 0) := (others => '0');                                 -- post fetch
+    signal instruction_selected : std_logic_vector(31 downto 0) := (others => '0');                         -- post fetch
     signal A1, B1, C1, OP1 : std_logic_vector(7 downto 0);                                                          -- post decode
     signal A2, B2_select_in, B2_select_out, B2_mux2, C2_in, C2_out, OP2 : std_logic_vector(7 downto 0);             -- banc de registre
+    signal A2_alea , B3_alea, C3_alea, OP2_alea : std_logic_vector(7 downto 0);
     signal input_board, B2_mux1 : std_logic_vector(7 downto 0) := (others => '0');                                  -- input board (for ex buttons)
     signal A3, B3_alu_in, B3_alu_out, B3_mux, C3, OP3 : std_logic_vector(7 downto 0);                               -- UAL
     signal A4, B4_in, B4_mux1, B4_out, B4_mux2, OP4 : std_logic_vector(7 downto 0);                                 -- Memoire des données
     signal A5, B5, OP5 : std_logic_vector(7 downto 0);                                                              -- Avant écriture dans les bancs de registres 
     signal RW_LC, W_LC : std_logic := '0';
-    
+    signal alea : std_logic := '0';
     -- signaux ignorés pour l'instant genre les FLAG de l'ALU on s'en fiche pour l'instant 
     signal IGNORED_1, IGNORED_6, IGNORED_7 : std_logic_vector(7 downto 0) := (others => '0');
     signal IGNORED_2, IGNORED_3, IGNORED_4, IGNORED_5 : std_logic := '0';
@@ -54,7 +55,8 @@ begin
             CLK         => CLK_divided,
             RST         => jump_reset,
             Addr_rst    => A3,
-            Addr_out    => instruction_pointer
+            Addr_out    => instruction_pointer,
+            Alea        => alea
         );
         
     -- Instanciation de la mémoire des instructions
@@ -122,10 +124,10 @@ begin
     -- Instanciation de DI/EX
     di_ex_inst : entity work.interface_element
         port map (
-            a_in   => A2,
+            a_in   => A2_alea,
             b_in   => B2_mux2, -- on a B2_select_out ou B2_select_in à donner à manger ici (b_in) selon le OP2 
             c_in   => C2_out,
-            op_in  => OP2,
+            op_in  => OP2_alea,
             a_out  => A3,
             b_out  => B3_alu_in,
             c_out  => C3,
@@ -137,8 +139,8 @@ begin
     -- Instanciation de l'ALU
     alu_inst : entity work.ALU
         port map (
-            A   => B3_alu_in,
-            B   => C3,
+            A   => B3_alea, --B3_alu_in,
+            B   => C3_alea, --C3,
             S   => B3_alu_out,
             SEL => OP3,
             CAR => IGNORED_2, -- FLAG IGNORED
@@ -147,6 +149,26 @@ begin
             NUL => IGNORED_5  -- FLAG IGNORED
         );
         
+      risk_inst : entity work.hazard_detection
+        port map(
+        CLK  => CLK,
+        RST  => '1',
+        ALEA => alea,
+        A2 => A2,
+        B2 => B2_select_in,
+        C2 => C2_in,
+        OP2=> OP2,
+        A3 => A2_alea,
+        B3 => B3_alea,
+        C3 => C3_alea,
+        OP3=> OP2_alea,
+        A4 => A4,
+        B4 => B4_in,
+        OP4=> OP4,
+        A5 => A5,
+        B5 => B5,
+        OP5=> OP5
+        );
         
     -- Instanciation de l'unité de contrôle
     control_inst : entity work.control_unit
@@ -215,4 +237,18 @@ begin
     
     -- LC après Mem/RE
     W_LC <= '0' when (OP5 = "00100110" or OP5="00000000" or OP5="00100010" or OP5="00100011" or OP5="00100100") else '1'; -- on écrit dans le banc de registre sauf si on STORE ou on a un NOPE ou un JMP ou un JMPF ou un PRINT
+
+     --Alea
+     
+     A2_alea <= A2 when alea ='0' else "00000000";
+    
+     B3_alea <= B3_alu_in when alea ='0' else "00000000";
+    
+     C3_alea <= c3 when alea ='0' else "00000000";
+     
+     OP2_alea <= OP2 when alea ='0' else "00000000";
+
+
 end Behavioral;
+
+    

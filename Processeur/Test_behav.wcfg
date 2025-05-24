@@ -10,38 +10,18 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1,635.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,969.001 ns"></ZoomEndTime>
-      <Cursor1Time time="862.334 ns"></Cursor1Time>
+      <ZoomStartTime time="58.500000 us"></ZoomStartTime>
+      <ZoomEndTime time="109.500001 us"></ZoomEndTime>
+      <Cursor1Time time="101.000000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="251"></NameColumnWidth>
-      <ValueColumnWidth column_width="112"></ValueColumnWidth>
+      <NameColumnWidth column_width="239"></NameColumnWidth>
+      <ValueColumnWidth column_width="116"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="45" />
+   <WVObjectSize size="37" />
    <wvobject fp_name="/Test/uut/CLK" type="logic">
       <obj_property name="ElementShortName">CLK</obj_property>
       <obj_property name="ObjectShortName">CLK</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/contr_ld1" type="array">
-      <obj_property name="ElementShortName">contr_ld1[7:0]</obj_property>
-      <obj_property name="ObjectShortName">contr_ld1[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/contr_ld2" type="array">
-      <obj_property name="ElementShortName">contr_ld2[7:0]</obj_property>
-      <obj_property name="ObjectShortName">contr_ld2[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/contr_itr1" type="array">
-      <obj_property name="ElementShortName">contr_itr1[7:0]</obj_property>
-      <obj_property name="ObjectShortName">contr_itr1[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/contr_itr2" type="array">
-      <obj_property name="ElementShortName">contr_itr2[7:0]</obj_property>
-      <obj_property name="ObjectShortName">contr_itr2[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/contr_btn" type="array">
-      <obj_property name="ElementShortName">contr_btn[4:0]</obj_property>
-      <obj_property name="ObjectShortName">contr_btn[4:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/Test/uut/instruction_pointer" type="array">
       <obj_property name="ElementShortName">instruction_pointer[7:0]</obj_property>
@@ -50,6 +30,10 @@
    <wvobject fp_name="/Test/uut/jump_reset" type="logic">
       <obj_property name="ElementShortName">jump_reset</obj_property>
       <obj_property name="ObjectShortName">jump_reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Test/uut/alea" type="logic">
+      <obj_property name="ElementShortName">alea</obj_property>
+      <obj_property name="ObjectShortName">alea</obj_property>
    </wvobject>
    <wvobject fp_name="/Test/uut/instruction_selected" type="array">
       <obj_property name="ElementShortName">instruction_selected[31:0]</obj_property>
@@ -192,21 +176,76 @@
    <wvobject fp_name="/Test/uut/regfile_inst/regfile" type="array">
       <obj_property name="ElementShortName">regfile[15:0][7:0]</obj_property>
       <obj_property name="ObjectShortName">regfile[15:0][7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/Input_addr" type="array">
-      <obj_property name="ElementShortName">Input_addr[7:0]</obj_property>
-      <obj_property name="ObjectShortName">Input_addr[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/Output_addr" type="array">
-      <obj_property name="ElementShortName">Output_addr[7:0]</obj_property>
-      <obj_property name="ObjectShortName">Output_addr[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/Output" type="array">
-      <obj_property name="ElementShortName">Output[7:0]</obj_property>
-      <obj_property name="ObjectShortName">Output[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Test/uut/io_inst/Input" type="array">
-      <obj_property name="ElementShortName">Input[7:0]</obj_property>
-      <obj_property name="ObjectShortName">Input[7:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[15]" type="array">
+         <obj_property name="ElementShortName">[15][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[14]" type="array">
+         <obj_property name="ElementShortName">[14][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[13]" type="array">
+         <obj_property name="ElementShortName">[13][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[12]" type="array">
+         <obj_property name="ElementShortName">[12][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[11]" type="array">
+         <obj_property name="ElementShortName">[11][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[10]" type="array">
+         <obj_property name="ElementShortName">[10][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[9]" type="array">
+         <obj_property name="ElementShortName">[9][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[8]" type="array">
+         <obj_property name="ElementShortName">[8][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[7]" type="array">
+         <obj_property name="ElementShortName">[7][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[6]" type="array">
+         <obj_property name="ElementShortName">[6][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[5]" type="array">
+         <obj_property name="ElementShortName">[5][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[4]" type="array">
+         <obj_property name="ElementShortName">[4][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[3]" type="array">
+         <obj_property name="ElementShortName">[3][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[2]" type="array">
+         <obj_property name="ElementShortName">[2][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[1]" type="array">
+         <obj_property name="ElementShortName">[1][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Test/uut/regfile_inst/regfile[0]" type="array">
+         <obj_property name="ElementShortName">[0][7:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>
