@@ -33,10 +33,12 @@ begin
             if RST = '1' then
                 count <= Addr_rst-1;
             else
-                prescaler <= prescaler + 1;
-                if (prescaler = 5) then 
-                    prescaler <= 0;
-                    count <= count + 1;
+                if(count < 255) then
+                    prescaler <= prescaler + 1;
+                    if (prescaler = 5) then 
+                        prescaler <= 0;
+                        count <= count + 1;
+                    end if;
                 end if;
             end if;
         end if;

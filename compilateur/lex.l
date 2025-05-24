@@ -63,6 +63,8 @@ STRING    \"[^"]*\"
 "else"       { return tElse; }
 "for"        { return tFor; }
 "while"      { return tWhile; }
+"writeIO"    { return twriteIO; }
+"readIO"    { return treadIO; }
 "!"          { return tNegate; }
 [a-z_][a-z0-9_]*  { 
                         strncpy(yylval.id, yytext, 15);
